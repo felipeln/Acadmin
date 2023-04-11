@@ -1,0 +1,162 @@
+
+
+aside{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #2d2d2d;
+
+    position: fixed;
+}
+
+nav{
+    position: relative;
+    height: 100vh;
+    background-color: #424242;
+    width: 70px;
+
+
+    overflow: hidden;
+    transition: 0.5s all ease-in-out;
+
+    box-shadow: 10px 0 0 teal;
+    border-left: 10px solid #424242;
+
+}
+
+nav:hover{
+    width: 250px;
+}
+nav.ativo{
+    width: 250px;
+}
+
+nav ul{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    padding-left: 5px;
+    padding-top: 40px;
+}
+nav ul li{
+    position: relative;
+    list-style: none;
+    width: 100%;
+
+    border-top-left-radius: 20px;
+    border-bottom-left-radius: 20px;
+}
+nav ul li a{
+    position: relative;
+    display: flex;
+    width: 100%;
+    text-decoration: none;
+    color: #fff;
+
+    font-size: 1.1em;
+
+    transition: all .3s ease-in-out;
+
+}
+
+nav ul li a .icon{
+    position: relative;
+    display: block;
+    min-width: 60px;
+    min-height: 60px;
+    text-align: center;
+    line-height: 70px;
+}
+nav ul li a .icon ion-icon{
+    position: relative;
+    font-size: 1.5rem;
+    z-index: 1;
+}
+
+nav ul li a .title{
+    position: relative;
+    display: block;
+    padding-left: 10px;
+    height: 60px;
+    line-height: 60px;
+    white-space: nowrap;
+}
+nav ul li.active{
+    background-color: teal;
+}
+
+nav ul li.active a::before{
+    content: '';
+    position: absolute;
+    top: -30px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #424242;
+    border-radius: 50%;
+    box-shadow: 15px 15px 0 teal;
+}
+nav ul li.active a::after{
+    content: '';
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    width: 30px;
+    height: 30px;
+    background-color: #424242;
+    border-radius: 50%;
+    box-shadow: 15px -15px 0 teal;
+}
+
+.open{
+    position: absolute;
+    right: -40px;
+    bottom: 150px;
+
+    padding-left: 25px;
+
+    line-height:60px;
+    text-align: center;
+    font-size: 2rem;
+    color: white;
+    width: 60px;
+    height: 60px;
+    
+
+    background-color: teal;
+
+    border-radius: 50%;
+    z-index: -1;
+}
+.open.click{
+    transform: rotate(180deg);
+    padding-left: 0;
+    padding-right: 25px;
+}
+
+
+.container{
+    position: absolute;
+    left: 300px;
+    top: 30px;
+    right: 40px;
+    border: 1px solid black;
+
+    border-radius: 5px;
+
+    animation: moving 0.1s ease;
+
+}
+@keyframes moving{
+    from{
+        transform: translateX(50px);
+        opacity: 0 ;
+    }
+    to{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+    
+  }

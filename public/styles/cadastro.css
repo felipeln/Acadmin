@@ -1,0 +1,126 @@
+
+
+form{
+    display: grid;
+    grid-template-columns: repeat(auto-fill,minmax(400px, 1fr));
+    gap: 30px;
+
+    /* padding: 40px; */
+}
+
+.form-wrapper{
+    background-color: whitesmoke;
+    color: black;
+    
+    padding: 40px 60px;
+    border-radius: 5px;
+    
+    display: none;
+    
+    animation: moving .5s ease;
+}
+
+@keyframes moving{
+    from{
+        transform: translateX(50px);
+        opacity: 0 ;
+    }
+    to{
+        transform: translateX(0px);
+        opacity: 1;
+    }
+    
+}
+
+.form-wrapper.ativo{
+    display: block;
+}
+
+.input-wrapper{
+    display: grid;
+    grid-template-columns: 1fr;
+}
+
+form label{
+    font-size: 1.25em;
+    font-weight: bold;
+
+}
+
+form button{
+    font-size: 1.5rem;
+    font-weight: bold;
+
+    background-color: teal;
+    color: white;
+    
+    border: none;
+    outline: none;
+
+    grid-column: 1 / -1;
+
+    
+    cursor: pointer;
+
+    border-radius: 5px;
+}
+
+.form-wrapper input, .form-wrapper button{
+    padding: 10px;
+
+    width: 100%;
+    border-radius: 5px;
+   
+}
+
+input{
+    border: none;
+    border: 1px solid teal;
+}
+.form-wrapper h1{
+    margin-bottom: 20px;
+}
+
+.container{
+    overflow: hidden;
+
+    border: none;
+}
+
+.submenu{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    background-color: #424242;
+
+    padding: 0 60px;
+}
+
+.submenu .submenu_btn{
+    font-size: 1.25rem;
+    font-weight: bold;
+
+    color: white;
+    background: none;
+    border: none;
+
+    padding: 10px;
+    margin: 10px;
+
+
+    cursor: pointer;
+
+    border-bottom: 2px solid teal;
+
+    transition: all .3s ease-in-out;
+}
+
+.submenu .submenu_btn:hover{
+    background-color: teal;
+}
+
+
+.submenu .submenu_btn.ativo{
+    background-color: teal;
+}
+

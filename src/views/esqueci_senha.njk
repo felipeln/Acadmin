@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/reset.css">
+    <link rel="stylesheet" href="/styles/login.css">
+    <title>Acadmin - Login</title>
+</head>
+<body>
+    <main>
+       <div class="logo">
+            <h1>ACADMIN</h1>
+       </div>
+
+        <div class="form-wrapper">
+            <h1>Esqueceu a Senha</h1>
+
+            <div id="error"></div>
+
+            <form method="post" action="/reset_senha" id="form">
+                <div class="input-wrapper">
+                    <label for="email">Email </label>
+                    <input type="text" name="email" id="email" placeholder="seu@email.com">
+                </div>
+
+                <button type="submit" id="reset">Redefinir senha</button>
+                
+                <a href="/login"  target="" rel="noopener noreferrer">Efetuar Login</a>
+            </form>
+
+
+        </div>
+
+       </main>
+
+    <script defer src="scripts/login_form.js"></script>
+
+</body>
+</html>

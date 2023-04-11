@@ -1,0 +1,33 @@
+.table-wrapper{
+    background-color: whitesmoke;
+    color: black;
+    
+    border-radius: 5px;
+    
+    animation: moving .5s ease; 
+
+    padding: 10px 0;
+}
+
+ .table-menu {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.table-menu ul{
+    display: flex;
+    align-self: flex-start;
+    justify-content: space-between;
+    width: 300px;
+}
+.table-menu ul li{
+    list-style: none;
+}
+.table-menu ul li a{
+    padding: 5px;
+    text-decoration: none;
+
+    background-color: teal;
+    color: white;
+}

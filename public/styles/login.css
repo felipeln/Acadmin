@@ -1,0 +1,103 @@
+/* .background{
+    background-image: url('../img/gym\ bg.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+
+    filter: blur(2px);
+    z-index: -1;
+
+} */
+
+/* https://colorhunt.co/palette/2d27274135438f43eef0eb8d */
+
+body, html{
+    color: rgb(0, 0, 0);
+    margin: 0; 
+    height: 100vh; 
+    overflow: hidden;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    background-color: teal;
+
+}
+
+.logo{
+    text-align: center;
+    color: white;
+    padding: 20px;
+
+}
+
+input, button{
+    padding: 10px;
+
+    width: 100%;
+}
+input{
+    border: none;
+    border: 1px solid teal;
+}
+
+a{
+    display: inline-block;
+    color: black;
+    width: 100%;
+    text-align: center;
+}
+
+
+.form-wrapper{
+    background-color: whitesmoke;
+    color: black;
+    
+    padding: 40px 60px;
+    border-radius: 5px;
+    
+}
+.form-wrapper h1{
+    margin-bottom: 20px;
+}
+.form-wrapper .input-wrapper{
+    padding: 20px 0;
+}
+form{
+    width: 300px;
+    padding-bottom: 10px;
+}
+form label, form button{
+    font-size: 1.25em;
+    font-weight: bold;
+
+}
+
+form button{
+    border: none;
+    background-color: teal;
+    color:white;
+
+    cursor: pointer;
+
+    border-radius: 5px;
+    margin: 20px 0;
+}
+form button.habilitado{
+    border: none;
+    background-color: teal;
+   
+
+    cursor: pointer;
+}
+
+#error{
+    color: red;
+}
