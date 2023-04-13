@@ -9,25 +9,31 @@
     padding: 10px 0;
 }
 
- .table-menu {
+
+#admin-menu{
+    padding-bottom: 40px;
+}
+#admin-menu ul{
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-.table-menu ul{
-    display: flex;
     align-self: flex-start;
-    justify-content: space-between;
-    width: 300px;
-}
-.table-menu ul li{
-    list-style: none;
-}
-.table-menu ul li a{
-    padding: 5px;
-    text-decoration: none;
 
+    width: 600px;
+}
+
+#admin-menu ul li{
+    list-style: none;
+    margin-right: 5px;
+}
+#admin-menu ul li a{
+    text-decoration: none;
+    padding: 5px;
+
+    background-color: white;
+    color: black;
+    border: 1px solid green;
+}
+#admin-menu ul li a.ativo{
     background-color: teal;
     color: white;
 }

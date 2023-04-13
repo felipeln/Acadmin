@@ -10,7 +10,7 @@ aside{
     position: fixed;
 }
 
-nav{
+nav#left-menu{
     position: relative;
     height: 100vh;
     background-color: #424242;
@@ -25,14 +25,14 @@ nav{
 
 }
 
-nav:hover{
+nav#left-menu:hover{
     width: 250px;
 }
-nav.ativo{
+nav#left-menu.ativo{
     width: 250px;
 }
 
-nav ul{
+nav#left-menu ul{
     position: absolute;
     top: 0;
     left: 0;
@@ -40,7 +40,7 @@ nav ul{
     padding-left: 5px;
     padding-top: 40px;
 }
-nav ul li{
+nav#left-menu ul li{
     position: relative;
     list-style: none;
     width: 100%;
@@ -48,7 +48,7 @@ nav ul li{
     border-top-left-radius: 20px;
     border-bottom-left-radius: 20px;
 }
-nav ul li a{
+nav#left-menu ul li a{
     position: relative;
     display: flex;
     width: 100%;
@@ -61,7 +61,7 @@ nav ul li a{
 
 }
 
-nav ul li a .icon{
+nav#left-menu ul li a .icon{
     position: relative;
     display: block;
     min-width: 60px;
@@ -69,13 +69,13 @@ nav ul li a .icon{
     text-align: center;
     line-height: 70px;
 }
-nav ul li a .icon ion-icon{
+nav#left-menu ul li a .icon ion-icon{
     position: relative;
     font-size: 1.5rem;
     z-index: 1;
 }
 
-nav ul li a .title{
+nav#left-menu ul li a .title{
     position: relative;
     display: block;
     padding-left: 10px;
@@ -83,11 +83,11 @@ nav ul li a .title{
     line-height: 60px;
     white-space: nowrap;
 }
-nav ul li.active{
+nav#left-menu ul li.active{
     background-color: teal;
 }
 
-nav ul li.active a::before{
+nav#left-menu ul li.active a::before{
     content: '';
     position: absolute;
     top: -30px;
@@ -98,7 +98,7 @@ nav ul li.active a::before{
     border-radius: 50%;
     box-shadow: 15px 15px 0 teal;
 }
-nav ul li.active a::after{
+nav#left-menu ul li.active a::after{
     content: '';
     position: absolute;
     bottom: -30px;
