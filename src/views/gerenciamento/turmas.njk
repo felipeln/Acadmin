@@ -1,0 +1,139 @@
+{% extends "layout.njk" %}
+
+
+{% block head %}
+        <link rel="stylesheet" href="/styles/gerenciamento.css">
+        <title>acadmin - Gerenciamento</title>
+{% endblock %}
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <ul>
+                <li class="list">
+                    <a href="/dashboard">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list ">
+                    <a href="/dashboard/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/dashboard/gerenciamento/funcionarios">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/financeiro">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/relatorios">
+                        <span class="icon"><ion-icon name="folder-outline"></ion-icon></span>
+                        <span class="title">Relatorios</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{% block content %}
+        <h1>Gerenciamento</h1>
+        <div class="table-wrapper">
+            <nav id="admin-menu">
+                <ul>
+                    <li><a href="/dashboard/gerenciamento/funcionarios" >Funcionarios</a></li>
+                    <li><a href="/dashboard/gerenciamento/clientes" >Clientes</a></li>
+                    <li><a href="/dashboard/gerenciamento/turmas" class="ativo">Turmas</a></li>
+                    <li><a href="/dashboard/gerenciamento/instrutores">Instrutores</a></li>
+                    <li><a href="/dashboard/gerenciamento/agenda">Agenda</a></li>
+                </ul>
+            </nav>
+
+            <div class="title">
+                <h1>Turmas</h1>
+            </div>
+        {%block table%}
+
+
+        <div class="table-head">
+            <ul>
+                <li>id <div class="filter-id"></div></li>
+                <li>Nome <div class="filter-nome"></div></li>
+                <li>Email <div class="filter-email"></div></li>
+                <li>Telefone <div class="filter-telefone"></div></li>
+                <li>Cpf <div class="filter-cpf"></div></li>
+                <li>Acões<div class="filter-cpf"></div></li>
+            </ul>
+        </div>
+
+        <div class="table">
+            
+            <div class="row">
+                <ul>
+                    <li>1</li>
+                    <li>felipe souza</li>
+                    <li>felipe1@gmail.com</li>
+                    <li>(21) 969459817</li>
+                    <li>001.062.143-51</li>
+                    <li class="actions">
+                        <button class="ver"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</button>
+                        <button class="editar"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</button>
+                        <button class="deletar"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar</button>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="row">
+                <ul>
+                    <li>1</li>
+                    <li>felipe souza</li>
+                    <li>felipe1@gmail.com</li>
+                    <li>(21) 969459817</li>
+                    <li>001.062.143-51</li>
+                    <li class="actions">
+                        <button class="ver"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</button>
+                        <button class="editar"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</button>
+                        <button class="deletar"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar</button>
+                    </li>
+                </ul>
+            </div><div class="row">
+                <ul>
+                    <li>1</li>
+                    <li>felipe souza</li>
+                    <li>felipe1@gmail.com</li>
+                    <li>(21) 969459817</li>
+                    <li>001.062.143-51</li>
+                    <li class="actions">
+                        <button class="ver"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</button>
+                        <button class="editar"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</button>
+                        <button class="deletar"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        {%endblock%}
+            
+        </div>
+    {% endblock %}

@@ -1,12 +1,13 @@
-{% extends "layout.njk" %}
+{% extends "./template/layout.njk" %}
 
 
-{% block head %}
+{# 
+    {% block head %}
         <link rel="stylesheet" href="/styles/gerenciamento.css">
         <title>acadmin - Gerenciamento</title>
-{% endblock %}
+    {% endblock %} #}
 
-{%block menu%}
+    {%block menu%}
     <aside>
         <nav class="ativo" id="left-menu">
             <ul>
@@ -56,23 +57,23 @@
         </nav>
         <div class="open">></div>
     </aside>
-{%endblock%}
+    {%endblock%}
 
-{% block content %}
+    {% block content %}
         <h1>Gerenciamento</h1>
         <div class="table-wrapper">
             <nav id="admin-menu">
                 <ul>
-                    <li><a href="/dashboard/gerenciamento/funcionarios" >Funcionarios</a></li>
-                    <li><a href="/dashboard/gerenciamento/clientes" >Clientes</a></li>
-                    <li><a href="/dashboard/gerenciamento/turmas" >Turmas</a></li>
-                    <li><a href="/dashboard/gerenciamento/instrutores" >Instrutores</a></li>
-                    <li><a href="/dashboard/gerenciamento/agenda" class="ativo">Agenda</a></li>
+                    <li><a href="#" class="ativo">Funcionarios</a></li>
+                    <li><a href="/dashboard/gerenciamento/clientes">Clientes</a></li>
+                    <li><a href="#">Turmas</a></li>
+                    <li><a href="#">Instrutores</a></li>
+                    <li><a href="#">Agenda</a></li>
                 </ul>
             </nav>
 
             <div class="title">
-                <h1>Agenda</h1>
+                <h1>Funcionarios</h1>
             </div>
         {%block table%}
 
@@ -105,34 +106,8 @@
                 </ul>
             </div>
 
-            <div class="row">
-                <ul>
-                    <li>1</li>
-                    <li>felipe souza</li>
-                    <li>felipe1@gmail.com</li>
-                    <li>(21) 969459817</li>
-                    <li>001.062.143-51</li>
-                    <li class="actions">
-                        <button class="ver"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</button>
-                        <button class="editar"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</button>
-                        <button class="deletar"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar</button>
-                    </li>
-                </ul>
-            </div><div class="row">
-                <ul>
-                    <li>1</li>
-                    <li>felipe souza</li>
-                    <li>felipe1@gmail.com</li>
-                    <li>(21) 969459817</li>
-                    <li>001.062.143-51</li>
-                    <li class="actions">
-                        <button class="ver"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</button>
-                        <button class="editar"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</button>
-                        <button class="deletar"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar</button>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
+
         {%endblock%}
             
         </div>

@@ -17,7 +17,7 @@ app.set('view engine', 'njk');
 // app.use(express.static('/public'))
 app.use(express.static(__dirname + '/public'));
 
-nunjucks.configure('./src/views', {
+nunjucks.configure(['./src/views', './src/views/gerenciamento', './src/views/template'] ,{
     autoescape: true,
     express: app,
     noCache: true
@@ -84,14 +84,39 @@ app.get('/dashboard/agendamento', async(req,res) =>{
     }
     res.render('agendamento')
 })
+
+
 // dashboard gerenciamento
 app.get('/dashboard/gerenciamento', async(req,res) =>{
     res.render('gerenciamento')
 })
+app.get('/dashboard/gerenciamento/funcionarios', async(req,res) =>{
+    res.render('funcionarios')
+})
+app.get('/dashboard/gerenciamento/clientes', async(req,res) =>{
+    res.render('clientes')
+})
+app.get('/dashboard/gerenciamento/turmas', async(req,res) =>{
+    res.render('turmas')
+})
+app.get('/dashboard/gerenciamento/instrutores', async(req,res) =>{
+    res.render('instrutores')
+})
+app.get('/dashboard/gerenciamento/agenda', async(req,res) =>{
+    res.render('agenda')
+})
+
+
+
 // dashboard financeiro
 app.get('/dashboard/financeiro', async(req,res) =>{
     res.render('financeiro')
 })
+
+
+
+
+
 // dashboard relatorios
 app.get('/dashboard/relatorios', async(req,res) =>{
     res.render('relatorios')
