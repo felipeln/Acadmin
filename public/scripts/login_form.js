@@ -4,7 +4,7 @@
 // const error = document.getElementById('error')
 
 
-// // autenticação basica
+// // // autenticação basica
 
 // const users = [
 //     {
@@ -35,9 +35,9 @@
 //     for(let i in users){
 //         if(email.value === users[i].email && password.value === users[i].password){
 //             if(users[i].cargo == 'adm'){
-//                 form.action = "/dashboard#adm"
+//                 form.href = "/dashboard"
 //             }if(users[i].cargo == 'cliente'){
-//                 form.action = "/portal#cliente"
+//                 form.href = "/portal"
 //             }
 //             res = true
 //             alert('Login efetuado')
@@ -59,32 +59,32 @@
 
 
 
-// // script de validação de email, para cadastro
+// // // script de validação de email, para cadastro
 
-// // function ValidateEmail(inputText)
-// // {
-// // 	var mailformat = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
-// // 	if(inputText.value.match(mailformat))
-// // 	{
-// // 		return false;
-// // 		}
-// // }
-
-
-
-// // form.addEventListener('submit', (e) => {
-
-// //     let messages = []
+// // // function ValidateEmail(inputText)
+// // // {
+// // // 	var mailformat = /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+// // // 	if(inputText.value.match(mailformat))
+// // // 	{
+// // // 		return false;
+// // // 		}
+// // // }
 
 
-// //     if (ValidateEmail(email) || email.value == null || email.value === '') {
-// //         messages.push('Digite um email valido')
-// //     }
 
-// //     if(messages.length > 0){
-// //         e.preventDefault()
-// //         error.innerText = messages.join(', ')
-// //     }
+// // // form.addEventListener('submit', (e) => {
+
+// // //     let messages = []
+
+
+// // //     if (ValidateEmail(email) || email.value == null || email.value === '') {
+// // //         messages.push('Digite um email valido')
+// // //     }
+
+// // //     if(messages.length > 0){
+// // //         e.preventDefault()
+// // //         error.innerText = messages.join(', ')
+// // //     }
 
     
-// // })
+// // // })

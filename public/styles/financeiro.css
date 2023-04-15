@@ -1,0 +1,149 @@
+/* card */
+
+.card-wrapper{
+    display: grid;
+
+    grid-template-columns: 1fr 1fr 1fr;
+
+    gap: 40px;
+
+    justify-content: space-between;
+    align-content: center;
+}
+
+
+.card-wrapper .card{
+    border-radius: 5px;
+    background-color: whitesmoke;
+
+    border-left: 5px solid teal;
+    padding: 30px;
+    
+
+}
+
+.card-wrapper .card li{
+    list-style: none;
+    font-size: 1.5em;
+}
+.card-wrapper .card .label{
+    display: flex;
+
+    justify-content: space-between;
+}
+.card-wrapper .card .label .icon{
+    font-size: 2em;
+    
+}
+ .entrada {
+    color: green;
+}
+.saida{
+    color: red;
+}
+.card-wrapper .card .valor{
+    font-weight: bold;
+}
+.card-wrapper .card .cifrao{
+    padding-right: 10px;
+}
+
+
+/* table */
+.finance-table{
+    padding: 30px 0;
+}
+.finance-table .finance-head ul{
+    display: grid;
+
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+
+    width: 100%;
+    background-color: whitesmoke;
+
+    color: black;
+    border-top-left-radius: 5px ;
+    border-top-right-radius: 5px;
+}
+.finance-head{
+    border-bottom: 3px #444 solid;
+}
+.finance-head ul li{
+    list-style: none;
+
+    list-style: none;
+    padding: 10px;
+
+    font-weight: bold;
+
+    font-size: 1.25em;
+
+    /* border-right: 2px solid teal; */
+
+}
+.finance-rows .row ul{
+    display: grid;
+
+    grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+    width: 100%;
+    background-color: whitesmoke;
+
+    color: black;
+    border-top-left-radius: 5px ;
+    border-top-right-radius: 5px;
+}
+.finance-rows .row ul li{
+    list-style: none;
+    padding: 10px;
+    
+    font-size: 1.125em;
+    
+/* 
+    border-right: 2px solid teal; */
+}
+
+.finance-rows .row ul li .icon{
+    font-size: 1.5em;
+}
+
+
+/* finance add */
+
+.finance-add {
+    padding: 30px 0;
+}
+
+.finance-add ul{
+    display: grid;
+
+    grid-template-columns: 2fr 2fr 2fr 1fr;
+
+    background-color: whitesmoke;
+
+    color: black;
+
+    border-radius: 5px;
+
+    padding: 10px;
+    align-items: center;
+}
+.finance-add ul li{
+    list-style: none;
+    
+}
+.finance-add ul li span{
+    padding-right: 5px;
+    
+    font-weight: bold;
+}
+
+.finance-add ul li button{
+    border: none;
+    background-color: teal;
+
+    color: white;
+    padding: 10px;
+}
+.finance-add ul li select{
+    width: 70%;
+}

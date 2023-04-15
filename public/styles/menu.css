@@ -142,7 +142,7 @@ nav#left-menu ul li.active a::after{
     left: 300px;
     top: 30px;
     right: 40px;
-    border: 1px solid black;
+    /* border: 1px solid black; */
 
     border-radius: 5px;
 

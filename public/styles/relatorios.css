@@ -1,0 +1,20 @@
+.relatorios-wrapper{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    gap: 50px;
+
+    padding: 40px 0;
+
+}
+
+.relatorio-card{
+    background-color: whitesmoke;
+    padding: 30px;
+    border-left: 3px solid teal;
+
+    cursor: pointer;
+}
+.relatorio-card h2{
+    font-size: 1.75em;
+}

@@ -3,6 +3,7 @@
 
 
     {% block head %}
+            <link rel="stylesheet" href="/styles/financeiro.css">
             <title>acadmin - Agendamento</title>
     {% endblock %}
 
@@ -60,4 +61,104 @@
 
     {%block content%}
         <h1>Financeiro</h1>
+
+
+        <div class="finance-wrapper">
+            <div class="card-wrapper">
+                <ul class="card">
+                    <li class="label"><span>Entradas</span> <ion-icon class="icon  entrada" name="arrow-up-circle-outline"></ion-icon> </li>
+                    <li class="valor"><span class="cifrao">R$</span>3000</li>
+                </ul>
+                <ul class="card">
+                    <li class="label"><span>Saidas</span> <ion-icon class="icon saida" name="arrow-down-circle-outline"></ion-icon> </li>
+                    <li class="valor"><span class="cifrao">R$</span>1000</li>
+                </ul>
+                <ul class="card">
+                    <li class="label"><span>Total</span> <ion-icon class="icon" name="wallet-outline"></ion-icon> </li>
+                    <li class="valor"><span class="cifrao">R$</span>2000</li>
+                </ul>
+            </div>
+
+
+            <div class="finance-add">
+                <ul>
+                    <li><span>Descrição</span> <input type="text" name="desc" id="desc"></li>
+                    <li><span>Valor</span> <input type="number" name="valor" id="valor"></li>
+                    <li><span>Tipo</span>
+                        <select name="tipo" id="tipo">
+                            <option value="Entrada">Entrada</option>
+                            <option value="Saida">Saida</option>
+                        </select>
+                    </li>
+                    <li><button>Adicionar</button></li>
+                </ul>
+            </div>
+
+
+            <div class="finance-table">
+                <div class="finance-head">
+                     <ul>
+                        <li>Descrição <div class="filter-desc"></div></li>
+                        <li>Valor<div class="filter-valor"></div></li>
+                        <li>data <div class="filter-data"></div></li>
+                        <li>Tipo <div class="filter-tipo"></div></li>
+                        <li></li>
+                </ul>
+                </div>
+
+                <div class="finance-rows">
+                    
+                    <div class="row">
+                        <ul>
+                            <li>Salario</li>
+                            <li><span class="cifrao">R$</span> 1000</li>
+                            <li>21/03/2022</li>
+                            <li><ion-icon class="icon saida" name="arrow-down-circle-outline"></ion-icon></li>
+                            <li class="actions">
+                                <span class="deletar"><ion-icon class="icon" name="trash-outline"></ion-icon> </span>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                    <div class="row">
+                            <ul>
+                                <li>Mensalidade</li>
+                                <li><span class="cifrao">R$</span> 1000</li>
+                                <li>05/03/2022</li>
+                                <li><ion-icon class="icon entrada" name="arrow-up-circle-outline"></ion-icon></li>
+                                <li class="actions">
+                                    <span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span >
+                                </li>
+                            </ul>
+                    </div>
+                    <div class="row">
+                            <ul>
+                                <li>Mensalidade</li>
+                                <li><span class="cifrao">R$</span> 1000</li>
+                                <li>05/02/2022</li>
+                                <li><ion-icon class="icon entrada" name="arrow-up-circle-outline"></ion-icon></li>
+                                <li class="actions">
+                                    <span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span >
+                                </li>
+                            </ul>
+                    </div>
+                    <div class="row">
+                            <ul>
+                                <li>Mensalidade</li>
+                                <li><span class="cifrao">R$</span> 1000</li>
+                                <li>05/01/2022</li>
+                                <li><ion-icon class="icon entrada" name="arrow-up-circle-outline"></ion-icon></li>
+                                <li class="actions">
+                                    <span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span >
+                                </li>
+                            </ul>
+                    </div>
+                </div>
+            </div>
+
+                
+
+
+        </div>
     {% endblock %}

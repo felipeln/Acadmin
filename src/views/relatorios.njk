@@ -3,6 +3,7 @@
 
 
     {% block head %}
+            <link rel="stylesheet" href="/styles/relatorios.css">
             <title>acadmin - Agendamento</title>
     {% endblock %}
 
@@ -61,6 +62,21 @@
     {%block content%}
         <h1>Relatorios</h1>
 
-        
+        <div class="relatorios-wrapper">
+            <div class="relatorio-card">
+                <h2>Financeiro</h2> 
+                <ion-icon class="icon" name="cash-outline"></ion-icon>
+            </div>
+            <div class="relatorio-card">
+                <h2>Funcionarios</h2> 
+            </div>
+            <div class="relatorio-card">
+                <h2>Clientes</h2> 
+                <ion-icon  class="icon"  name="cash-outline"></ion-icon>
+            </div>
+            <div class="relatorio-card">
+                <h2>Instrutores</h2> 
+            </div>
+        </div>
 
     {% endblock %}

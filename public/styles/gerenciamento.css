@@ -1,5 +1,5 @@
 .table-wrapper{
-    background-color: whitesmoke;
+    /* background-color: whitesmoke; */
     color: black;
     
     border-radius: 5px;
@@ -40,14 +40,16 @@
 
 
 /* table */
-
+.table-head {
+    border-bottom: 3px solid teal;
+}
 .table-head ul{
     display: grid;
 
     grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 2fr;
 
     width: 100%;
-    background-color: black;
+    background-color: #444;
 
     color: white;
     border-top-left-radius: 5px ;
@@ -56,7 +58,7 @@
 .table-head ul li{
     list-style: none;
     padding: 10px;
-    border-right: 2px solid #ccc;
+    /* border-right: 2px solid #ccc; */
 }
 .table-head ul li:nth-last-child(1), .row ul li:nth-last-child(1){
     border-right: 0;

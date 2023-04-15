@@ -17,7 +17,7 @@ app.set('view engine', 'njk');
 // app.use(express.static('/public'))
 app.use(express.static(__dirname + '/public'));
 
-nunjucks.configure(['./src/views', './src/views/gerenciamento', './src/views/template'] ,{
+nunjucks.configure(['./src/views', './src/views/gerenciamento', './src/views/template','./src/views/portal','./src/views/relatorios',] ,{
     autoescape: true,
     express: app,
     noCache: true
@@ -66,11 +66,9 @@ app.get('/reset_senha', async(req,res) =>{
 
 
 // dashboard
+
 app.get('/dashboard', async(req,res) =>{
     res.render('dashboard')
-})
-app.get('/dashboard#login', async(req,res) =>{
-    res.redirect('/dashboard')
 })
 
 // dashboard cadastro
@@ -121,3 +119,25 @@ app.get('/dashboard/financeiro', async(req,res) =>{
 app.get('/dashboard/relatorios', async(req,res) =>{
     res.render('relatorios')
 })
+
+
+
+
+
+
+
+
+
+
+// portal
+
+app.get('/portal', async(req,res) =>{
+    res.render('portal')
+})
+app.get('/portal/agendamento', async(req,res) =>{
+    res.render('user-agendamento')
+})
+app.get('/portal/financeiro', async(req,res) =>{
+    res.render('user-financeiro')
+})
+
