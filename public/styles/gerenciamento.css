@@ -46,7 +46,8 @@
 .table-head ul{
     display: grid;
 
-    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 2fr;
+
+    grid-template-columns: 20% 23% 18% 10% 29%;
 
     width: 100%;
     background-color: #444;
@@ -65,15 +66,22 @@
 }
 
 .row{
-    border: 2px solid #ccc;
+    /* border: 2px solid #ccc; */
   
+    border-top: 2px solid #ccc;
+}
+.row:nth-last-child(1){
+    border-bottom: 2px solid #ccc;
 }
 .row ul{
     display: grid;
 
-    grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 2fr;
+    /* grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr 2fr; */
+    /* grid-template-columns: repeat(auto-fill, minmax(186px, 1fr)); */
+    grid-template-columns: 20% 23% 18% 10% 29%;
 
     width: 100%;
+
 
     border-radius: none;
     background-color: whitesmoke;
@@ -83,27 +91,54 @@
 
 .row ul li{
     list-style: none;
-    border-right: 2px solid #ccc;
+    /* border-right: 2px solid #ccc; */
+
+    border-right: 1px solid #ccc;
     
+    word-wrap: break-word;
     padding: 10px;
 }
 
 
 /* actions */
-.actions{
+.row ul .actions{
     display: flex;
-    justify-content: flex-end;
-    /* align-items: center;
-    justify-items: center; */
+    
     gap: 0 5px;
+    align-items: center;
+    justify-content: flex-end;
 }
-.actions button{
+.actions .act-btn{
     display: flex;
     align-items: center;
     justify-items: center;
     
+    max-height: 30px;
+    padding: 5px 10px;
 }
-.actions button .icon{
+.actions .act-btn .icon{
     font-size: 1.25em;
     padding: 0 5px;
 }
+.actions button{
+    border: none;
+    cursor: pointer;
+}
+
+ .ver{
+    background-color: #0d6efd ;
+    color: white;
+     text-decoration: none;
+}
+ .editar{
+    background-color: #ffc107 ;
+    color: black;
+    text-decoration: none;
+}
+ .deletar{
+    background-color: #dc3545 ;
+    color: white;
+    text-decoration: none;
+}
+
+

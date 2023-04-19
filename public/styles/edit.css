@@ -1,0 +1,76 @@
+.edit-form{
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+
+    gap: 0 40px;
+}
+
+.form-field{
+    padding: 10px 0;
+
+    display: grid;
+    
+    grid-template-columns: 1fr;
+    
+}
+.form-field label{
+    font-weight: bold;
+    font-size: 1.25em;
+}
+.form-field input, .form-field select{
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.form-buttons{
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-buttons .btn{
+    margin-right: 10px;
+}
+
+button{
+    padding: 5px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+
+/* ver menu */
+
+.ver-menu ul {
+    display: inline-flex;
+    
+}
+
+.ver-menu ul li{
+    list-style: none;
+}
+.ver-menu ul li a{
+    
+    padding: 5px;
+    margin-right: 5px;
+    color: teal;
+}
+
+.ver-menu span{
+    display: flex;
+    justify-content: flex-end;
+}
+.ver-menu .editar{
+    padding: 5px;
+
+    color: black;
+
+    
+}hr{
+    margin: 10px 0;
+    outline: none;
+    color: whitesmoke;
+}

@@ -7,14 +7,26 @@
     padding: 40px 0;
 
 }
+.relatorios-wrapper a{
+    text-decoration: none;
+    color: black;
+}
 
 .relatorio-card{
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+
     background-color: whitesmoke;
     padding: 30px;
     border-left: 3px solid teal;
 
     cursor: pointer;
+
+    align-items: center;
 }
 .relatorio-card h2{
     font-size: 1.75em;
+}
+.relatorio-card .icon{
+    font-size: 3em;
 }

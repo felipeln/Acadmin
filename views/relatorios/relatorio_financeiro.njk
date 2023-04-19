@@ -1,0 +1,65 @@
+{% extends 'layout.njk' %}
+
+        {% block head %}
+            <title>acadmin - Relatorios</title>
+        {% endblock %}
+    
+    
+       {%block menu%}
+       <aside>
+        <nav class="ativo" id="left-menu">
+            <ul>
+                <li class="list">
+                    <a href="/dashboard">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list ">
+                    <a href="/dashboard/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/financeiro">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/dashboard/relatorios">
+                        <span class="icon"><ion-icon name="folder-outline"></ion-icon></span>
+                        <span class="title">Relatorios</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+        </aside>
+       {%endblock%}
+
+            {%block content%}
+                <h1>Relatorios - Financeiro</h1>
+            {%endblock%}
+
+{%block scripts%}
+{%endblock%}
