@@ -15,5 +15,3 @@ close_btn.addEventListener('click', () => {
         modal_overlay.querySelector("iframe").src = ''; 
     })
 
-
-

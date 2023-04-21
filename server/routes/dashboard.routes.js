@@ -1,51 +1,91 @@
 const express = require('express');
 const router = express.Router();
-const dashboardController = require('../controllers/dashboardController')
+const dashboardController = require('../controllers/admin/dashboardController')
+const GerenciamentoController = require('../controllers/admin/gerenciamentoController')
+const cadastroController = require('../controllers/admin/cadastroController')
 
-// dashboard admin
+//! dashboard admin
 
 router.get('/dashboard', dashboardController.homepage)
 
-// dashboard cadastro
-router.get('/dashboard/cadastro', dashboardController.cadastro)
+//! dashboard cadastro
+//? get cliente
+router.get('/dashboard/cadastro', cadastroController.cadastroCliente)
+router.get('/dashboard/cadastro/cliente', cadastroController.cadastroCliente)
+//? post cliente
+router.post('/dashboard/cadastro/cliente', cadastroController.cadastroClientePost)
 
-// dashboard agendamento
+//? get funcionario
+router.get('/dashboard/cadastro/funcionario', cadastroController.cadastroFuncionario)
+//? post funcionario
+router.post('/dashboard/cadastro/funcionario', cadastroController.cadastroFuncionarioPost)
+
+//? get instrutor
+router.get('/dashboard/cadastro/instrutor', cadastroController.cadastroInstrutor)
+//? post instrutor
+router.post('/dashboard/cadastro/instrutor', cadastroController.cadastroInstrutorPost)
+
+// ! dashboard agendamento
 router.get('/dashboard/agendamento', dashboardController.agendamento)
+// * turmas
+// * horarios
+// * agendamento
 
 
-// dashboard admin gerenciamento
-router.get('/dashboard/gerenciamento', dashboardController.gerenciamento)
+// ! dashboard admin  **gerenciamento**
 
-router.get('/dashboard/gerenciamento/funcionarios', dashboardController.gerenciamento)
+// * Funcionarios
+    router.get('/dashboard/gerenciamento', GerenciamentoController.funcionarios)
 
+    router.get('/dashboard/gerenciamento/funcionarios', GerenciamentoController.funcionarios)
 
-router.get('/dashboard/gerenciamento/clientes', dashboardController.gerenciamentoClientes)
-// VER
-router.get('/dashboard/gerenciamento/clientes/ver/:id', dashboardController.gerenciamentoClienteVer)
-// EDIT
-router.get('/dashboard/gerenciamento/clientes/edit/:id', dashboardController.gerenciamentoClienteEdit)
-// Save edit
-router.put('/dashboard/gerenciamento/clientes/edit/:id', dashboardController.gerenciamentoClienteEditPost)
-// delete
-router.delete('/dashboard/gerenciamento/clientes/edit/:id', dashboardController.gerenciamentoClienteDelete)
-
-
-router.get('/dashboard/gerenciamento/turmas',dashboardController.gerenciamentoTurmas)
-
-router.get('/dashboard/gerenciamento/instrutores', dashboardController.gerenciamentoInstrutores)
+    //? VER
+    router.get('/dashboard/gerenciamento/funcionarios/ver/:id', GerenciamentoController.FuncionarioVer)
+    //? EDIT
+    router.get('/dashboard/gerenciamento/funcionarios/edit/:id', GerenciamentoController.FuncionarioEdit)
+    //? Save edit
+    router.put('/dashboard/gerenciamento/funcionarios/edit/:id', GerenciamentoController.FuncionarioEditPost)
+    //? delete
+    router.delete('/dashboard/gerenciamento/funcionarios/edit/:id', GerenciamentoController.FuncionarioDelete)
+    //? search
+    router.post('/dashboard/gerenciamento/funcionarios/search', GerenciamentoController.FuncionarioSearch)
 
 
-router.get('/dashboard/gerenciamento/agenda', dashboardController.gerenciamentoAgenda)
+// * Clientes
+    router.get('/dashboard/gerenciamento/clientes', GerenciamentoController.Clientes)
+    //? VER
+    router.get('/dashboard/gerenciamento/clientes/ver/:id', GerenciamentoController.ClienteVer)
+    //? EDIT
+    router.get('/dashboard/gerenciamento/clientes/edit/:id', GerenciamentoController.ClienteEdit)
+    //? Save edit
+    router.put('/dashboard/gerenciamento/clientes/edit/:id', GerenciamentoController.ClienteEditPost)
+    //? delete
+    router.delete('/dashboard/gerenciamento/clientes/edit/:id', GerenciamentoController.ClienteDelete)
+    //? search
+    router.post('/dashboard/gerenciamento/clientes/search', GerenciamentoController.ClienteSearch)
 
 
+//  * Instrutores
+    router.get('/dashboard/gerenciamento/instrutores', GerenciamentoController.Instrutores)
+    //? ver
+    router.get('/dashboard/gerenciamento/instrutores/ver/:id', GerenciamentoController.InstrutorVer)
+    //? Edit
+    router.get('/dashboard/gerenciamento/instrutores/edit/:id', GerenciamentoController.InstrutorEdit)
+    //? Save Edit
+    router.put('/dashboard/gerenciamento/instrutores/edit/:id', GerenciamentoController.InstrutorEditPost)
+    //? Delete
+    router.delete('/dashboard/gerenciamento/instrutores/edit/:id', GerenciamentoController.InstrutorDelete)
+    //? search
+    router.post('/dashboard/gerenciamento/instrutores/search', GerenciamentoController.InstrutorSearch)
 
-// dashboard admin financeiro
+
+//! dashboard admin financeiro
 router.get('/dashboard/financeiro', dashboardController.financeiro)
 
 
 
 
-// dashboard admin relatorios
+//! dashboard admin relatorios
 router.get('/dashboard/relatorios', dashboardController.relatorio)
 
 router.get('/dashboard/relatorios/financeiro',dashboardController.relatorioFinanceiro)

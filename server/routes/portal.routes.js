@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const portalController = require('../controllers/portalController')
+const portalController = require('../controllers/portal/portalController')
 
 
 router.get('/portal', portalController.home)

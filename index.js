@@ -39,7 +39,7 @@ app.set('view engine', 'njk');
 // setup css file
 app.use(express.static(__dirname + '/public'));
 
-nunjucks.configure(['./views', './views/admin' , './views/atendente' ,'./views/gerenciamento', './views/template','./views/portal','./views/relatorios', './views/gerenciamento/layouts'] ,{
+nunjucks.configure(['./views', './views/', './views/template'] ,{
     autoescape: true,
     express: app,
     noCache: true

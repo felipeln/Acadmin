@@ -1,0 +1,164 @@
+{% extends "layout.njk" %}
+
+{% block head %}
+        <link rel="stylesheet" href="/styles/gerenciamento.css">
+        <link rel="stylesheet" href="/styles/table.css">
+        <title>acadmin - Gerenciamento</title>
+{% endblock %}
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <ul>
+                <li class="list">
+                    <a href="/dashboard">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list ">
+                    <a href="/dashboard/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/dashboard/gerenciamento/funcionarios">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/financeiro">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/relatorios">
+                        <span class="icon"><ion-icon name="folder-outline"></ion-icon></span>
+                        <span class="title">Relatorios</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{% block content %}
+        <h1 class="ver-title">{{InstrutoresAcademia.nome}} {{InstrutoresAcademia.sobrenome}}</h1>
+<hr>
+        <div class="ver-menu">
+            <ul>
+                <li><a href="/dashboard/gerenciamento/instrutores">Voltar </a></li>
+                <li> / {{InstrutoresAcademia.nome}} {{InstrutoresAcademia.sobrenome}} </li>
+            </ul>
+
+             <span>
+                <a class="editar" href="/dashboard/gerenciamento/instrutores/edit/{{InstrutoresAcademia._id}}">Editar</a>
+            </span>
+        </div>
+
+     
+<div class="table-container">
+    
+        <div class="table-rows">
+                    
+                    <div class="row">
+                        <div class="col col-title" >Nome:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.nome}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Sobrenome:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.sobrenome}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Data de Nascimento:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.dataNascimento}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Telefone:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.telefone}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Email:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.email}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Sexo:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.sexo}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Status:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.status}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Cargo:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.cargo}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Modalidade:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.modalidade}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >CPF:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.cpf}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >endereco:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.endereco}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Data de Cadastro:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.dataCadastro}}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col col-title" >Data de Modifição:</div>
+                        <div class="col">
+                            {{InstrutoresAcademia.dataModificado}}
+                        </div>
+                    </div>
+
+        </div>
+
+       
+    </div>
+        
+{% endblock %}

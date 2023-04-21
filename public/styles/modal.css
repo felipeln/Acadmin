@@ -35,7 +35,7 @@
     border-bottom: 1px solid #ccc;
 }
 .modal-content .modal-info h1{
-    font-size: 1.25em;
+    font-size: 1.125em;
     font-weight: bolder;
 }
 .modal-content .modal-aviso{
@@ -44,7 +44,7 @@
 }
 
 .modal-content .modal-aviso h2 {
-    font-size: 1.25em;
+    font-size: 1.125em;
     font-weight: 500;
 }
 

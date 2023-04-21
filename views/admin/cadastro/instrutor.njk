@@ -1,0 +1,166 @@
+{% extends "layout.njk" %}
+
+    {% block head %}
+            <link rel="stylesheet" href="/styles/cadastro.css">
+            <title>Acadmin - Cadastro</title>
+    {% endblock %}
+
+        
+    </head>
+    <body>
+        {%block menu%}
+        <aside>
+                <nav class="ativo" id="left-menu">
+                    <ul>
+                        <li class="list ">
+                            <a href="/dashboard">
+                                <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                                <span class="title">Home</span>
+                            </a>
+                        </li>
+                        <li class="list active">
+                            <a href="/dashboard/cadastro">
+                                <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                                <span class="title">Cadastro</span>
+                            </a>
+                        </li>
+                        <li class="list">
+                            <a href="/dashboard/agendamento">
+                                <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                                <span class="title">Agendamento</span>
+                            </a>
+                        </li>
+                        <li class="list">
+                            <a href="/dashboard/gerenciamento">
+                                <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                                <span class="title">Gerenciamento</span>
+                            </a>
+                        </li>
+                        <li class="list">
+                            <a href="/dashboard/financeiro">
+                                <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                                <span class="title">Financeiro</span>
+                            </a>
+                        </li>
+                        <li class="list">
+                            <a href="/dashboard/relatorios">
+                                <span class="icon"><ion-icon name="folder-outline"></ion-icon></span>
+                                <span class="title">Relatorios</span>
+                            </a>
+                        </li>
+                        <li class="list">
+                            <a href="/login">
+                                <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                                <span class="title">Sair</span>
+                            </a>
+                        </li>
+                    </ul>               
+                </nav>
+                <div class="open">></div>
+            </aside>
+        {%endblock%}
+
+            {%block content%}
+            <div class="submenu">
+                <a href="/dashboard/cadastro/cliente" class="submenu_btn ">Cliente</a>
+                <a href="/dashboard/cadastro/funcionario" class="submenu_btn">Funcionario</a>
+                <a href="/dashboard/cadastro/instrutor" class="submenu_btn  ativo">Instrutor</a>
+            </div>
+
+            <div class="form-wrapper"  id="instrutor">
+                <h1>Cadastrar Instrutor</h1>
+
+                {% for mensagem in msg%}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+    
+                <form action="/dashboard/cadastro/instrutor" method="POST" id="form" class="instrutor">
+
+                     <div class="input-wrapper">
+                        <label for="nome">Nome </label>
+                        <input type="text" name="nome" id="nome" placeholder="nome">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="sobrenome">Sobrenome </label>
+                        <input type="text" name="sobrenome" id="sobrenome" placeholder="sobrenome">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="dataNascimento">Data De Nascimento </label>
+                        <input type="Date" name="dataNascimento" id="dataNascimento" placeholder="dataNascimento" 
+                        min="1930-01-01" max='2023-03-31'>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="email">Email </label>
+                        <input type="text" name="email" id="email" placeholder="seu@email.com">
+                    </div>
+
+                     <div class="input-wrapper">
+                        <label for="senha">Senha </label>
+                        <input type="senha" name="senha" id="senha" placeholder="senha">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="cpf">CPF </label>
+                        <input type="text" name="cpf" id="cpf" placeholder="cpf">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="sexo">Sexo</label>
+                        <select name="sexo" id="sexo">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="cargo">Cargo</label>
+                        <select name="cargo" id="cargo">
+                            <option value="Instrutor">Instrutor</option>
+                            
+                        </select>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="modalidade">Modalidade</label>
+                        <select name="modalidade" id="modalidade">
+                            <option value="Boxe">Boxe</option>
+                            <option value="FitDance">FitDance</option>
+                            <option value="Musculacao">Musculação</option>
+                            <option value="Jiu  Jitsu">Jiu  Jitsu</option>
+                            <option value="Natacao">Natação</option>
+                            <option value="Pilates">Pilates</option>
+                        </select>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="telefone">Telefone </label>
+                        <input type="text" name="telefone" id="telefone" placeholder="telefone">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="endereco">Endereço </label>
+                        <input type="text" name="endereco" id="endereco" placeholder="endereco">
+                    </div>
+    
+                    <button type="submit" id="logar">Cadastrar</button>
+                </form>
+              
+            </div>
+            {% endblock %}
+
+
+      
+{%block scripts%}
+    <script src="/scripts/cadastro.js"></script>
+     <script src="/scripts/flashmsg.js"></script>
+{%endblock%}
+

@@ -40,6 +40,10 @@
 
 
 /* table */
+.table{
+    min-height: 520px;
+    max-height: 520px;
+}
 .table-head {
     border-bottom: 3px solid teal;
 }
@@ -84,9 +88,12 @@
 
 
     border-radius: none;
-    background-color: whitesmoke;
+    background-color: white;
 
     color: black;
+}
+.row:nth-child(2n) ul{
+    background-color: whitesmoke;
 }
 
 .row ul li{
@@ -142,3 +149,120 @@
 }
 
 
+
+/* pagination */
+.pagination-nav{
+    width: 100%;
+    margin: 10px 0;
+
+}
+.pagination-ul{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    
+    
+}
+.pagination-ul li{
+   list-style: none;
+
+   border: 3px solid #ccc;
+
+}
+.pagination-ul li .page-link{
+    font-size: 1.2em;
+    color: black;
+    text-decoration: none;
+    padding: 10px;
+
+}
+
+.pagination-ul li.disabled .page-link{
+    color: white;
+}
+.disabled{
+    pointer-events: none;
+    color: white;
+    background-color: teal;
+}
+
+
+/* alert message */
+
+.alert-box {
+    display: flex;
+    min-width: 600px;
+    max-width: 600px;
+    margin-bottom: 5px;
+    justify-content: space-between;
+
+    border-radius: 5px;
+    padding: 3px  0;
+}
+.alert-box.deleted{
+    background-color: #dc3545;
+    color: white;
+    
+}
+.alert-box .close-alert{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: none;
+    color: white;
+    font-size: 1.5em;
+
+    border: none;
+    cursor: pointer;
+}
+
+.alert-box.desativado {
+    display: none;
+    overflow: hidden;
+}
+
+
+/* search menu */
+.table-nav{
+    display: grid;
+
+    grid-template-columns: 1fr 3fr 1fr;
+
+    align-items: center;
+}
+
+.table-nav .search-input{
+    width: 70%;
+    padding: 5px;
+    border-radius: 5px;
+}
+.table-nav .add{
+    border: 1px solid #008080;
+    text-decoration: none;
+
+    padding: 5px;
+    justify-self: end;
+
+    color: white;
+    background-color: teal;
+}
+
+
+.not-found{
+    padding: 30px 0;
+    /* border: 1px solid red; */
+    min-height: 500px;
+
+    display: flex;
+
+    background: url('/img/user-not-found.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    
+}
+.not-found h2{
+    font-size: 2em;
+
+}
