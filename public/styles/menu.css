@@ -110,6 +110,8 @@ nav#left-menu ul li.active a::after{
     box-shadow: 15px -15px 0 teal;
 }
 
+/* open btn */
+
 .open{
     position: absolute;
     right: -40px;
@@ -130,24 +132,29 @@ nav#left-menu ul li.active a::after{
     border-radius: 50%;
     z-index: -1;
 }
-.open.click{
+
+.open.aberto{
     transform: rotate(180deg);
     padding-left: 0;
     padding-right: 25px;
 }
 
 
+/* content container */
 .container{
-    position: absolute;
-    left: 300px;
-    top: 30px;
-    right: 40px;
-    /* border: 1px solid black; */
+    margin-left: 300px;
+    margin-right: 40px;
+
+    padding-top: 5px;
 
     border-radius: 5px;
 
+    transition: all 0.3s ease;
     animation: moving 0.1s ease;
 
+}
+.container.expand{
+    margin-left: 120px;
 }
 @keyframes moving{
     from{

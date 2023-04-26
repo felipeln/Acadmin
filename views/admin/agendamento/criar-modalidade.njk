@@ -4,6 +4,7 @@
 
     {% block head %}
      <link rel="stylesheet" href="/styles/gerenciamento.css">
+     <link rel="stylesheet" href="/styles/criar.css">
             <title>acadmin - Agendamento</title>
     {% endblock %}
 
@@ -60,92 +61,74 @@
     {%endblock%}
 
     {%block content%}
+       <h1>Criar agendamento</h1>
 
-        <div class="table-wrapper agendamento">
-            <div class="title table-nav">
-                <h1>Agendamentos</h1>
+      
 
-                <form class="search-form" role="search" method="POST" action="/dashboard/agendamento/search">
-                <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
-                </form>
-
-                <a href="/dashboard/agendamento/criar/search" class="add">+ Agendamento</a>
-            </div>
-
-            {% for mensagem in msg%}
-
-                <div class="alert-box deleted">
-                    <p>{{mensagem}}</p>
-                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
-                </div>
-
-            {% endfor %}
-
-         <div class="table-head agendamento">
+    <div class="ver-menu">
             <ul>
-                <li>Cliente</li>
-                <li>Modalidade</li>
-                <li>Instrutor</li>
-                <li>Dia</li>
-                <li>Hora Inicio: </li>
-                <li>Hora Termina: </li>
-                <li>Acões</li>
+                <li><a href="/dashboard/agendamento">Agendamentos</a> ></li>
+            </ul>
+
+            <ul>
+                <li><a  href="/dashboard/agendamento/criar/search">Cliente</a> ></li>
+                
+            </ul>
+             <ul>
+                <li><a  href="/dashboard/agendamento/criar/novo/{{cliente._id}}">Modalidade</a> ></li>
+            </ul>
+             <ul>
+                <li>Agendar</li>
             </ul>
         </div>
 
-        <div class="table">
 
-            {% for agendamento in agendamentos%}
+        <div class="form-wrapper">
+        <form action="/dashboard/agendamento/criar/modalidade/agendado" method="POST">
+        
 
-                <div class="row agendamento">
-                <ul>
-                    <li>{{agendamento.clienteNome}} </li>
-                    <li>{{agendamento.modalidade}} </li>
-                    <li>{{agendamento.instrutorNome}}</li>
-                    <li>{{agendamento.dia}} </li>
-                    <li>{{agendamento.horarioComeca}}</li>
-                    <li>{{agendamento.horarioTermina}}</li>
-
-                    <li class="actions">
-                        <a href="/dashboard/agendamento/ver/{{agendamento._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
-
-                        <a class="editar act-btn" href="/dashboard/agendamento/edit/{{agendamento._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
-
-                        
-                        
-                    <form action="/dashboard/gerenciamento/clientes/edit/{{cliente._id}}?_method=DELETE" method="POST" class="position-relative">
-                        
-                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
-                    </form>
-                        
-                        
-                    </li>
-
-                </ul>
+            <div class="input-wrapper">
+                <label for="cliente">Cliente</label>
+                <select class="disabled" name="cliente" id="cliente">
+                    <option value="{{cliente.id}}">{{cliente.nome}} {{cliente.sobrenome}}</option>
+                </select>
+            </div>
+            <div class="input-wrapper">
+                <label for="modalidade">Modalidade</label>
+                <select class="disabled" name="modalidade" id="modalidade">
+                    <option value="{{modalidade}}">{{modalidade}}</option>
+                </select>
             </div>
 
-            {% endfor %}
+            <div class="input-wrapper">
+                <label for="instrutor">Instrutor</label>
+                <select name="instrutor" id="instrutor" required>
+                    
+                    {% for instrutor in instrutores %}
+                        <option value="{{instrutor.id}}">{{instrutor.nome}} {{instrutor.sobrenome}}</option>
+                    {% endfor %}
 
+                </select>
+            </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
+        <div class="input-wrapper">
+                <label for="dia">Dia:</label>
+               <input type="date" name="dia" id="dia" required>
+        </div>
+        <div class="input-wrapper">
+                <label for="horario">Horario:</label>
+               <select name="horario" id="horario" required>
+                {% for horario in horarios %}
+                        <option value="{{horario.hora}}">{{horario.hora}}</option>
+                {% endfor %}
+               </select>
         </div>
 
-
-
-
-
-
-
-
+         <button type="submit" id="agendar">Agendar</button>
+</form>
+</div>
     {% endblock %}
+
+    {%block scripts%}
+        <script src="/scripts/hoje.js"></script>
+    {%endblock%}

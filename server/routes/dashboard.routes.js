@@ -3,10 +3,12 @@ const router = express.Router();
 const dashboardController = require('../controllers/admin/dashboardController')
 const GerenciamentoController = require('../controllers/admin/gerenciamentoController')
 const cadastroController = require('../controllers/admin/cadastroController')
-
+const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch, agendamentoClienteSearchView , agendamentoCriarPost, agendamentoCriarAgendamento,agendamentoEdit, agendamentoEditPut }  = require('../controllers/admin/agendamentoController')
 //! dashboard admin
 
-router.get('/dashboard', dashboardController.homepage)
+// router.get('/dashboard',  dashboardController.homepage)
+router.get('/dashboard/',  dashboardController.homepage)
+router.post('/dashboard', dashboardController.admin)
 
 //! dashboard cadastro
 //? get cliente
@@ -26,7 +28,22 @@ router.get('/dashboard/cadastro/instrutor', cadastroController.cadastroInstrutor
 router.post('/dashboard/cadastro/instrutor', cadastroController.cadastroInstrutorPost)
 
 // ! dashboard agendamento
-router.get('/dashboard/agendamento', dashboardController.agendamento)
+router.get('/dashboard/agendamento', agendamento)
+router.get('/dashboard/agendamento/ver/:id', agendamentoVer)
+router.get('/dashboard/agendamento/edit/:id', agendamentoEdit)
+router.put('/dashboard/agendamento/edit/:id', agendamentoEditPut)
+
+// router.get('/dashboard/agendamento/criar', agendamentoCriar)
+router.get('/dashboard/agendamento/criar/search', agendamentoClienteSearchView)
+router.post('/dashboard/agendamento/criar/search', agendamentoClienteSearch)
+router.get('/dashboard/agendamento/criar/novo/:id', agendamentoCriar)
+router.get('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
+router.post('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
+router.post('/dashboard/agendamento/criar/modalidade/agendado', agendamentoCriarAgendamento)
+
+
+
+
 // * turmas
 // * horarios
 // * agendamento

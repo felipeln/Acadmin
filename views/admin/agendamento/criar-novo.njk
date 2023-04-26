@@ -4,6 +4,7 @@
 
     {% block head %}
      <link rel="stylesheet" href="/styles/gerenciamento.css">
+     <link rel="stylesheet" href="/styles/criar.css">
             <title>acadmin - Agendamento</title>
     {% endblock %}
 
@@ -60,92 +61,70 @@
     {%endblock%}
 
     {%block content%}
+       <h1>Escolha uma modalidade</h1>
 
-        <div class="table-wrapper agendamento">
-            <div class="title table-nav">
-                <h1>Agendamentos</h1>
-
-                <form class="search-form" role="search" method="POST" action="/dashboard/agendamento/search">
-                <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
-                </form>
-
-                <a href="/dashboard/agendamento/criar/search" class="add">+ Agendamento</a>
-            </div>
-
-            {% for mensagem in msg%}
+        {% for mensagem in msgErro %}
 
                 <div class="alert-box deleted">
                     <p>{{mensagem}}</p>
                     <button class="close-alert"><ion-icon name="close"></ion-icon></button>
                 </div>
 
-            {% endfor %}
+        {% endfor %}
+        
+        {% for mensagem in msgSucesso %}
 
-         <div class="table-head agendamento">
+                <div class="alert-box sucesso">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+        {% endfor %}
+
+      <div class="ver-menu">
             <ul>
-                <li>Cliente</li>
-                <li>Modalidade</li>
-                <li>Instrutor</li>
-                <li>Dia</li>
-                <li>Hora Inicio: </li>
-                <li>Hora Termina: </li>
-                <li>Acões</li>
+                <li><a href="/dashboard/agendamento">Agendamentos</a> ></li>
+            </ul>
+
+             <ul>
+                <li><a  href="/dashboard/agendamento/criar/search">Cliente</a> ></li>
+            </ul>
+             <ul>
+                <li> Modalidade </li>
             </ul>
         </div>
 
-        <div class="table">
 
-            {% for agendamento in agendamentos%}
 
-                <div class="row agendamento">
-                <ul>
-                    <li>{{agendamento.clienteNome}} </li>
-                    <li>{{agendamento.modalidade}} </li>
-                    <li>{{agendamento.instrutorNome}}</li>
-                    <li>{{agendamento.dia}} </li>
-                    <li>{{agendamento.horarioComeca}}</li>
-                    <li>{{agendamento.horarioTermina}}</li>
-
-                    <li class="actions">
-                        <a href="/dashboard/agendamento/ver/{{agendamento._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
-
-                        <a class="editar act-btn" href="/dashboard/agendamento/edit/{{agendamento._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
-
+        <div class="form-wrapper">
+            <form action="/dashboard/agendamento/criar/modalidade" method="POST">
+          
+                <div class="input-wrapper">
+                    <label for="cliente">Cliente</label>
+                    <select class="disabled"  name="cliente" id="cliente">
+                        <option selected value="{{cliente.id}}">{{cliente.nome}} {{cliente.sobrenome}}</option>
                         
-                        
-                    <form action="/dashboard/gerenciamento/clientes/edit/{{cliente._id}}?_method=DELETE" method="POST" class="position-relative">
-                        
-                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
-                    </form>
-                        
-                        
-                    </li>
+                    </select>
+                </div>
 
-                </ul>
-            </div>
-
-            {% endfor %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+                <div class="input-wrapper">
+                    <label for="modalidade">Modalidade</label>
+                    <select name="modalidade" id="modalidade">
+                        <option></option>
+                        <option value="Boxe">Boxe</option>
+                        <option value="FitDance">FitDance</option>
+                        <option value="Musculacao">Musculação</option>
+                        <option value="Jiu Jitsu">Jiu Jitsu</option>
+                        <option value="Natacao">Natação</option>
+                        <option value="Pilates">Pilates</option>
+                    </select>
+                </div>
+            </form>
         </div>
-
-
-
-
-
-
-
-
     {% endblock %}
+
+    {%block scripts%}
+        <script src="/scripts/modalidade.js"></script>
+<script src="/scripts/flashmsg.js"></script>
+
+    {%endblock%}

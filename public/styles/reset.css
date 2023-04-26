@@ -58,3 +58,64 @@
   #root, #__next {
     isolation: isolate;
   }
+
+  .error-page .not-found{
+    padding: 30px 0;
+    /* border: 1px solid red; */
+    min-height: 600px;
+
+
+    display: flex;
+    flex-direction: column;
+
+    justify-content: center;
+    align-items: center;
+
+    background: url('/img/undraw_page_not_found.svg');
+    background-repeat: no-repeat;
+    background-position: center bottom;
+    
+}
+.not-found h2{
+    font-size: 2em;
+
+}
+
+
+.alert-box {
+  display: grid;
+  grid-template-columns: 5fr 1fr;
+  max-width: 500px;
+  margin-bottom: 5px;
+
+  align-items: center;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.alert-box.deleted{
+  background-color: #dc3545;
+  color: white;
+  
+}
+.alert-box.sucesso{
+  background-color: teal;
+  color: white;
+}
+.alert-box .close-alert{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background: none;
+  color: white;
+  font-size: 1.5em;
+
+  border: none;
+  cursor: pointer;
+}
+
+.alert-box.desativado {
+  display: none;
+  overflow: hidden;
+}

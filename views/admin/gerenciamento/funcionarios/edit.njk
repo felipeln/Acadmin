@@ -104,10 +104,10 @@
                 <input type="text" class="form-control" id="email" name="email" value="{{FuncionariosAcademia.email}}" placeholder="email@email.com" required>
             </div>
 
-            <div class="form-field">
+            {# <div class="form-field">
                 <label for="senha">Senha</label>
                 <input type="text" class="form-control" id="senha" name="senha" value="{{FuncionariosAcademia.senha}}" placeholder="digite uma senha" required>
-            </div>
+            </div> #}
 
             <div class="form-field">
                 <label for="endereco">Endereço:</label>
@@ -117,15 +117,7 @@
             <div class="form-field">
                 <label for="cargo">cargo</label>
                 <select name="cargo" id="cargo">
-                    {% if  FuncionariosAcademia.cargo == "Atendente"   %}
-                        <option value="Atendente" selected> Atendente</option>
-                        <option value="Gerente" >Gerente</option>
-                    {% endif %}
-                    {% if FuncionariosAcademia.cargo == "Gerente"  %}
-                        <option value="Atendente" >Atendente</option>
-                        <option value="Gerente" selected>Gerente</option>
-                    {% endif %}
-                    
+                        <option value="funcionario" selected> Funcionario</option>
                 </select>
 
             </div>

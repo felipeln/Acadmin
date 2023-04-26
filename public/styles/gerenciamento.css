@@ -40,10 +40,7 @@
 
 
 /* table */
-.table{
-    min-height: 520px;
-    max-height: 520px;
-}
+
 .table-head {
     border-bottom: 3px solid teal;
 }
@@ -52,7 +49,6 @@
 
 
     grid-template-columns: 20% 23% 18% 10% 29%;
-
     width: 100%;
     background-color: #444;
 
@@ -80,8 +76,6 @@
 .row ul{
     display: grid;
 
-    /* grid-template-columns: 1fr 1.5fr 1.5fr 1fr 1fr 1fr 2fr; */
-    /* grid-template-columns: repeat(auto-fill, minmax(186px, 1fr)); */
     grid-template-columns: 20% 23% 18% 10% 29%;
 
     width: 100%;
@@ -115,6 +109,8 @@
     align-items: center;
     justify-content: flex-end;
 }
+
+
 .actions .act-btn{
     display: flex;
     align-items: center;
@@ -190,48 +186,16 @@
 
 /* alert message */
 
-.alert-box {
-    display: flex;
-    min-width: 600px;
-    max-width: 600px;
-    margin-bottom: 5px;
-    justify-content: space-between;
-
-    border-radius: 5px;
-    padding: 3px  0;
-}
-.alert-box.deleted{
-    background-color: #dc3545;
-    color: white;
-    
-}
-.alert-box .close-alert{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    background: none;
-    color: white;
-    font-size: 1.5em;
-
-    border: none;
-    cursor: pointer;
-}
-
-.alert-box.desativado {
-    display: none;
-    overflow: hidden;
-}
-
-
 /* search menu */
 .table-nav{
     display: grid;
 
     grid-template-columns: 1fr 3fr 1fr;
+    gap: 20px;
 
     align-items: center;
 }
+
 
 .table-nav .search-input{
     width: 70%;
@@ -246,16 +210,17 @@
     justify-self: end;
 
     color: white;
-    background-color: teal;
+    background-color: #008080;
 }
 
 
 .not-found{
     padding: 30px 0;
     /* border: 1px solid red; */
-    min-height: 500px;
+    min-height: 600px;
 
     display: flex;
+    flex-direction: column;
 
     background: url('/img/user-not-found.png');
     background-repeat: no-repeat;
@@ -265,4 +230,61 @@
 .not-found h2{
     font-size: 2em;
 
+}
+
+
+
+/* agendamento search */
+.table-head.search-cliente ul{
+    grid-template-columns: 27.5% 27.5% 15% 15% 15%;
+}
+.row.search-cliente ul {
+
+    grid-template-columns: 27.5% 27.5% 15% 15% 15%;
+
+ 
+}
+.row.search-cliente ul li {
+    word-wrap: break-word;
+}
+
+.actions.agendamento form {
+    width: 100%;
+}
+.actions.actions.agendamento form .agenda-btn{
+    background-color: teal;
+    color: white;
+}
+
+
+/* AGENDAMENTO */
+.table-wrapper.agendamento{
+    padding-top: 60px;
+}
+
+.table-head.agendamento ul{
+    display: grid;
+
+
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr 2fr;
+    width: 100%;
+    background-color: #444;
+
+    color: white;
+    border-top-left-radius: 5px ;
+    border-top-right-radius: 5px;
+}
+
+.row.agendamento ul{
+    display: grid;
+
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1fr 1fr  2fr;
+
+    width: 100%;
+
+
+    border-radius: none;
+    background-color: white;
+
+    color: black;
 }

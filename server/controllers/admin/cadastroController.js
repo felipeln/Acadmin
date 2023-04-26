@@ -1,6 +1,8 @@
 const Cliente = require('../../models/Cliente')
 const Funcionario = require('../../models/Funcionario')
 const Instrutor = require('../../models/Instrutores')
+const Admin = require('../../models/Admin')
+const moment = require('moment')
 const mongoose = require('mongoose')
 
 // ! dashboard cadastro
@@ -18,7 +20,7 @@ const mongoose = require('mongoose')
         const novoCliente = new Cliente({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: req.body.dataNascimento,
+            dataNascimento: moment(req.body.dataNascimento).format('DD/MM/YYYY'),
             email: req.body.email,
             senha: req.body.senha,
             cpf: req.body.cpf,
@@ -31,33 +33,60 @@ const mongoose = require('mongoose')
         let userCpf = req.body.cpf
         let userEmail = req.body.email
 
-        let result = await Cliente.findOne({
+        let funcionario = await Funcionario.findOne({
             $or: [
                 {email: userEmail},
                 {cpf: userCpf}
             ]
             
         })
-        await req.flash('erro',`cpf ou email ja estao cadastrados no sistema`)
+        let cliente = await Cliente.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
+        let admin = await Admin.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
+        let instrutor = await Instrutor.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
 
-        let msg = await req.consumeFlash('erro')
+        
+
+        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('sucesso',`Cadastro realizado com sucesso`)
+
+        let erro = await req.consumeFlash('erro')
+        let sucesso = await req.consumeFlash('sucesso')
         
         
         
-        if(result == null){
+        if(funcionario == null && instrutor == null && admin == null && cliente == null){
             try {
 
                 await Cliente.create(novoCliente)
 
-                console.log(result);
+                console.log('Cadastro realizado');
                 
-                res.redirect('/dashboard/cadastro/cliente')
+                res.status(200).render('admin/cadastro/cliente', {sucesso})
             } catch (error) {
             console.log(error); 
             }
         }else{
-            res.render('admin/cadastro/cliente', {msg})
-            console.log('erro');
+            res.status(400).render('admin/cadastro/cliente', {erro})
+            console.log(req.body);
+            console.log('erro, usuario ja cadastrado');
         }
 
        
@@ -77,7 +106,7 @@ const mongoose = require('mongoose')
         const novoFuncionario = new Funcionario({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: req.body.dataNascimento,
+            dataNascimento: moment(req.body.dataNascimento).format('DD/MM/YYYY'),
             email: req.body.email,
             senha: req.body.senha,
             cpf: req.body.cpf,
@@ -87,37 +116,64 @@ const mongoose = require('mongoose')
             endereco: req.body.endereco,
         })
 
-
+        
         let userCpf = req.body.cpf
         let userEmail = req.body.email
 
-        let result = await Funcionario.findOne({
+        let funcionario = await Funcionario.findOne({
             $or: [
                 {email: userEmail},
                 {cpf: userCpf}
             ]
             
         })
-        await req.flash('erro',`cpf ou email ja estao cadastrados no sistema`)
+        let cliente = await Cliente.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
+        let admin = await Admin.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
+        let instrutor = await Instrutor.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
 
-        let msg = await req.consumeFlash('erro')
+        
+
+        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('sucesso',`Cadastro realizado com sucesso`)
+
+        let erro = await req.consumeFlash('erro')
+        let sucesso = await req.consumeFlash('sucesso')
         
         
         
-        if(result == null){
+        if(funcionario == null && instrutor == null && admin == null && cliente == null){
             try {
 
                 await Funcionario.create(novoFuncionario)
 
-                console.log(result);
+                console.log('Cadastro realizado');
                 
-                res.redirect('/dashboard/cadastro/funcionario')
+                res.status(200).render('admin/cadastro/funcionario', {sucesso})
             } catch (error) {
             console.log(error); 
             }
         }else{
-            res.render('admin/cadastro/funcionario', {msg})
-            console.log('erro');
+            res.status(400).render('admin/cadastro/funcionario', {erro})
+            console.log(req.body);
+            console.log('erro, usuario ja cadastrado');
         }
 
     }
@@ -136,9 +192,8 @@ const mongoose = require('mongoose')
         const novoInstrutor = new Instrutor({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: req.body.dataNascimento,
+            dataNascimento: moment(req.body.dataNascimento).format('DD/MM/YYYY'),
             email: req.body.email,
-            senha: req.body.senha,
             cpf: req.body.cpf,
             sexo: req.body.sexo,
             cargo: req.body.cargo,
@@ -151,33 +206,62 @@ const mongoose = require('mongoose')
         let userCpf = req.body.cpf
         let userEmail = req.body.email
 
-        let result = await Instrutor.findOne({
+        let funcionario = await Funcionario.findOne({
             $or: [
                 {email: userEmail},
                 {cpf: userCpf}
             ]
             
         })
-        await req.flash('erro',`cpf ou email ja estao cadastrados no sistema`)
+        let cliente = await Cliente.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
+        let admin = await Admin.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
+        let instrutor = await Instrutor.findOne({
+            $or: [
+                {email: userEmail},
+                {cpf: userCpf}
+            ]
+            
+        })
 
-        let msg = await req.consumeFlash('erro')
+        
+
+        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('sucesso',`Cadastro realizado com sucesso`)
+
+        let erro = await req.consumeFlash('erro')
+        let sucesso = await req.consumeFlash('sucesso')
         
         
         
-        if(result == null){
+        if(funcionario == null && instrutor == null && admin == null && cliente == null){
             try {
 
                 await Instrutor.create(novoInstrutor)
 
-                console.log(result);
+                console.log('Cadastro realizado');
                 
-                res.redirect('/dashboard/cadastro/instrutor')
+                res.status(200).render('admin/cadastro/instrutor', {sucesso})
             } catch (error) {
             console.log(error); 
             }
         }else{
-            res.render('admin/cadastro/instrutor', {msg})
-            console.log('erro');
+            res.status(400).render('admin/cadastro/instrutor', {erro})
+            console.log(req.body);
+            console.log('erro, usuario ja cadastrado');
         }
-
     }
+
+
+    

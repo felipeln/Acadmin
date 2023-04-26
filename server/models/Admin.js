@@ -1,22 +1,17 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const bcrypt = require('bcryptjs')
+
 const moment = require('moment'); 
 
-const ClienteSchema = new Schema({
+const AdminSchema = new Schema({
     nome: {
         type: String,
         required: true
     },
     sobrenome: {
-        type: String
-    },
-    dataNascimento: {
-        type: String, // YYYY-MM-DD
+        type: String,
         required: true
-    },
-    telefone: {
-        type: String
     },
     email: {
         type: String,
@@ -26,30 +21,11 @@ const ClienteSchema = new Schema({
         type: String,
         default: null
     },
-    sexo: {
-        type: String,
-        enum: ['Masculino','Feminino','Outro'],
-        required: true
-    },
-    endereco: {
-        type: String,
-        required: true
-    },
-    status: {
-        type: String,
-        enum: ['Ativo', 'Inativo'],
-        required: true,
-        default: 'Ativo'
-    },
-    cpf: {
-        type: String,
-        required: true,
-    },
     cargo: {
         type: String,
-        enum: ['Cliente'],
+        enum: ['Admin'],
         required: true,
-        default: 'Cliente'
+        default: 'Admin'
     },
     dataCadastro: {
         type: String,
@@ -62,18 +38,18 @@ const ClienteSchema = new Schema({
     }
 })
 
-// salvar senha encryptada
 
-ClienteSchema.pre('save', async function(next){
+// encryypting password before saving
+AdminSchema.pre('save', async function(next){
     if(!this.isModified('senha')){
         next()
     }
     this.senha = await bcrypt.hash(this.senha, 10)
 })
-
 // verificar senha
-ClienteSchema.methods.comparePassword = async function(yourPassword){
+AdminSchema.methods.comparePassword = async function(yourPassword){
     return await bcrypt.compare(yourPassword, this.senha);
 }
 
-module.exports = mongoose.model('Cliente', ClienteSchema)
+
+module.exports = mongoose.model('Admin', AdminSchema)

@@ -18,29 +18,38 @@
         <div class="form-wrapper">
             <h1>Login</h1>
 
-            <div id="error"></div>
-            <form method="post" action="/dashboard#login" href="/dashboard" id="form">
+            {% for mensagem in msg%}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+
+            <form method="POST" action="/login" id="form">
                 <div class="input-wrapper">
                     <label for="email">Email </label>
-                    <input type="text" name="email" id="email" placeholder="seu@email.com">
+                    <input type="text" required name="email" id="email" placeholder="seu@email.com">
                 </div>
                 
                 <div class="input-wrapper">
-                    <label for="password">Senha </label>
-                    <input type="password" name="password" id="password" placeholder="senha">
+                    <label for="senha">Senha </label>
+                    <input type="password" required name="senha" id="senha" placeholder="senha">
                 </div>
 
                 <button type="submit" id="logar">Entrar</button>
                 
-                <a href="/esqueci_senha"  target="" rel="noopener noreferrer">Esqueci a senha</a>
+                <a href="/esqueci_a_senha"  target="" rel="noopener noreferrer">Esqueci a senha</a>
             </form>
-
-            <!-- <a href="http://" target="_blank" rel="noopener noreferrer">Não tem cadastro? Crie uma conta</a> -->
         </div>
     
     </main>
 
-    <script defer src="scripts/login_form.js"></script>
+
+<script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+<script src="/scripts/flashmsg.js"></script>
 
 </body>
 </html>

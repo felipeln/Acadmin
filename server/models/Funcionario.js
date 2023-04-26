@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcryptjs')
+const moment = require('moment'); 
 
 const FuncionarioSchema = new Schema({
     nome: {
@@ -43,24 +45,37 @@ const FuncionarioSchema = new Schema({
     },
     cargo: {
         type: String,
-        enum: ['Atendente','Gerente'],
+        enum: ['funcionario'],
         required: true,
-        default: 'Atendente'
+        default: 'funcionario'
     },
     cpf: {
         type: String,
         required: true,
     },
     dataCadastro: {
-        type: Date,
-        default: Date.now
-
+        type: String,
+        default: moment().format('DD/MM/YYYY HH:mm:ss')
     },
+
     dataModificado: {
-        type: Date,
-        default: Date.now()
+        type: String,
+        default: moment().format('DD/MM/YYYY HH:mm:ss')
     }
 
 })
+
+
+FuncionarioSchema.pre('save', async function(next){
+    if(!this.isModified('senha')){
+        next()
+    }
+    this.senha = await bcrypt.hash(this.senha, 10)
+})
+// verificar senha
+FuncionarioSchema.methods.comparePassword = async function(yourPassword){
+    return await bcrypt.compare(yourPassword, this.senha);
+}
+
 
 module.exports = mongoose.model('Funcionario', FuncionarioSchema)

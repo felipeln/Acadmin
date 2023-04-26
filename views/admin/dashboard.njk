@@ -2,6 +2,7 @@
 
         {% block head %}
             <title>Acadmin - Dashboard</title>
+            <link rel="stylesheet" href="/styles/reset.css">
         {% endblock %}
 
 
@@ -59,5 +60,18 @@
 
         {%block content%}
             <h1>Pagina principal</h1>
+
+             {% for mensagem in msg%}
+
+                <div class="alert-box sucesso">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
         {%endblock%}
 
+{% block scripts %}
+<script src="/scripts/flashmsg.js"></script>
+{% endblock scripts %}
+   

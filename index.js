@@ -1,7 +1,6 @@
 require('dotenv').config()
 
 const express = require('express');
-
 const { flash } = require('express-flash-message')
 const session = require('express-session')
 const methodOverride =require('method-override')
@@ -39,12 +38,11 @@ app.set('view engine', 'njk');
 // setup css file
 app.use(express.static(__dirname + '/public'));
 
-nunjucks.configure(['./views', './views/', './views/template'] ,{
+ nunjucks.configure(['./views', './views/', './views/template'] ,{
     autoescape: true,
     express: app,
     noCache: true
 });
-
 
 
 // db
@@ -54,13 +52,13 @@ connectDB()
 // login routes
 
 app.get('/', (req,res) => {
-    res.send('working')
+    res.redirect('/login')
 })
 
 app.use(require('./server/routes/login.routes'))
 
 // dashboard
-app.use(require('./server/routes/dashboard.routes'))
+app.use(require('./server/routes/dashboard.routes'),)
 
 
 // portal
@@ -71,6 +69,12 @@ app.use(require('./server/routes/portal.routes'))
 // atendente
 app.use(require('./server/routes/acadmin.routes'))
 
+
+// pagina de erro
+
+app.get('*', (req, res) => {
+  res.status(404).render('errors/404');
+});
 
 
 app.listen(port, () =>{

@@ -1,6 +1,8 @@
-
-
+.container{
+    padding-top: 30px;
+}
 form{
+
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(400px, 1fr));
     gap: 30px;
@@ -75,57 +77,32 @@ input, select{
     border: none;
     border: 1px solid teal;
 }
-.form-wrapper h1{
-    margin-bottom: 20px;
-}
 
-.container{
-    overflow: hidden;
-
-    border: none;
-}
-
-.submenu{
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    background-color: #424242;
-
-    padding: 0 60px;
-}
-
-.submenu .submenu_btn{
-    font-size: 1.25rem;
-    font-weight: bold;
-
+.disabled{
     color: white;
-    background: none;
-    border: none;
-
-    padding: 10px;
-    margin: 10px;
-
-
-    cursor: pointer;
-
-    border-bottom: 2px solid teal;
-
-    transition: all .3s ease-in-out;
-
-    text-decoration: none;
+    pointer-events: all;
 }
 
-.submenu .submenu_btn:hover{
-    background-color: teal;
+.ver-menu ul {
+    display: inline-flex;
+    padding: 10px 0;
 }
 
-
-.submenu .submenu_btn.ativo{
-    background-color: teal;
+.ver-menu ul li{
+    list-style: none;
+}
+.ver-menu ul li a{
+    
+    padding: 5px;
+    margin-right: 5px;
+    color: teal;
 }
 
 
-.input-wrapper span{
-    color: #dc3545;
-}
+.ver-menu .editar{
+    padding: 5px;
 
+    color: black;
+
+    
+}

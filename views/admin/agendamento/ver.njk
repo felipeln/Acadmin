@@ -22,13 +22,13 @@
                         <span class="title">Cadastro</span>
                     </a>
                 </li>
-                <li class="list ">
+                <li class="list  active ">
                     <a href="/dashboard/agendamento">
                         <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
                         <span class="title">Agendamento</span>
                     </a>
                 </li>
-                <li class="list active">
+                <li class="list">
                     <a href="/dashboard/gerenciamento/funcionarios">
                         <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
                         <span class="title">Gerenciamento</span>
@@ -59,16 +59,16 @@
 {%endblock%}
 
 {% block content %}
-        <h1 class="ver-title">{{clienteAcademia.nome}} {{clienteAcademia.sobrenome}}</h1>
+        <h1 class="ver-title">{{agendamento.clienteNome}} - {{agendamento.dia}} - {{agendamento.horarioComeca}}</h1>
 <hr>
         <div class="ver-menu">
             <ul>
-                <li><a href="/dashboard/gerenciamento/clientes">Voltar </a></li>
-                <li> / {{clienteAcademia.nome}} {{clienteAcademia.sobrenome}} </li>
+                <li><a href="/dashboard/agendamento">Voltar </a></li>
+                <li> / {{agendamento.clienteNome}} </li>
             </ul>
 
              <span>
-                <a class="editar" href="/dashboard/gerenciamento/clientes/edit/{{clienteAcademia._id}}">Editar</a>
+                <a class="editar" href="/dashboard/agendamento/edit/{{agendamento._id}}">Editar</a>
             </span>
         </div>
 
@@ -77,78 +77,51 @@
     
         <div class="table-rows">
                     
+                
                     <div class="row">
-                        <div class="col col-title" >Nome:</div>
+                        <div class="col col-title" >Cliente</div>
                         <div class="col">
-                            {{clienteAcademia.nome}}
+                            {{agendamento.clienteNome}}
+                        </div>
+                    </div>
+                   
+                    <div class="row">
+                        <div class="col col-title" >Instutor</div>
+                        <div class="col">
+                            {{agendamento.instrutorNome}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-title" >Sobrenome:</div>
+                        <div class="col col-title" >Modalidade</div>
                         <div class="col">
-                            {{clienteAcademia.sobrenome}}
+                            {{agendamento.modalidade}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-title" >Data de Nascimento:</div>
+                        <div class="col col-title" >Dia:</div>
                         <div class="col">
-                            {{clienteAcademia.dataNascimento}}
+                            {{agendamento.dia}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-title" >Telefone:</div>
+                        <div class="col col-title" >Horario Inicio</div>
                         <div class="col">
-                            {{clienteAcademia.telefone}}
+                            {{agendamento.horarioComeca}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-title" >Email:</div>
+                        <div class="col col-title" >Horario termina</div>
                         <div class="col">
-                            {{clienteAcademia.email}}
+                            {{agendamento.horarioTermina}}
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col col-title" >Sexo:</div>
+                        <div class="col col-title" >Status</div>
                         <div class="col">
-                            {{clienteAcademia.sexo}}
+                            {{agendamento.status}}
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col col-title" >Status:</div>
-                        <div class="col">
-                            {{clienteAcademia.status}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-title" >Cargo:</div>
-                        <div class="col">
-                            {{clienteAcademia.cargo}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-title" >CPF:</div>
-                        <div class="col">
-                            {{clienteAcademia.cpf}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-title" >Endereco:</div>
-                        <div class="col">
-                            {{clienteAcademia.endereco}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-title" >Data de Cadastro:</div>
-                        <div class="col">
-                            {{clienteAcademia.dataCadastro}}
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col col-title" >Data de Modifição:</div>
-                        <div class="col">
-                            {{clienteAcademia.dataModificado}}
-                        </div>
-                    </div>
+                   
 
         </div>
 

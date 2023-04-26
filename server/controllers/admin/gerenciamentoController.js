@@ -3,6 +3,9 @@ const Funcionario = require('../../models/Funcionario')
 const Instrutor = require('../../models/Instrutores')
 const mongoose = require('mongoose')
 
+const moment = require('moment'); 
+
+
 
 // dashboard admin gerenciamento
  //! * Funcionarios
@@ -80,13 +83,12 @@ exports.funcionarios = async (req,res) => {
                 dataNascimento: req.body.dataNascimento,
                 telefone: req.body.telefone,
                 email: req.body.email,
-                senha: req.body.senha,
                 sexo: req.body.sexo,
                 status: req.body.status,
                 cargo: req.body.cargo,
                 endereco: req.body.endereco,
                 cpf: req.body.cpf,
-                dataModificado: Date.now()
+                dataModificado: moment().format('DD/MM/YYYY HH:mm:ss')
             })
             
             
@@ -108,7 +110,7 @@ exports.funcionarios = async (req,res) => {
         
             await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema`)
 
-            res.redirect("admin/gerenciamento/funcionarios/funcionarios")
+            res.redirect("/dashboard/gerenciamento/funcionarios")
           } catch (error) {
             console.log(error);
           }
@@ -226,11 +228,10 @@ exports.funcionarios = async (req,res) => {
                 dataNascimento: req.body.dataNascimento,
                 telefone: req.body.telefone,
                 email: req.body.email,
-                senha: req.body.senha,
                 sexo: req.body.sexo,
                 status: req.body.status,
                 cpf: req.body.cpf,
-                dataModificado: Date.now()
+                dataModificado: moment().format('DD/MM/YYYY HH:mm:ss')
             })
             
             
@@ -364,14 +365,13 @@ exports.funcionarios = async (req,res) => {
               dataNascimento: req.body.dataNascimento,
               telefone: req.body.telefone,
               email: req.body.email,
-              senha: req.body.senha,
               sexo: req.body.sexo,
               status: req.body.status,
               modalidade: req.body.modalidade,
               cargo: req.body.cargo,
               endereco: req.body.endereco,
               cpf: req.body.cpf,
-              dataModificado: Date.now()
+              dataModificado: moment().format('DD/MM/YYYY HH:mm:ss')
             })
             
             

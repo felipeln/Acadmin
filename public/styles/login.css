@@ -98,6 +98,37 @@ form button.habilitado{
     cursor: pointer;
 }
 
-#error{
-    color: red;
+
+.alert-box {
+    display: grid;
+    grid-template-columns: 5fr 1fr;
+    max-width: 500px;
+    margin-bottom: 5px;
+
+    align-items: center;
+    border-radius: 5px;
+    padding: 5px;
+}
+
+.alert-box.deleted{
+    background-color: #dc3545;
+    color: white;
+    
+}
+.alert-box .close-alert{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    background: none;
+    color: white;
+    font-size: 1.5em;
+
+    border: none;
+    cursor: pointer;
+}
+
+.alert-box.desativado {
+    display: none;
+    overflow: hidden;
 }

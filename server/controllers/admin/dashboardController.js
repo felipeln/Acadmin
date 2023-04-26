@@ -1,8 +1,7 @@
+const Admin = require('../../models/Admin')
+
+
 // model
-const Cliente = require('../../models/Cliente')
-const Funcionario = require('../../models/Funcionario')
-const Instrutor = require('../../models/Instrutores')
-const mongoose = require('mongoose')
 
 
 // ! dashboard admin
@@ -11,15 +10,33 @@ exports.homepage = async (req,res) => {
 
     res.render('admin/dashboard')
 }
+exports.admin = async (req,res) => {
 
+    const novoAdmin = new Admin({
+            nome: req.body.nome,
+            sobrenome: req.body.sobrenome,
+            email: req.body.email,
+            senha: req.body.senha,
+    })
 
-//! dashboard agendamento
-exports.agendamento = async (req,res) => {
-    const data = {
-        title: "agendamento"
+    try {
+
+        await Admin.create(novoAdmin)
+
+        console.log('Cadastro realizado');
+        
+        res.status(200).json({
+            sucess: true,
+            message: "Administrador cadastrado com sucesso",
+            novoAdmin,
+        })
+    } catch (error) {
+    console.log(error); 
     }
-    res.render('admin/agendamento/agendamento', {data})
+
 }
+
+
 
 
 //! dashboard Financeiro

@@ -1,5 +1,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
+const bcrypt = require('bcryptjs')
+const moment = require('moment'); 
 
 const InstrutorSchema = new Schema({
     nome: {
@@ -21,10 +23,6 @@ const InstrutorSchema = new Schema({
     email: {
         type: String,
         required: true
-    },
-    senha: {
-        type: String,
-        default: null
     },
     sexo: {
         type: String,
@@ -49,7 +47,7 @@ const InstrutorSchema = new Schema({
     },
     modalidade:{
         type: String,
-        enum: ['Boxe', 'FitDance', 'Musculacao', 'Jiu Jitsu', 'Natacao', 'Pilates' ],
+        enum: ['Boxe', 'FitDance', 'Musculacao', 'Jiu Jitsu', 'Natacao', 'Pilates'],
         required: true,
     }
     ,
@@ -58,15 +56,25 @@ const InstrutorSchema = new Schema({
         required: true,
     },
     dataCadastro: {
-        type: Date,
-        default: Date.now
-
+        type: String,
+        default: moment().format('DD/MM/YYYY HH:mm:ss')
     },
+
     dataModificado: {
-        type: Date,
-        default: Date.now()
+        type: String,
+        default: moment().format('DD/MM/YYYY HH:mm:ss')
     }
 
 })
 
+
 module.exports = mongoose.model('Instrutores', InstrutorSchema)
+
+
+
+// InstrutorSchema.pre('save', async function(next) {
+//     if(!this.isModified('senha')){
+//         next()
+//     }
+//     this.senha = await bcrypt.hash(this.senha, 10)
+// })
