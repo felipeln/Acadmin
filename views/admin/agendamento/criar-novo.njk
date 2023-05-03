@@ -90,14 +90,14 @@
                 <li><a  href="/dashboard/agendamento/criar/search">Cliente</a> ></li>
             </ul>
              <ul>
-                <li> Modalidade </li>
+                <li> Novo agendamento </li>
             </ul>
         </div>
 
 
 
         <div class="form-wrapper">
-            <form action="/dashboard/agendamento/criar/modalidade" method="POST">
+            <form action="/criar/novo-agendamento" method="POST">
           
                 <div class="input-wrapper">
                     <label for="cliente">Cliente</label>
@@ -110,7 +110,6 @@
                 <div class="input-wrapper">
                     <label for="modalidade">Modalidade</label>
                     <select name="modalidade" id="modalidade">
-                        <option></option>
                         <option value="Boxe">Boxe</option>
                         <option value="FitDance">FitDance</option>
                         <option value="Musculacao">Musculação</option>
@@ -119,12 +118,43 @@
                         <option value="Pilates">Pilates</option>
                     </select>
                 </div>
+
+
+                <div class="input-wrapper">
+                <label for="instrutor">Instrutor</label>
+                <select name="instrutor" id="instrutor" required>
+                    
+                    {# {% for instrutor in instrutores %}
+                        <option value="{{instrutor.id}}">{{instrutor.nome}} {{instrutor.sobrenome}}</option>
+                    {% endfor %} #}
+
+                </select>
+                </div>
+
+            <div class="input-wrapper">
+                    <label for="dia">Dia:</label>
+                <input type="date" name="dia" id="dia" required>
+            </div>
+            <div class="input-wrapper">
+                <label for="horario">Horario:</label>
+                <select name="horario" id="horario" required>
+                    {# {% for horario in horarios %}
+                            <option value="{{horario.hora}}">{{horario.hora}}</option>
+                    {% endfor %} #}
+                </select>
+                <span class="erro-horario"></span>
+            </div>
+
+         <button type="submit" id="agendar">Agendar</button>
+
             </form>
         </div>
     {% endblock %}
 
     {%block scripts%}
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
         <script src="/scripts/modalidade.js"></script>
-<script src="/scripts/flashmsg.js"></script>
+        <script src="/scripts/flashmsg.js"></script>
 
     {%endblock%}

@@ -119,35 +119,55 @@ exports.funcionarios = async (req,res) => {
     // ? search
     exports.FuncionarioSearch= async (req,res) => {
 
-              
-      try {
-        let searchTerm = req.body.searchTerm
-        const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
+    try {
+        
+
+      const searchTerm = req.body.searchTerm.trim();
+      const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+      const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
+
+      if (searchTermIsNumber) {
+        const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
+        const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
 
         const FuncionariosAcademia = await Funcionario.find({
-            $or: [
-                {
-                    nome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                },
-                
-                {
-                    sobrenome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                },
+          $or: [
+            {
+              cpf: cpfWithSpecialCharRegex,
+            },
+            {
+              cpf: cpfWithoutSpecialChar,
+            },
+          ],
+        });
 
-            ]
-        })
-
+        
         res.render('admin/gerenciamento/funcionarios/search', {
-        FuncionariosAcademia,
-      })
-    
+          FuncionariosAcademia,
+        })
+      
+      } else {
+        const FuncionariosAcademia = await Funcionario.find({
+          $or: [
+            {
+              nome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+            },
+            {
+              sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+            },
+          ],
+        });
+        
+        res.render('admin/gerenciamento/funcionarios/search', {
+          FuncionariosAcademia,
+        })
+      
+      }
+
     } catch (error) {
-        console.log(error);
+      console.log(error);
     }
-
-
 }
-
 
 
 
@@ -260,35 +280,55 @@ exports.funcionarios = async (req,res) => {
     }
     // ? search 
     exports.ClienteSearch= async (req,res) => {
+
+      try {
         
 
-           
-            try {
-              let searchTerm = req.body.searchTerm
-              const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
-      
-              const clientesAcademia = await Cliente.find({
-                  $or: [
-                      {
-                          nome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                      },
-                      
-                      {
-                          sobrenome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                      },
-      
-                  ]
-              })
-      
-              res.render('admin/gerenciamento/clientes/search', {
-              clientesAcademia,
-            })
-          
-          } catch (error) {
-              console.log(error);
-          }
-      
+        const searchTerm = req.body.searchTerm.trim();
+        const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+        const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
 
+        if (searchTermIsNumber) {
+          const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
+          const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
+
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {
+                cpf: cpfWithSpecialCharRegex,
+              },
+              {
+                cpf: cpfWithoutSpecialChar,
+              },
+            ],
+          });
+
+          res.render('admin/gerenciamento/clientes/search', {
+            clientesAcademia,
+          })
+        
+        } else {
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {
+                nome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+              },
+              {
+                sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+              },
+            ],
+          });
+          res.render('admin/gerenciamento/clientes/search', {
+            clientesAcademia,
+          })
+        
+        }
+
+      } catch (error) {
+        console.log(error);
+      }
+
+          
     }
 
 
@@ -328,10 +368,11 @@ exports.funcionarios = async (req,res) => {
 
         try {
             const InstrutoresAcademia = await Instrutor.findOne({ _id: req.params.id })
-        
+            
         
             res.render('admin/gerenciamento/instrutores/ver', {
-              InstrutoresAcademia
+              InstrutoresAcademia, 
+              
             })
         
           } catch (error) {
@@ -345,11 +386,15 @@ exports.funcionarios = async (req,res) => {
 
         try {
             const InstrutoresAcademia = await Instrutor.findOne({ _id: req.params.id })
+            
+
 
             res.render('admin/gerenciamento/instrutores/edit', {
-              InstrutoresAcademia
+              InstrutoresAcademia,
+              
             })
         
+
           } catch (error) {
             console.log(error);
           }
@@ -393,7 +438,7 @@ exports.funcionarios = async (req,res) => {
         
             await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema`)
 
-            res.redirect("/dashboard/gerenciamento/instrutores")
+            res.redirect('/dashboard/gerenciamento/Instrutores')
           } catch (error) {
             console.log(error);
           }
@@ -401,33 +446,54 @@ exports.funcionarios = async (req,res) => {
 
     // ? search 
     exports.InstrutorSearch= async (req,res) => {
-            
 
-              
-          try {
-            let searchTerm = req.body.searchTerm
-            const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
-
-            const InstrutoresAcademia = await Instrutor.find({
-                $or: [
-                    {
-                        nome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                    },
-                    
-                    {
-                        sobrenome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                    },
-
-                ]
-            })
-
-            res.render('admin/gerenciamento/instrutores/search', {
-            InstrutoresAcademia,
-          })
+        try {
         
+
+          const searchTerm = req.body.searchTerm.trim();
+          const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+          const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
+  
+          if (searchTermIsNumber) {
+            const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
+            const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
+  
+            const InstrutoresAcademia = await Instrutor.find({
+              $or: [
+                {
+                  cpf: cpfWithSpecialCharRegex,
+                },
+                {
+                  cpf: cpfWithoutSpecialChar,
+                },
+              ],
+            });
+  
+            res.render('admin/gerenciamento/instrutores/search', {
+              InstrutoresAcademia,
+            })
+          
+          } else {
+            const InstrutoresAcademia = await Instrutor.find({
+              $or: [
+                {
+                  nome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+                },
+                {
+                  sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+                },
+              ],
+            });
+            res.render('admin/gerenciamento/instrutores/search', {
+              InstrutoresAcademia,
+            })
+          
+          }
+  
         } catch (error) {
-            console.log(error);
+          console.log(error);
         }
+  
 
 
     }

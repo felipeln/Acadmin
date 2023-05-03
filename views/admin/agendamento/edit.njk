@@ -61,7 +61,7 @@
 
 {% block content %}
         <h1 class="ver-title">Editando Agendamento: {{agendamento.dia}} </h1>
-<hr>
+        <hr>
         <div class="ver-menu">
             <ul>
                 <li><a href="/dashboard/agendamento/">Voltar </a></li>
@@ -69,7 +69,8 @@
             </ul>
         </div>
 
-    {% for mensagem in msgErro %}
+        {% for mensagem in msgErro %}
+
 
                 <div class="alert-box deleted">
                     <p>{{mensagem}}</p>
@@ -133,15 +134,10 @@
             <div class="form-field">
                 <label for="horario">Horario:</label>
                <select name="horario" id="horario" required>
-                {% for horario in horarios %}
-                    {% if horario.hora == agendamento.horarioComeca %}
-                        <option selected value="{{horario.hora}}">{{horario.hora}}</option>
-
-                        {%else%}
-                        <option value="{{horario.hora}}">{{horario.hora}}</option>
-                    {% endif %}
-                {% endfor %}
+                <option selected value="{{agendamento.horarioComeca}}">{{agendamento.horarioComeca}}</option>
+             
                </select>
+               <span class='erro-horario'></span>
             </div>
             
             
@@ -192,15 +188,12 @@
             </div>
         </div>
     </div>
-    
-
-
 {% endblock %}
 
-
 {%block scripts%}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="/scripts/modal.js"></script>
     <script src="/scripts/flashmsg.js"></script>
 
-    <script src="/scripts/hoje.js"></script>
+    <script src="/scripts/edit.js"></script>
 {%endblock%}

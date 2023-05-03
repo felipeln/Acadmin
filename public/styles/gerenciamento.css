@@ -194,6 +194,7 @@
     gap: 20px;
 
     align-items: center;
+    margin-bottom: 20px;
 }
 
 
@@ -235,6 +236,9 @@
 
 
 /* agendamento search */
+.table-wrapper.search-agendamento{
+    padding-top: 60px;
+}
 .table-head.search-cliente ul{
     grid-template-columns: 27.5% 27.5% 15% 15% 15%;
 }
@@ -258,6 +262,18 @@
 
 
 /* AGENDAMENTO */
+.agendamento .table-nav{
+    /* grid-template-columns: 3fr 1fr 1fr; */
+    grid-template-columns: 3fr 1fr;
+
+}
+.agendamento .table-nav select{
+    padding: 5px;
+    border: 1px solid teal;
+}
+.agendamento .table-nav .search-input{
+    width: 100%;
+}
 .table-wrapper.agendamento{
     padding-top: 60px;
 }
@@ -287,4 +303,20 @@
     background-color: white;
 
     color: black;
+}
+
+
+
+/* pagamentos */
+.table-head.pagamentos ul{
+    grid-template-columns: 15% 15% 15% 15% 40%;
+}
+.row.pagamentos ul {
+
+    grid-template-columns: 15% 15% 15% 15% 40%;
+
+ 
+}
+.row.pagamentos ul li {
+    word-wrap: break-word;
 }

@@ -1,4 +1,43 @@
+.finance-wrapper h1{
+    padding: 20px 0;
+}
+
+
+
+/* finance menu */
+
+#finance-menu{
+    padding-bottom: 40px;
+}
+#finance-menu ul{
+    display: flex;
+    flex-direction: row;
+    align-self: flex-start;
+
+    width: 600px;
+}
+
+#finance-menu ul li{
+    list-style: none;
+    margin-right: 5px;
+}
+#finance-menu ul li a{
+    text-decoration: none;
+    padding: 5px;
+
+    background-color: white;
+    color: black;
+    border: 1px solid green;
+}
+#finance-menu ul li a.ativo{
+    background-color: teal;
+    color: white;
+}
+
+
 /* card */
+
+
 
 .card-wrapper{
     display: grid;
@@ -110,22 +149,27 @@
 /* finance add */
 
 .finance-add {
-    padding: 30px 0;
+    padding: 20px 0;
 }
 
 .finance-add ul{
     display: grid;
 
-    grid-template-columns: 2fr 2fr 2fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
     background-color: whitesmoke;
 
     color: black;
 
     border-radius: 5px;
-
-    padding: 10px;
+    gap:  0 15px;
+    padding: 20px;
     align-items: center;
+}
+.finance-add ul li{
+    display: grid;
+    gap: 10px;
+    grid-template-columns: 1fr;
 }
 .finance-add ul li{
     list-style: none;
@@ -147,3 +191,4 @@
 .finance-add ul li select{
     width: 70%;
 }
+

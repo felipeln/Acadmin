@@ -38,15 +38,6 @@ exports.admin = async (req,res) => {
 
 
 
-
-//! dashboard Financeiro
-exports.financeiro = async (req,res) => {
-
-
-    res.render('admin/financeiro/financeiro')
-}
-
-
 //! dashboard Relatorios
 exports.relatorio = async (req,res) => {
  

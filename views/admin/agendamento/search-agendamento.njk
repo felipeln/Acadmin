@@ -61,9 +61,9 @@
 
     {%block content%}
 
-        <div class="table-wrapper agendamento">
+        <div class="table-wrapper search-agendamento">
             <div class="title table-nav">
-                <h1>Agendamentos</h1>
+                <h1>Pesquisar</h1>
 
                 <form class="search-form" role="search" method="POST" action="/dashboard/agendamento/search">
                 <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
@@ -93,6 +93,8 @@
             </ul>
         </div>
 
+      {% if agendamentos.length > 0  %}
+
         <div class="table">
 
             {% for agendamento in agendamentos%}
@@ -113,7 +115,7 @@
 
                         
                         
-                    <form action="/dashboard/gerenciamento/clientes/edit/{{cliente._id}}?_method=DELETE" method="POST" class="position-relative">
+                    <form action="/dashboard/agendamento/edit/{{agendamento._id}}?_method=DELETE" method="POST" class="position-relative">
                         
                         <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
                     </form>
@@ -127,4 +129,11 @@
             {% endfor %}
 
         </div>
+
+        {%else%}
+        <div class="not-found">
+                <h2>Nenhum Agendamento encontrado</h2>
+        </div>
+      {% endif %}
+
     {% endblock %}

@@ -1,9 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const {financeiro, pagamentos, searchCliente, searchClientePost,  historicoPagamentos, novaCobranca,novaCobrancaPost, boletoPago, excluirBoleto } = require('../controllers/admin/financeiroController')
 const dashboardController = require('../controllers/admin/dashboardController')
 const GerenciamentoController = require('../controllers/admin/gerenciamentoController')
 const cadastroController = require('../controllers/admin/cadastroController')
-const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch, agendamentoClienteSearchView , agendamentoCriarPost, agendamentoCriarAgendamento,agendamentoEdit, agendamentoEditPut }  = require('../controllers/admin/agendamentoController')
+const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch, agendamentoClienteSearchView , agendamentoCriarPost, agendamentoCriarAgendamento,agendamentoEdit, agendamentoEditPut, agendamentoDelete, agendamentoSearch , instrutoresModalidade, instrutoresHorarios, novoAgendamento }  = require('../controllers/admin/agendamentoController')
 //! dashboard admin
 
 // router.get('/dashboard',  dashboardController.homepage)
@@ -32,15 +33,24 @@ router.get('/dashboard/agendamento', agendamento)
 router.get('/dashboard/agendamento/ver/:id', agendamentoVer)
 router.get('/dashboard/agendamento/edit/:id', agendamentoEdit)
 router.put('/dashboard/agendamento/edit/:id', agendamentoEditPut)
+router.delete('/dashboard/agendamento/edit/:id', agendamentoDelete)
 
 // router.get('/dashboard/agendamento/criar', agendamentoCriar)
 router.get('/dashboard/agendamento/criar/search', agendamentoClienteSearchView)
 router.post('/dashboard/agendamento/criar/search', agendamentoClienteSearch)
-router.get('/dashboard/agendamento/criar/novo/:id', agendamentoCriar)
-router.get('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
-router.post('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
-router.post('/dashboard/agendamento/criar/modalidade/agendado', agendamentoCriarAgendamento)
 
+// ? novas rotas para agendamento
+router.get('/dashboard/agendamento/criar/novo/:id', agendamentoCriar)
+router.get('/info/:modalidade', instrutoresModalidade)
+router.get('/info/:instrutor/horarios/:dia', instrutoresHorarios)
+router.post('/criar/novo-agendamento', novoAgendamento)
+
+
+// router.get('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
+// router.post('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
+// router.post('/dashboard/agendamento/criar/modalidade/agendado', agendamentoCriarAgendamento)
+
+router.post('/dashboard/agendamento/search',  agendamentoSearch)
 
 
 
@@ -97,7 +107,19 @@ router.post('/dashboard/agendamento/criar/modalidade/agendado', agendamentoCriar
 
 
 //! dashboard admin financeiro
-router.get('/dashboard/financeiro', dashboardController.financeiro)
+router.get('/dashboard/financeiro', financeiro)
+router.get('/dashboard/financeiro/geral', financeiro)
+router.get('/dashboard/financeiro/pagamentos', pagamentos)
+router.get('/dashboard/financeiro/criar/search', searchCliente)
+router.post('/dashboard/financeiro/criar/search', searchClientePost)
+router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novaCobranca)
+router.post('/financeiro/criar-novo/pagamento/:id', novaCobrancaPost)
+router.get('/dashboard/financeiro/pagamento/historico/:id', historicoPagamentos)
+
+router.put('/financeiro/pagar/boleto/:id', boletoPago)
+router.delete('/financeiro/excluir/boleto/:id', excluirBoleto)
+// router.get('/dashboard/financeiro/criar-novo/pagamento/:id', criarPagamento)
+// router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novoPagamento)
 
 
 
