@@ -1,0 +1,280 @@
+{% extends "layout.njk" %}
+
+
+
+    {% block head %}
+            <link rel="stylesheet" href="/styles/portal/user-financeiro.css">
+            <link rel="stylesheet" href="/styles/pagamentos.css">
+            <link rel="stylesheet" href="/styles/boleto.css">
+            <title>Acadmin - Financeiro</title>
+    {% endblock %}
+
+    {%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <ul>
+                <li class="list">
+                    <a href="/dashboard">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list ">
+                    <a href="/dashboard/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/dashboard/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/dashboard/financeiro">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list ">
+                    <a href="/dashboard/relatorios">
+                        <span class="icon"><ion-icon name="folder-outline"></ion-icon></span>
+                        <span class="title">Relatorios</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+    {%endblock%}
+
+    {% block content %}
+    <div class="finance-wrapper">
+            <h1>Pagamentos</h1>
+
+                <nav id="finance-menu">
+                    <ul>
+                        <li><a href="/dashboard/financeiro/geral" >Geral</a></li>
+                        <li><a href="/dashboard/financeiro/pagamentos" class="ativo">Pagamentos</a></li>
+                    </ul>
+                </nav>
+
+        <div class="table-wrapper pagamentos">
+
+                <div class="title table-nav">
+
+                
+
+                    <form class="search-form" role="search" method="POST" action="/dashboard/pagamento/search" >
+                    <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
+                    </form>
+                    
+                    <div class="filtro-contaienr">
+                        <label for="filtro">Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option  selected  value="Todos">Todos</option>
+                            <option  value="Pago">Pago</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Atrasado">Atrasado</option>
+                        </select>
+                    </div>
+                    
+
+                    <a href="/dashboard/financeiro/criar/search" class="add">+ Pagamento</a>
+                </div>
+
+
+
+
+                <div class="finance-table">
+                    <div class="finance-head">
+                        <ul>
+                            <li>Cliente </li>
+                            <li>Data de Emissao</li>
+                            <li>Data de vencimento </li>
+                            <li>Data de pagamento </li>
+                            <li>Valor</li>
+                            {# <li>Valor pago</li> #}
+                            <li>Status</li>
+                            <li>Detalhes</li>
+                    </ul>
+                    </div>
+
+                    <div class="finance-rows">
+                        
+                    
+
+                        {# <div class="row">
+                                <ul>
+                                    <li>Felipe</li>
+                                    <li>20/03/2022</li>
+                                    <li></li>
+                                    <li><span class="cifrao">R$</span>110,00</li> #}
+                                    {# <li><span class="cifrao">R$</span>0,00</li> #}
+                                    {# <li><span class="cifrao">R$</span>0,00</li> #}
+                                    {# <li class="status">Pendente</li>
+                                    <li class="detalhes"><a href="#">Detalhes</a></li>
+                                </ul>
+                        </div> #}
+
+
+                        {% if boletos.length > 0 %}
+
+                            {% for boleto in boletos %}
+                             <div class="row">
+                                <ul>
+                                    <li>{{boleto.clienteNome}}</li>
+                                    <li>{{boleto.dataEmissao}}</li>
+                                    <li>{{boleto.dataVencimento}}</li>
+                                    <li>{{boleto.dataPagamento}}</li>
+                                    <li><span class="cifrao">R$</span>{{boleto.valor}},00</li>
+                                    <li class="status">{{boleto.status}}</li>
+                                    <li class="detalhes">
+                                        <a  class="details-btn" data-cliente-id="{{boleto.id}}" >Detalhes</a>
+                                    </li>
+                                </ul>
+                        </div>
+                            {% endfor %}
+
+                        {% endif %}
+
+
+
+                    </div>
+                </div>
+
+    </div>
+    
+    
+    {% block boletoModal %}
+    
+    {% for boleto in boletos %}
+
+        <div id="{{boleto.id}}" class="modal-overlay " >
+        <div class="modal ">
+            <div class="modal-content">
+                <div class="boleto-container">
+                        <div class="boleto">
+                            <div class="boleto__header">
+                                <div class="boleto__logo">Logo</div>
+                                <div>Boleto bancário</div>
+                            </div>
+                            <div class="boleto__barcode">
+                                <img src="https://barcode.tec-it.com/barcode.ashx?data=12345678901234567890123456789012345678901234&amp;code=Code128&amp;dpi=96&amp;dataseparator=" alt="Código de barras do boleto">
+                            </div>
+                            <div class="boleto__details">
+                                <div class="boleto__details__item">Cliente: {{boleto.clienteNome}}</div>
+                                <div class="boleto__details__item">boleto id: {{boleto.id}}</div>
+                            </div>
+                            <div class="boleto__details">
+                                <div class="boleto__details__item">Vencimento: {{boleto.dataVencimento}}</div>
+                                <div class="boleto__details__item">Valor: R$ {{boleto.valor}},00</div>
+                            </div>
+
+                            {% if boleto.status == 'Pago' %}
+                            
+                                <div class="boleto__details">
+                                    <div class="boleto__details__item">data Pagamento: {{boleto.dataPagamento}}</div>
+                                </div>
+                            {% endif %}
+
+                            <div class="boleto__instructions">
+                                <p>Pagável em qualquer banco até o vencimento.</p>
+                                <p>Após o vencimento, acrescer juros de 1% ao mês e multa de 2% sobre o valor total.</p>
+                            </div>
+                        </div>
+                        
+
+                        
+                        
+                        <div class="modal-buttons">
+                            <form action="/financeiro/excluir/boleto/{{boleto._id}}?_method=DELETE" method="POST">
+                                    <button type="submit" class="btn excluir">Excluir Cobrança</button>
+                            </form>
+                            {% if boleto.status == 'Pendente' or boleto.status == 'Atrasado' %}
+                                <form action="/financeiro/pagar/boleto/{{boleto._id}}?_method=PUT" method="POST">
+                                    <button type="submit" class="btn">Pagar</button>
+                                </form>
+                            {% endif %}
+                            <a class="close_modal" id="close-{{boleto.id}}">
+                                fechar
+                            </a>
+                            
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% endblock boletoModal %}
+
+    
+
+        {# pagination #}
+
+         {# {% if boletos.length > 0 %}
+
+            <nav class="pagination-nav">
+                <ul class="pagination-ul">
+
+                    {% if current == 1 %}
+                        <li class="page-item disabled"><a href="#" class="page-link">Primeira</a></li>
+                        {% else %}
+                        <li class="page-item"><a href="/dashboard/financeiro/pagamentos?page=1" class="page-link">Primeira</a></li>
+                    {% endif %}
+
+
+                    {% set i = 0 %}
+
+                    {% if number > 5 %}
+                        {% set i = number - 4 %}
+                        {% else %}
+                        {% set i = 1 %}
+                    {% endif %}
+
+
+                    {% for i in range(1 , pages + 1) %}
+                        {% if i == current %}
+                            <li class="page-item disabled"><a href="" class="page-link">{{i}}</a></li>
+                            {%else%}
+                            <li class="page-item"><a href="/dashboard/financeiro/pagamentos?page={{i}}" class="page-link">{{i}}</a></li>
+                        {% endif %}
+
+                     
+                    {% endfor %}
+
+
+                    {% if current == pages %}
+                        <li class="page-item disabled"><a href="" class="page-link">Ultima</a></li>
+                        {%else%}
+                        <li class="page-item"><a href="/dashboard/financeiro/pagamentos?page={{pages}}" class="page-link">Ultima</a></li>
+                    {% endif %}
+
+                </ul>
+            </nav>
+
+        {% endif %} #}
+
+    {% endblock content %}
+
+
+{%block scripts%}
+<script src="/scripts/boletoModal.js"></script>
+{# <script src="/scripts/filtro.js"></script> #}
+
+{%endblock%}

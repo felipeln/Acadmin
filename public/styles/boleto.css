@@ -1,0 +1,121 @@
+.modal-overlay{
+    background-color: rgba(0, 0, 0, 0.7);
+    width: 100%;
+    height: 100%;
+
+    position: fixed;
+
+    top: 0;
+    left: 0;
+
+    opacity: 0;
+    visibility: hidden;
+}
+
+.modal{
+
+    background-color: white;
+    width: 600px;
+    /* height: 250px; */
+
+    margin: 5vh auto;
+
+    position: relative;
+
+}
+
+.modal-buttons{
+    padding: 20px;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.modal-buttons .close_modal{
+    background-color: dimgray;
+    color: white;
+
+    
+   
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+
+    font-size: 1em;
+}
+
+.modal-buttons button{
+    background-color: teal ;
+    color: white;
+    margin-right: 20px;
+    border: none;
+    padding: 10px;
+    
+    border-radius: 5px;
+    cursor: pointer;
+}
+.modal-buttons button.excluir{
+    background-color: #dc3545;
+    color: white;
+}
+.modal-overlay.active{
+    opacity: 1;
+    visibility: visible;
+}
+
+/* boletocss */
+
+.boleto-container {
+    width: 600px;
+    margin: 0 auto;
+    font-family: Arial, sans-serif;
+
+    
+}
+
+
+.boleto {
+    /* border: 1px solid #000; */
+    padding: 20px;
+    background-color: #f9f9f9;
+}
+.boleto__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+.boleto__logo {
+    width: 150px;
+    height: 50px;
+    background-color: #000;
+    color: #fff;
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    line-height: 50px;
+}
+.boleto__barcode {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+}
+.boleto__barcode img {
+    max-width: 100%;
+}
+.boleto__details {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+.boleto__details__item {
+    font-size: 16px;
+    font-weight: bold;
+    line-height: 1.5;
+}
+    .boleto__instructions {
+    margin-top: 20px;
+    font-size: 14px;
+    line-height: 1.5;
+}
