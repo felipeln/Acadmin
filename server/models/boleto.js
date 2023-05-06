@@ -6,6 +6,7 @@ const moment = require('moment');
 const boletoSchema = new Schema({
     clienteId: {type: Schema.Types.ObjectId, ref: 'Cliente', required: true},
     clienteNome: {type: Schema.Types.String, ref: 'Cliente', required: true},
+    clienteCpf: {type: Schema.Types.String, ref: 'Cliente', required: true},
     dataEmissao: {
       type: String,
       required: true
@@ -32,6 +33,9 @@ const boletoSchema = new Schema({
       type: String,
       required: true,
     },
+    transactionHash:{
+      type: String
+    }
 })
 
 

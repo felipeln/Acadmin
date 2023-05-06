@@ -32,10 +32,18 @@ body, html{
 }
 
 .logo{
-    text-align: center;
-    color: white;
-    padding: 20px;
-
+    /* text-align: center; */
+    /* color: white; */
+    /* padding: 20px; */
+    display: flex;
+    justify-content: center;
+    align-content: flex-end;
+    margin-bottom: 20px;
+}
+.logo img{
+    max-width: 300px;
+    /* height: 149px; */
+    /* height: 100px; */
 }
 
 input, button{

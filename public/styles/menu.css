@@ -10,6 +10,17 @@ aside{
     position: fixed;
 }
 
+nav .logo{
+    /* border: 1px solid red; */
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+   cursor: pointer;
+}
+nav .logo img{
+    width: 220px;
+}
+
 nav#left-menu{
     position: relative;
     height: 100vh;
@@ -20,7 +31,7 @@ nav#left-menu{
     overflow: hidden;
     transition: 0.5s all ease-in-out;
 
-    box-shadow: 10px 0 0 teal;
+    box-shadow: 10px 0 0 #008080;
     border-left: 10px solid #424242;
 
 }
@@ -34,11 +45,11 @@ nav#left-menu.ativo{
 
 nav#left-menu ul{
     position: absolute;
-    top: 0;
+    top: 125px;
     left: 0;
     width: 100%;
     padding-left: 5px;
-    padding-top: 40px;
+    /* padding-top: 40px; */
 }
 nav#left-menu ul li{
     position: relative;
@@ -115,7 +126,7 @@ nav#left-menu ul li.active a::after{
 .open{
     position: absolute;
     right: -40px;
-    bottom: 150px;
+    bottom: 110px;
 
     padding-left: 25px;
 

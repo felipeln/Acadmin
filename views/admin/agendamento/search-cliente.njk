@@ -10,6 +10,9 @@
 {%block menu%}
     <aside>
         <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
             <ul>
                 <li class="list">
                     <a href="/dashboard">
@@ -108,6 +111,7 @@
                                         <li class="actions agendamento">
                                             
                                             <a href="/dashboard/agendamento/criar/novo/{{cliente._id}}" class="ver act-btn"><ion-icon class="icon" name="calendar-number-outline"></ion-icon> Agendar</a>
+                                            <a href="/dashboard/agendamento/historico/{{cliente._id}}" class="editar act-btn"><ion-icon class="icon" name="reader-outline"></ion-icon> Historico</a>
 
                                         {# <form action="/dashboard/agendamento/criar/novo/{{cliente._id}}?_method=POST" method="POST" class="position-relative">
                                             

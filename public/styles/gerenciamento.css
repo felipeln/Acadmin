@@ -240,11 +240,11 @@
     padding-top: 60px;
 }
 .table-head.search-cliente ul{
-    grid-template-columns: 27.5% 27.5% 15% 15% 15%;
+    grid-template-columns: 20% 25% 15% 15% 25%;
 }
 .row.search-cliente ul {
 
-    grid-template-columns: 27.5% 27.5% 15% 15% 15%;
+    grid-template-columns: 20% 25% 15% 15% 25%;
 
  
 }

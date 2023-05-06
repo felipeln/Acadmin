@@ -1,10 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const {financeiro, pagamentos, searchCliente, searchClientePost,  historicoPagamentos, novaCobranca,novaCobrancaPost, boletoPago, excluirBoleto } = require('../controllers/admin/financeiroController')
+const {financeiro, pagamentos, searchCliente, searchClientePost,  historicoPagamentos, novaCobranca,novaCobrancaPost, boletoPago, pagamentosSearch, excluirBoleto } = require('../controllers/admin/financeiroController')
 const dashboardController = require('../controllers/admin/dashboardController')
 const GerenciamentoController = require('../controllers/admin/gerenciamentoController')
 const cadastroController = require('../controllers/admin/cadastroController')
-const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch, agendamentoClienteSearchView , agendamentoCriarPost, agendamentoCriarAgendamento,agendamentoEdit, agendamentoEditPut, agendamentoDelete, agendamentoSearch , instrutoresModalidade, instrutoresHorarios, novoAgendamento }  = require('../controllers/admin/agendamentoController')
+const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch, agendamentoClienteSearchView , agendamentoClienteHistorico ,agendamentoEdit, agendamentoEditPut, agendamentoDelete, agendamentoSearch , instrutoresModalidade, instrutoresHorarios, novoAgendamento }  = require('../controllers/admin/agendamentoController')
 //! dashboard admin
 
 // router.get('/dashboard',  dashboardController.homepage)
@@ -37,6 +37,7 @@ router.delete('/dashboard/agendamento/edit/:id', agendamentoDelete)
 
 // router.get('/dashboard/agendamento/criar', agendamentoCriar)
 router.get('/dashboard/agendamento/criar/search', agendamentoClienteSearchView)
+router.get('/dashboard/agendamento/historico/:id', agendamentoClienteHistorico)
 router.post('/dashboard/agendamento/criar/search', agendamentoClienteSearch)
 
 // ? novas rotas para agendamento
@@ -110,6 +111,7 @@ router.post('/dashboard/agendamento/search',  agendamentoSearch)
 router.get('/dashboard/financeiro', financeiro)
 router.get('/dashboard/financeiro/geral', financeiro)
 router.get('/dashboard/financeiro/pagamentos', pagamentos)
+router.post('/dashboard/financeiro/pagamentos/search', pagamentosSearch)
 router.get('/dashboard/financeiro/criar/search', searchCliente)
 router.post('/dashboard/financeiro/criar/search', searchClientePost)
 router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novaCobranca)

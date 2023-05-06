@@ -74,3 +74,8 @@ button{
     outline: none;
     color: whitesmoke;
 }
+
+.escolhida{
+    background-color: teal;
+    color: white;
+}

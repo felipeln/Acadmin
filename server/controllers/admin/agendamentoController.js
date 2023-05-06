@@ -8,28 +8,6 @@ moment.locale('pt-br');
 const axios = require('axios')
 
 
-// Agendando a tarefa para ser executada a cada 5 minutos
-// 
-  // const data= moment().format('DD/MM/YYYY');
-  // const hora = moment().format('HH:mm');
-  // const horaEdata = moment(data).add(moment.duration(hora))
-  // const dia = horaEdata.format('DD/MM/YYYY HH:mm')
-  // console.log(dia);
-
-
-
-//   const dia1 = '01/05/2023 05:10';
-//   const dia2 = '02/05/2023 05:19';
-//   const d2 = moment()
-//   const d3 = moment(d2, 'DD/MM/YYYY HH:mm')
-  
-//   const diaMoment1 = moment(dia1, 'DD/MM/YYYY HH:mm');
-//   const diaMoment2 = moment(dia2, 'DD/MM/YYYY HH:mm');
-
-// console.log('dia 2 ', diaMoment2);
-// console.log('dia 3 ', d3);
-
-// console.log(d3.isBefore(diaMoment2))
 
 // Agendar a função para ser executada a cada 1 minuto
 cron.schedule('* * * * * * /30', async () => {
@@ -61,23 +39,6 @@ exports.agendamento = async (req,res) => {
 
     let msg = await req.consumeFlash('excluido')
     
-    // try {
-
-
-    // const agendamentos = await Agendamentos.aggregate([
-    //   { $match: { status: 'Ativo' } },
-    //   { $sort: { dia: 1, horarioComeca: 1 } }
-    // ]).exec();
-
-    //     res.render('admin/agendamento/agendamento', {
-    //         agendamentos,
-    //         msg
-    //     })
-    // } catch (error) {
-    //     console.log(error);
-    // }
-
-
     try {
 
       const cursor = await Agendamentos.aggregate([
@@ -226,6 +187,24 @@ exports.agendamentoClienteSearch = async (req,res) => {
         console.log(error);
     }
 
+}
+
+// ? pagina de historico de agendamentos
+exports.agendamentoClienteHistorico = async (req,res) => {
+  try {
+    const id = req.params.id
+    const agendamentos = await Agendamentos.find({clienteId: id})
+
+    const clienteDados = await Cliente.findById(id, {nome: 1, sobrenome: 1, _id: 0})
+    const nomeCompleto = `${clienteDados.nome} ${clienteDados.sobrenome}`
+    res.render('admin/agendamento/historico', {
+      agendamentos,
+      nomeCompleto
+    })
+
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 // ? Rotas novas para criar agendamento.

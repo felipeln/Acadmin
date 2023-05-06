@@ -10,6 +10,9 @@
 {%block menu%}
     <aside>
         <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
             <ul>
                 <li class="list">
                     <a href="/dashboard">
@@ -134,7 +137,7 @@
             <div class="form-field">
                 <label for="horario">Horario:</label>
                <select name="horario" id="horario" required>
-                <option selected value="{{agendamento.horarioComeca}}">{{agendamento.horarioComeca}}</option>
+                <option selected class='escolhida' value="{{agendamento.horarioComeca}}">{{agendamento.horarioComeca}}</option>
              
                </select>
                <span class='erro-horario'></span>

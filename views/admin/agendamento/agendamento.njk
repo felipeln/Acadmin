@@ -10,6 +10,9 @@
     {%block menu%}
     <aside>
         <nav class="ativo" id="left-menu">
+            <div class="logo">
+                        <img src="/img/acadmin3.png" alt="">
+            </div>
             <ul>
                 <li class="list">
                     <a href="/dashboard">
@@ -125,7 +128,7 @@
                         
                     <form action="/dashboard/agendamento/edit/{{agendamento._id}}?_method=DELETE" method="POST" class="position-relative">
                         
-                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
+                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="trash-outline"></ion-icon> Deletar </button>
                     </form>
                         
                         
