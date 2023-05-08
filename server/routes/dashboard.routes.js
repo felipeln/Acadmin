@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const {financeiro, pagamentos, searchCliente, searchClientePost,  historicoPagamentos, novaCobranca,novaCobrancaPost, boletoPago, pagamentosSearch, excluirBoleto } = require('../controllers/admin/financeiroController')
+const {financeiro, pagamentos, searchCliente, searchClientePost,  historicoPagamentos, novaCobranca,novaCobrancaPost, boletoPago, boletoPagoPessoal, pagamentosSearch, excluirBoleto, financeiroAdicionar, financeiroRemover, excluirBoletoPessoal } = require('../controllers/admin/financeiroController')
 const dashboardController = require('../controllers/admin/dashboardController')
 const GerenciamentoController = require('../controllers/admin/gerenciamentoController')
 const cadastroController = require('../controllers/admin/cadastroController')
@@ -109,6 +109,8 @@ router.post('/dashboard/agendamento/search',  agendamentoSearch)
 
 //! dashboard admin financeiro
 router.get('/dashboard/financeiro', financeiro)
+router.post('/financeiro/financas/adicionar', financeiroAdicionar)
+router.delete('/financeiro/financas/Remover/:id', financeiroRemover)
 router.get('/dashboard/financeiro/geral', financeiro)
 router.get('/dashboard/financeiro/pagamentos', pagamentos)
 router.post('/dashboard/financeiro/pagamentos/search', pagamentosSearch)
@@ -120,6 +122,9 @@ router.get('/dashboard/financeiro/pagamento/historico/:id', historicoPagamentos)
 
 router.put('/financeiro/pagar/boleto/:id', boletoPago)
 router.delete('/financeiro/excluir/boleto/:id', excluirBoleto)
+
+router.put('/financeiro//historico/boleto/pagar/:id', boletoPagoPessoal)
+router.delete('/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
 // router.get('/dashboard/financeiro/criar-novo/pagamento/:id', criarPagamento)
 // router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novoPagamento)
 

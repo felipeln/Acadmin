@@ -20,7 +20,7 @@ const mongoose = require('mongoose')
         const novoCliente = new Cliente({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: moment(req.body.dataNascimento).format('DD/MM/YYYY'),
+            dataNascimento: moment(req.body.dataNascimento, 'YYYY-MM-DD').format('DD/MM/YYYY'),
             email: req.body.email,
             senha: req.body.senha,
             cpf: req.body.cpf,

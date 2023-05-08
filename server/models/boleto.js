@@ -34,7 +34,9 @@ const boletoSchema = new Schema({
       required: true,
     },
     transactionHash:{
-      type: String
+      type: String,
+      // required: true,
+      default: ''
     }
 })
 

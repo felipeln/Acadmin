@@ -72,12 +72,21 @@
                 </ul>
             </nav>
 
-            <div class="title table-nav">
-                <h1>Pesquisar</h1>
+            <div class="title table-nav gerencia">
+                <h1>Funcionarios</h1>
 
                 <form class="search-form" role="search" method="POST" action="/dashboard/gerenciamento/funcionarios/search">
                 <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
                 </form>
+
+                <div class="filtro-contaienr">
+                        <label for="filtro">Filtrar por Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option value="">Todos</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                </div>
 
                 <a href="/dashboard/cadastro/funcionario" class="add">+ Funcionario</a>
             </div>
@@ -98,12 +107,12 @@
                             </ul>
                         </div>
 
-                        <div class="table">
+                        <div class="table" id="funcionario-list">
                             
 
                             {% for funcionario in FuncionariosAcademia %}
 
-                                <div class="row">
+                                <div class="row" data-status="{{funcionario.status}}">
                                     <ul>
                                         <li>{{funcionario.nome}} {{funcionario.sobrenome}}</li>
                                         <li>{{funcionario.email}}</li>
@@ -148,3 +157,6 @@
 {% endblock %}
 
 
+{%block scripts%}
+    <script src="/scripts/filtroFuncionario.js"></script>
+{%endblock%}

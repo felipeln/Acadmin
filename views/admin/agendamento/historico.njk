@@ -68,7 +68,7 @@
         <h1>{{nomeCompleto}} - Historico de Agendamentos</h1>
        <div class="ver-menu">
             <ul>
-                <li><a href="/dashboard/financeiro/Agendamentos">Agendamentos</a> ></li>
+                <li><a href="/dashboard/agendamento">Agendamentos</a> ></li>
             </ul>
             <ul>
                 <li><a href="/dashboard/agendamento/criar/search">Cliente</a> ></li>
@@ -128,7 +128,10 @@
                         </div>
                             {% endfor %}
     
-
+                        {% else %}
+                            <div class="not-found agendamento">
+                                <h2>{{nomeCompleto}} não tem nenhum agendamento</h2>
+                            </div>
 
                         {% endif %}
 

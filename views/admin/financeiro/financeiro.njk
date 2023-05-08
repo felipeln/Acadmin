@@ -81,36 +81,35 @@
             <div class="card-wrapper">
                 <ul class="card">
                     <li class="label"><span>Entradas</span> <ion-icon class="icon  entrada" name="arrow-up-circle-outline"></ion-icon> </li>
-                    <li class="valor"><span class="cifrao">R$</span>3000</li>
+                    <li class="valor entradas">{{entradaTotal}}</li>
                 </ul>
                 <ul class="card">
-                    <li class="label"><span>Saidas</span> <ion-icon class="icon saida" name="arrow-down-circle-outline"></ion-icon> </li>
-                    <li class="valor"><span class="cifrao">R$</span>1000</li>
+                    <li class="label"><span class="saidas">Saidas</span> <ion-icon class="icon saida" name="arrow-down-circle-outline"></ion-icon> </li>
+                    <li class="valor saidas">{{saidaTotal}}</li>
                 </ul>
                 <ul class="card">
                     <li class="label"><span>Total</span> <ion-icon class="icon" name="wallet-outline"></ion-icon> </li>
-                    <li class="valor"><span class="cifrao">R$</span>2000</li>
+                    <li class="valor total">{{total}}</li>
                 </ul>
             </div>
 
-
-            <form action="/financeiro/adicionar">
+            <form id="adicionar"  action="/financeiro/financas/adicionar" method="POST">
             <div class="finance-add">
                 <ul>
-                    <li><span>Descrição</span> <input type="text" name="desc" id="desc"></li>
-                    <li><span>Valor</span> <input type="number" name="valor" id="valor"></li>
+                    <li><span>Descrição</span> <input type="text" required  name="desc" id="desc"></li>
+                    <li><span>Valor</span> <input type="number"  required name="valor" id="valor"></li>
                      <li>
                         <label for="data"><span>Data</span></label>
-                        <input type="date" name="data" id="data">
+                        <input type="date" required name="data" id="data">
                     </li>
                     <li><span>Tipo</span>
-                        <select name="tipo" id="tipo">
+                        <select name="tipo" required  id="tipo">
                             <option value="Entrada">Entrada</option>
                             <option value="Saida">Saida</option>
                         </select>
                     </li>
                    
-                    <li><button>Adicionar</button></li>
+                    <li><button id="btnNew">Adicionar</button></li>
                 </ul>
             </div>
             </form>
@@ -128,7 +127,7 @@
 
                 <div class="finance-rows">
                     
-                    <div class="row">
+                    {# <div class="row">
                         <ul>
                             <li>Salario</li>
                             <li><span class="cifrao">R$</span> 1000</li>
@@ -153,7 +152,35 @@
                                     <span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span >
                                 </li>
                             </ul>
-                    </div>
+                    </div> #}
+
+
+                    {% for financa in financas %}
+                        <div class="row">
+                            <ul>
+                                <li>{{financa.desc}}</li>
+                                <li><span class="cifrao">R$</span> {{financa.valor}}</li>
+                                <li>{{financa.data}}</li>
+                                
+                                {% if financa.tipo == 'Saida' %}
+                                    <li><ion-icon class="icon saida" name="arrow-down-circle-outline"></ion-icon></li>
+                                    {% else %}
+                                    <li><ion-icon class="icon entrada" name="arrow-up-circle-outline"></ion-icon></li>
+
+                                {% endif %}
+                                
+                                <li class="actions">
+                                    
+
+                                    <form action="/financeiro/financas/Remover/{{financa._id}}?_method=DELETE" method="POST" class="position-relative">
+                        
+                                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span ></button>
+                                    </form>
+                                </li>
+                            </ul>
+                        </div>
+                    {% endfor %}
+                     
 
                    
                 </div>
@@ -164,3 +191,9 @@
 
         </div>
     {% endblock %}
+
+    
+{%block scripts%}
+    {# <script src="/scripts/financeiro.js"></script> #}
+
+{%endblock%}

@@ -103,6 +103,8 @@
 
 
                 <div class="finance-table">
+                {% if boletos.length > 0 %}
+
                     <div class="finance-head">
                         <ul>
                             <li>Cliente </li>
@@ -121,7 +123,6 @@
                     
 
                         <div id="boletos-list">
-                            {% if boletos.length > 0 %}
 
                                 {% for boleto in boletos %}
                                     <div class="row boletos-row" data-status="{{boleto.status}}">
@@ -139,6 +140,10 @@
                                     </div>
                                 {% endfor %}
 
+                            {%else%}
+                                <div class="not-found pagamento">
+                                    <h2>Nenhum Pagamento Encontrado</h2>
+                                </div>
                             {% endif %}
                         </div>
                     </div>
@@ -219,6 +224,6 @@
 
 {%block scripts%}
 <script src="/scripts/boletoModal.js"></script>
-<script src="/scripts/filtro.js"></script>
+<script src="/scripts/filtroPagamento.js"></script>
 
 {%endblock%}

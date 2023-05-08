@@ -72,12 +72,21 @@
                 </ul>
             </nav>
 
-            <div class="title table-nav">
+            <div class="title table-nav gerencia">
                 <h1>Instrutores</h1>
 
                 <form class="search-form" role="search" method="POST" action="/dashboard/gerenciamento/instrutores/search">
                 <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
                 </form>
+
+                <div class="filtro-contaienr">
+                        <label for="filtro">Filtrar por Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option value="">Todos</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                </div>
 
                 <a href="/dashboard/cadastro/instrutor" class="add">+ Instrutor</a>
             </div>
@@ -94,120 +103,114 @@
         {%block table%}
 
 
-        <div class="table-head">
-            <ul>
-                <li>Nome <div class="filter nome"></div></li>
-                <li>Email <div class="filter email"></div></li>
-                <li>Telefone <div class="filter telefone"></div></li>
-                <li>Status <div class="filter status"></div></li>
-                <li>Acões</li>
-            </ul>
-        </div>
-
-        <div class="table">
-            
-
-            {% for instrutor in InstrutoresAcademia %}
-
-                <div class="row">
+            <div class="table-head">
                 <ul>
-                    <li>{{instrutor.nome}} {{instrutor.sobrenome}}</li>
-                    <li>{{instrutor.email}}</li>
-                    <li>{{instrutor.telefone}}</li>
-                    <li>{{instrutor.status}}</li>
-
-                    <li class="actions">
-                        <a href="/dashboard/gerenciamento/instrutores/ver/{{instrutor._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
-
-                        <a class="editar act-btn" href="/dashboard/gerenciamento/instrutores/edit/{{instrutor._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
-
-                        
-                        
-                    <form action="/dashboard/gerenciamento/instrutores/edit/{{instrutor._id}}?_method=DELETE" method="POST" class="position-relative">
-                        
-                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
-                    </form>
-                        
-                        
-                    </li>
-
+                    <li>Nome <div class="filter nome"></div></li>
+                    <li>Email <div class="filter email"></div></li>
+                    <li>Telefone <div class="filter telefone"></div></li>
+                    <li>Status <div class="filter status"></div></li>
+                    <li>Acões</li>
                 </ul>
             </div>
 
-            {% endfor %}
-         
+            <div class="table " id="instrutor-list">
+                
+
+                {% for instrutor in InstrutoresAcademia %}
+
+                    <div class="row" data-status="{{instrutor.status}}">
+                    <ul>
+                        <li>{{instrutor.nome}} {{instrutor.sobrenome}}</li>
+                        <li>{{instrutor.email}}</li>
+                        <li>{{instrutor.telefone}}</li>
+                        <li>{{instrutor.status}}</li>
+
+                        <li class="actions">
+                            <a href="/dashboard/gerenciamento/instrutores/ver/{{instrutor._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
+
+                            <a class="editar act-btn" href="/dashboard/gerenciamento/instrutores/edit/{{instrutor._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
+
+                            
+                            
+                        <form action="/dashboard/gerenciamento/instrutores/edit/{{instrutor._id}}?_method=DELETE" method="POST" class="position-relative">
+                            
+                            <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
+                        </form>
+                            
+                            
+                        </li>
+
+                    </ul>
+                </div>
+
+                {% endfor %}
+            
+
+                
+            </div>
+
 
             
-        </div>
 
-
-        
-
-        {%endblock%}
-            
-        </div>
+            {%endblock%}
+                
+            </div>
 
 
 
-    {# Paginação #}
+        {# Paginação #}
 
-    {% if InstrutoresAcademia.length > 0 %}
+            {# {% if InstrutoresAcademia.length > 0 %}
 
-            <nav class="pagination-nav">
-                <ul class="pagination-ul">
+                <nav class="pagination-nav">
+                    <ul class="pagination-ul">
 
-                    {% if current == 1 %}
-                        <li class="page-item disabled"><a href="#" class="page-link">Primeira</a></li>
-                        {% else %}
-                        <li class="page-item"><a href="/dashboard/gerenciamento/instrutores/?page=1" class="page-link">Primeira</a></li>
-                    {% endif %}
-
-
-                    {% set i = 0 %}
-
-                    {% if number > 5 %}
-                        {% set i = number - 4 %}
-                        {% else %}
-                        {% set i = 1 %}
-                    {% endif %}
-
-                   
-                    
-                    
-                    
-
-                    {% for i in range(1 , pages + 1) %}
-                        {% if i == current %}
-                            <li class="page-item disabled"><a href="" class="page-link">{{i}}</a></li>
-                            {%else%}
-                            <li class="page-item"><a href="/dashboard/gerenciamento/instrutores/?page={{i}}" class="page-link">{{i}}</a></li>
+                        {% if current == 1 %}
+                            <li class="page-item disabled"><a href="#" class="page-link">Primeira</a></li>
+                            {% else %}
+                            <li class="page-item"><a href="/dashboard/gerenciamento/instrutores/?page=1" class="page-link">Primeira</a></li>
                         {% endif %}
 
-                    {% endfor %}
+
+                        {% set i = 0 %}
+
+                        {% if number > 5 %}
+                            {% set i = number - 4 %}
+                            {% else %}
+                            {% set i = 1 %}
+                        {% endif %}
+
+                    
+                        
+                        
+                        
+
+                        {% for i in range(1 , pages + 1) %}
+                            {% if i == current %}
+                                <li class="page-item disabled"><a href="" class="page-link">{{i}}</a></li>
+                                {%else%}
+                                <li class="page-item"><a href="/dashboard/gerenciamento/instrutores/?page={{i}}" class="page-link">{{i}}</a></li>
+                            {% endif %}
+
+                        {% endfor %}
 
 
-                    {% if current == pages %}
-                        <li class="page-item disabled"><a href="" class="page-link">Ultima</a></li>
-                        {%else%}
-                        <li class="page-item"><a href="/dashboard/gerenciamento/instrutores/?page={{pages}}" class="page-link">Ultima</a></li>
-                    {% endif %}
+                        {% if current == pages %}
+                            <li class="page-item disabled"><a href="" class="page-link">Ultima</a></li>
+                            {%else%}
+                            <li class="page-item"><a href="/dashboard/gerenciamento/instrutores/?page={{pages}}" class="page-link">Ultima</a></li>
+                        {% endif %}
 
-                </ul>
-            </nav>
+                    </ul>
+                </nav>
 
-        {% endif %}
+            {% endif %} #}
 
-
-
-
-
-
-
-
-    {% endblock %}
+        {% endblock %}
 
     
 {%block scripts%}
 <script src="/scripts/flashmsg.js"></script>
+<script src="/scripts/filtroInstrutor.js"></script>
 
 {%endblock%}

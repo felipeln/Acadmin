@@ -1,4 +1,7 @@
 const Cliente = require('../../models/Cliente')
+const Instrutores = require('../../models/Instrutores')
+const Funcionario = require('../../models/Funcionario')
+const Financa = require('../../models/financas')
 const Boleto = require('../../models/boleto')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
@@ -9,8 +12,9 @@ const { agendamento } = require('./agendamentoController');
 moment.locale('pt-br');
 
 // mudar status para atrasado
-
-cron.schedule('*/5 * * * * *', async () => {
+// a cada segundo * * * * * *
+//  a cada 5 segundos */5 * * * * *
+cron.schedule('* * * * * *', async () => {
     // console.log('Verificando boletos pendentes...');
   
     // Busca todos os boletos pendentes no banco de dados
@@ -23,10 +27,9 @@ cron.schedule('*/5 * * * * *', async () => {
         const vencimento = moment(boleto.dataVencimento, 'DD/MM/YYYY')
         let diferencaDias = hoje.diff(vencimento, 'days')
 
-        console.log();
 
         if (vencimento.isBefore(hoje)) {
-          console.log(`Boleto ${boleto._id} está atrasado`);
+          // console.log(`Boleto ${boleto._id} está atrasado`);
           await Boleto.findByIdAndUpdate(boleto._id, { $set: { status: 'Atrasado' } });
 
             
@@ -36,7 +39,7 @@ cron.schedule('*/5 * * * * *', async () => {
 });
 
 
-// se o cliente estiver com alguem boleto com o status atrasado, desative os agendamentos dele.
+// se o cliente estiver com alguem boleto com o status atrasado, desative os futuros agendamentos dele.
 cron.schedule('*/5 * * * * *', async () =>{
 
     const boletos = await Boleto.find({ status: 'Atrasado' });
@@ -54,10 +57,26 @@ cron.schedule('*/5 * * * * *', async () =>{
             cliente.status = 'Inativo'
             await cliente.save()
             const clienteAgendamentos = await Agendamento.find({clienteId: boleto.clienteId})
+
+            const dataHora = moment()
+            const diaConsulta = moment(dataHora, 'DD/MM/YYYY HH:mm')
             clienteAgendamentos.forEach(async (agendamento) => {
     
-                  agendamento.status = 'Inativo'
-                  await agendamento.save() 
+                  // agendamento.status = 'Inativo'
+                  // await agendamento.save() 
+                  const data = moment(agendamento.dia, 'DD/MM/YYYY')
+                  .set('hour', moment(agendamento.horarioComeca, 'HH:mm').get('hour'))
+                  .set('minute', moment(agendamento.horarioComeca, 'HH:mm').get('minute'))
+
+                  const dataAgendado = moment(data, 'DD/MM/YYYY HH:mmm')
+
+                  if(dataAgendado.isAfter(diaConsulta)){
+
+
+                    agendamento.deleteOne({_id: agendamento.id})
+
+                  }
+
 
                 //   console.log(`os agendamentos do ${cliente.nome} ${cliente.sobrenome}, estao sendo desativados por atraso no pagamento da mensalidade`);
             });
@@ -67,13 +86,103 @@ cron.schedule('*/5 * * * * *', async () =>{
     
 })
 
-exports.financeiro = async (req,res) =>{
 
 
-    res.render('admin/financeiro/financeiro')
+
+
+
+// !
+
+
+exports.financeiro = async (req, res) => {
+
+  
+
+  const financas = await Financa.find()
+
+
+  let entradaTotal
+  let saidaTotal
+  let total
+
+
+     entradaTotal = financas.reduce((total, objeto) => {
+    if (objeto.tipo === 'Entrada') {
+      return total + Number(objeto.valor);
+    } else {
+      return total;
+    }
+  }, 0);
+
+   saidaTotal = financas.reduce((total, objeto) => {
+    if (objeto.tipo === 'Saida') {
+      return total + Number(objeto.valor);
+    } else {
+      return total;
+    }
+  }, 0);
+
+
+  const boletosPagos = await Boleto.find({status: 'Pago'})
+  const boletosTotal = boletosPagos.reduce((total, boleto) =>{
+      return total + Number(boleto.valor)
+  }, 0)
+
+  entradaTotal += boletosTotal
+
+  total = entradaTotal - saidaTotal
+
+  total = total.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+
+  entradaTotal = entradaTotal.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+  saidaTotal = saidaTotal.toLocaleString('pt-BR', {
+    style: 'currency',
+    currency: 'BRL'
+  });
+  
+
+  res.render('admin/financeiro/financeiro', { financas, saidaTotal, entradaTotal, total })
+}
+
+exports.financeiroAdicionar = async (req, res) => {
+  const { desc, valor, data, tipo } = req.body
+
+  const dia = moment(data).format('DD/MM/YYYY')
+
+
+  const novaFinanca = new Financa({
+    desc: desc,
+    valor,
+    data: dia,
+    tipo
+  })
+
+
+  await novaFinanca.save()
+  
+
+  res.redirect('/dashboard/financeiro/')
 }
 
 
+exports.financeiroRemover = async (req,res) =>{
+
+  try {
+    
+    await Financa.findByIdAndDelete(req.params.id)
+
+  res.redirect('/dashboard/financeiro/')
+
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 exports.pagamentos = async (req,res) => {
     try {
@@ -275,7 +384,7 @@ exports.historicoPagamentos = async (req,res) =>{
 
 
     const boletos = await Boleto.find({clienteId: Id})
-    console.log(boletos);
+    // console.log(boletos);
     
     
     res.render('admin/financeiro/historico', {boletos} )
@@ -291,12 +400,48 @@ exports.boletoPago = async (req,res) =>{
 
         const boleto = await Boleto.findByIdAndUpdate(req.params.id, {
             status: 'Pago',
-            // transictionHash: bcrypt.hashSync(id, 10)
-            // dataPagamento: moment().format('DD/MM/YYYY ')
+            transictionHash: bcrypt.hashSync(id, 10),
+            dataPagamento: moment().format('DD/MM/YYYY ')
         })
+
+       const cliente = await Cliente.findById(boleto.clienteId)
+
+
+        
+        cliente.status = 'Ativo'
+        await cliente.save()
+
+        // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
+        res.redirect(`/dashboard/financeiro/pagamentos`)
+    } catch (error) {
+        console.log(error);
+    }
+}
+
+
+exports.boletoPagoPessoal = async (req,res) =>{
+
+    try {
+
+       let id = req.params.id
+
+        const boleto = await Boleto.findByIdAndUpdate(req.params.id, {
+            status: 'Pago',
+            transactionHash: bcrypt.hashSync(id, 10),
+            dataPagamento: moment().format('DD/MM/YYYY ')
+            // dataPagamento: '09/01/2023'
+            // dataPagamento: '12/02/2023'
+            // dataPagamento: '11/03/2023'
+            // dataPagamento: '14/04/2023'
+        })
+
+       const cliente = await Cliente.findById(boleto.clienteId)
+
 
         const previousUrl = req.get('referer') 
         
+        cliente.status = 'Ativo'
+        await cliente.save()
 
         // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
         res.redirect(previousUrl)
@@ -314,8 +459,30 @@ exports.excluirBoleto =  async (req,res) =>{
         const boleto = await Boleto.findByIdAndRemove(req.params.id)
 
         // console.log(boleto);
+        let url
 
         const previousUrl = req.get('referer') 
+
+
+
+        // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
+        res.redirect('/dashboard/financeiro/pagamentos')
+    } catch (error) {
+        console.log(error);
+    }
+
+}
+
+exports.excluirBoletoPessoal =  async (req,res) =>{
+
+
+    try {
+        const boleto = await Boleto.findByIdAndRemove(req.params.id)
+
+        // console.log(boleto);
+
+        const previousUrl = req.get('referer') 
+
         // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
         res.redirect(previousUrl)
     } catch (error) {
@@ -323,3 +490,5 @@ exports.excluirBoleto =  async (req,res) =>{
     }
 
 }
+
+

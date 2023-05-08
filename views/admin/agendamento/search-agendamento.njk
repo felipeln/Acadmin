@@ -66,7 +66,7 @@
 
         <div class="table-wrapper search-agendamento">
             <div class="title table-nav">
-                <h1>Pesquisar</h1>
+                <h1>Agendamentos</h1>
 
                 <form class="search-form" role="search" method="POST" action="/dashboard/agendamento/search">
                 <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
@@ -84,7 +84,10 @@
 
             {% endfor %}
 
-         <div class="table-head agendamento">
+        
+
+      {% if agendamentos.length > 0  %}
+       <div class="table-head agendamento">
             <ul>
                 <li>Cliente</li>
                 <li>Modalidade</li>
@@ -95,8 +98,6 @@
                 <li>Acões</li>
             </ul>
         </div>
-
-      {% if agendamentos.length > 0  %}
 
         <div class="table">
 
@@ -134,7 +135,7 @@
         </div>
 
         {%else%}
-        <div class="not-found">
+        <div class="not-found agendamento">
                 <h2>Nenhum Agendamento encontrado</h2>
         </div>
       {% endif %}

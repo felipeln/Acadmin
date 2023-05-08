@@ -73,12 +73,21 @@
                 </ul>
             </nav>
 
-           <div class="title table-nav">
+           <div class="title table-nav gerencia">
                 <h1>Funcionarios</h1>
 
                 <form class="search-form" role="search" method="POST" action="/dashboard/gerenciamento/funcionarios/search">
                 <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
                 </form>
+
+                <div class="filtro-contaienr">
+                        <label for="filtro">Filtrar por Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option value="">Todos</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                </div>
 
                 <a href="/dashboard/cadastro/funcionario" class="add">+ Funcionario</a>
             </div>
@@ -106,11 +115,11 @@
             </ul>
         </div>
 
-        <div class="table">
+        <div class="table" id="funcionario-list">
             
             {% for funcionario in funcionariosAcademia %}
     
-                <div class="row">
+                <div class="row" data-status="{{funcionario.status}}">
                 <ul>
                     {# <li>{{funcionario._id}}</li> #}
                     <li>{{funcionario.nome}} {{funcionario.sobrenome}}</li>
@@ -151,7 +160,7 @@
 
         
 
-        {% if funcionariosAcademia.length > 0 %}
+        {# {% if funcionariosAcademia.length > 0 %}
 
             <nav class="pagination-nav">
                 <ul class="pagination-ul">
@@ -191,11 +200,13 @@
                 </ul>
             </nav>
 
-        {% endif %}
+        {% endif %} #}
+
     {% endblock %}
 
     
 {%block scripts%}
 <script src="/scripts/flashmsg.js"></script>
+<script src="/scripts/filtroFuncionario.js"></script>
 
 {%endblock%}

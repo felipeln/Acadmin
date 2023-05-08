@@ -113,6 +113,11 @@
                         </div>
                             {% endfor %}
 
+                            {%else%}
+                             <div class="not-found pagamento">
+                                    <h2>Nenhum Pagamento Econtrado</h2>
+                                </div>
+
                         {% endif %}
 
 
@@ -164,11 +169,11 @@
                             
                             
                             <div class="modal-buttons">
-                                <form action="/financeiro/excluir/boleto/{{boleto._id}}?_method=DELETE" method="POST">
+                                <form action="/financeiro/historico/boleto/excluir/{{boleto._id}}?_method=DELETE" method="POST">
                                         <button type="submit" class="btn excluir">Excluir Cobrança</button>
                                 </form>
                                 {% if boleto.status == 'Pendente' or boleto.status == 'Atrasado' %}
-                                    <form action="/financeiro/pagar/boleto/{{boleto._id}}?_method=PUT" method="POST">
+                                    <form action="/financeiro//historico/boleto/pagar/{{boleto._id}}?_method=PUT" method="POST">
                                         <button type="submit" class="btn">Pagar</button>
                                     </form>
                                 {% endif %}

@@ -19,8 +19,8 @@ exports.funcionarios = async (req,res) => {
    
         try {
             const funcionariosAcademia = await Funcionario.aggregate([{$sort: {nome: 1} }])
-            .skip(perpage * page - perpage)
-            .limit(perpage)
+            // .skip(perpage * page - perpage)
+            // .limit(perpage)
             .exec()
 
             // length
@@ -182,8 +182,8 @@ exports.funcionarios = async (req,res) => {
     let number = Number(page)    
         try {
             const clientesAcademia = await Cliente.aggregate([{$sort: {nome: 1} }])
-            .skip(perpage * page - perpage)
-            .limit(perpage)
+            // .skip(perpage * page - perpage)
+            // .limit(perpage)
             .exec()
 
             let count = await Cliente.count()
@@ -343,8 +343,8 @@ exports.funcionarios = async (req,res) => {
 
         try {
             const InstrutoresAcademia = await Instrutor.aggregate([{$sort: {nome: 1} }])
-            .skip(perpage * page - perpage)
-            .limit(perpage)
+            // .skip(perpage * page - perpage)
+            // .limit(perpage)
             .exec()
 
             let count = await Instrutor.count()

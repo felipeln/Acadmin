@@ -129,3 +129,23 @@
     color: white;
     background-color: teal;
 }
+
+.not-found{
+    padding: 30px 0;
+    /* border: 1px solid red; */
+    min-height: 600px;
+
+    display: flex;
+    flex-direction: column;
+
+    background: url('/img/user-search-error.png');
+    background-repeat: no-repeat;
+    background-position: right center;
+    
+}
+
+.not-found.pagamento{
+    background: url('/img/pagamento-search.png');
+    background-repeat: no-repeat;
+    background-position: right;
+}
