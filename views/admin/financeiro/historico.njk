@@ -137,33 +137,40 @@
                     <div class="boleto-container">
                             <div class="boleto">
                                 <div class="boleto__header">
-                                    <div class="boleto__logo">Logo</div>
-                                    <div>Boleto bancário</div>
+                                <div class="boleto__logo">
+                                    <img src="/img/acadmin4.png" alt="Acadmin Logo">
                                 </div>
-                                <div class="boleto__barcode">
-                                    <img src="https://barcode.tec-it.com/barcode.ashx?data=12345678901234567890123456789012345678901234&amp;code=Code128&amp;dpi=96&amp;dataseparator=" alt="Código de barras do boleto">
-                                </div>
-                                <div class="boleto__details">
-                                    <div class="boleto__details__item">Cliente: {{boleto.clienteNome}}</div>
-                                    <div class="boleto__details__item">boleto id: {{boleto.id}}</div>
-                                </div>
-                                <div class="boleto__details">
-                                    <div class="boleto__details__item">Vencimento: {{boleto.dataVencimento}}</div>
-                                    <div class="boleto__details__item">Valor: R$ {{boleto.valor}},00</div>
-                                </div>
-
-                                {% if boleto.status == 'Pago' %}
-                                
-                                    <div class="boleto__details">
-                                        <div class="boleto__details__item">data Pagamento: {{boleto.dataPagamento}}</div>
-                                    </div>
-                                {% endif %}
-
-                                <div class="boleto__instructions">
-                                    <p>Pagável em qualquer banco até o vencimento.</p>
-                                    <p>Após o vencimento, acrescer juros de 1% ao mês e multa de 2% sobre o valor total.</p>
-                                </div>
+                                <div>Boleto bancário</div>
                             </div>
+                            <div class="boleto__barcode">
+                                <img src="https://barcode.tec-it.com/barcode.ashx?data=12345678901234567890123456789012345678901234&amp;code=Code128&amp;dpi=96&amp;dataseparator=" alt="Código de barras do boleto">
+                            </div>
+                            <div class="boleto__details">
+                                <div class="boleto__details__item">Cliente: {{boleto.clienteNome}}</div>
+                                <div class="boleto__details__item"> CPF: {{boleto.clienteCpf}}</div>
+                            </div>
+                            <div class="boleto__details">
+                                <div class="boleto__details__item">Data Vencimento: {{boleto.dataVencimento}}</div>
+                                <div class="boleto__details__item">Valor: R$ {{boleto.valor}},00</div>
+                            </div>
+
+                            {% if boleto.status == 'Pago' %}
+                            
+                                <div class="boleto__details">
+                                    <div class="boleto__details__item">Data Pagamento: {{boleto.dataPagamento}}</div>
+
+
+                                </div>
+                                {# <div class="boleto__details">
+                                    <div class="boleto__details__item">transação: {{boleto.transactionHash}}</div>
+                                </div> #}
+                            {% endif %}
+
+                            <div class="boleto__instructions">
+                                <p>Pagável em qualquer banco até o vencimento.</p>
+                                <p>Após o vencimento, acrescer juros de 1% ao mês e multa de 2% sobre o valor total.</p>
+                            </div>
+                        </div>
                             
 
                             

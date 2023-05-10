@@ -8,7 +8,7 @@ const nunjucks = require('nunjucks')
 const app = express();
 const connectDB = require('./server/config/db')
 const port = 1212
-const axios = require('axios')
+// const axios = require('axios')
 
 // session (cookies)
 app.use(

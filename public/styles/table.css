@@ -40,7 +40,9 @@ hr{
     outline: none;
     color: whitesmoke;
 }
-
+.ver-menu.relatorio{
+    padding: 20px 0;
+}
 .ver-menu ul {
     display: inline-flex;
     

@@ -6,7 +6,6 @@ const mongoose = require('mongoose')
 const moment = require('moment'); 
 
 
-
 // dashboard admin gerenciamento
  //! * Funcionarios
 exports.funcionarios = async (req,res) => {

@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 const moment = require('moment'); // require
 const cron = require('node-cron');
 moment.locale('pt-br');
-const axios = require('axios')
+// const axios = require('axios')
 
 
 

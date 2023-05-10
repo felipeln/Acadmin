@@ -1,6 +1,8 @@
 {% extends 'layout.njk' %}
 
         {% block head %}
+            <link rel="stylesheet" href="/styles/cadastro.css">
+            <link rel="stylesheet" href="/styles/table.css">
             <title>acadmin - Relatorios</title>
         {% endblock %}
     
@@ -61,7 +63,84 @@
        {%endblock%}
 
             {%block content%}
-                <h1>Relatorios - Clientes</h1>
+        
+
+                <div class="ver-menu relatorio">
+                <ul>
+                    <li><a href="/dashboard/relatorios">Relatorios</a> ></li>
+                </ul>
+                <ul>
+                </ul>
+                <ul>
+                    <li> Relatorio Clientes </li>
+                </ul>
+            </div>
+
+
+            <div class="form-wrapper ativo"  id="cliente">
+                <h1>Relatorios Clientes</h1>
+
+            {% for mensagem in sucesso %}
+
+                <div class="alert-box sucesso">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+            {% for mensagem in erro %}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+
+                <div id="error"></div>
+                <form action="/gerar/relatorio/clientes" method="POST" id="form" class="cliente">
+
+                   <div class="input-wrapper">
+                        <label for="tipo">Tipo</label>
+                        <select name="tipo" id="tipo">
+                            <option value="completo">Completo</option>
+                            <option value="ativo">Ativo</option>
+                            <option value="inativo">Inativo</option>
+                        </select>
+                    </div>
+                    
+                   <div class="input-wrapper">
+                        <label for="mesInicio">Mês Inicio</label>
+                        <select name="mesInicio" id="mesInicio">
+                            <option value="janeiro">Janeiro</option>
+                            <option value="fevereiro">Fevereiro</option>
+                            <option value="marco">Março</option>
+                            <option value="abril">Abril</option>
+                            <option value="maio">Maio</option>
+                        </select>
+                    </div>
+
+
+                   <div class="input-wrapper">
+                        <label for="mesFim">Mês Fim</label>
+                        <select name="mesFim" id="mesFim">
+                            <option value="janeiro">Janeiro</option>
+                            <option value="fevereiro">Fevereiro</option>
+                            <option value="marco">Março</option>
+                            <option value="abril">Abril</option>
+                            <option value="maio">Maio</option>
+                        </select>
+                    </div>
+
+                    
+                   
+                    <button type="submit">Gerar Relatorio</button>
+                </form>
+              
+            </div>
+
+
+
             {%endblock%}
 
 {%block scripts%}

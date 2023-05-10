@@ -1,6 +1,6 @@
 const Cliente = require('../../models/Cliente')
-const Instrutores = require('../../models/Instrutores')
-const Funcionario = require('../../models/Funcionario')
+// const Instrutores = require('../../models/Instrutores')
+// const Funcionario = require('../../models/Funcionario')
 const Financa = require('../../models/financas')
 const Boleto = require('../../models/boleto')
 const mongoose = require('mongoose')
@@ -8,7 +8,6 @@ const bcrypt = require('bcryptjs')
 const moment = require('moment'); // require
 const cron = require('node-cron');
 const Agendamento = require('../../models/Agendamento');
-const { agendamento } = require('./agendamentoController');
 moment.locale('pt-br');
 
 // mudar status para atrasado
@@ -39,7 +38,7 @@ cron.schedule('* * * * * *', async () => {
 });
 
 
-// se o cliente estiver com alguem boleto com o status atrasado, desative os futuros agendamentos dele.
+// se o cliente estiver com alguem boleto com o status atrasado a mais de 7 dias, desative os futuros agendamentos dele.
 cron.schedule('*/5 * * * * *', async () =>{
 
     const boletos = await Boleto.find({ status: 'Atrasado' });

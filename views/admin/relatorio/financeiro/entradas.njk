@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relatorio Financeiro</title>
+    <link rel="stylesheet" href="/styles/relatorioModel.css">
+   <style>
+
+        .finance-table{
+            padding: 30px 0;
+        }
+        .finance-table .finance-head ul{
+            display: grid;
+
+            grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+
+            width: 100%;
+            background-color: #008080;
+
+            color: white;
+            border-top-left-radius: 5px ;
+            border-top-right-radius: 5px;
+        }
+       
+        .finance-head ul li{
+            list-style: none;
+
+            list-style: none;
+            padding: 10px;
+
+            font-weight: bold;
+
+            font-size: 1.25em;
+
+            /* border-right: 2px solid teal; */
+
+        }
+        .finance-rows .row ul{
+            display: grid;
+
+            grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
+            width: 100%;
+            background-color: whitesmoke;
+
+            color: black;
+            border-top-left-radius: 5px ;
+            border-top-right-radius: 5px;
+        }
+        .finance-rows .row ul li{
+            list-style: none;
+            padding: 10px;
+            
+            font-size: 1.125em;
+            
+        /* 
+            border-right: 2px solid teal; */
+        }
+
+        .finance-rows .row ul li .icon{
+            font-size: 1.5em;
+        }
+
+
+   </style>
+</head>
+<body>
+    
+    <h1>Relatorio financeiro Entradas</h1>
+
+
+    {% if dadosEntrada.length > 0 %}
+
+        <div class="finance-table">
+
+            <div class="finance-head">
+                     <ul>
+                        <li>Cliente <div class="filter-desc"></div></li>
+                        <li>Valor<div class="filter-valor"></div></li>
+                        <li>Data Pagamento <div class="filter-data"></div></li>
+                        <li>Tipo <div class="filter-tipo"></div></li>
+                        <li></li>
+                </ul>
+            </div>
+
+                <div class="finance-rows">
+                    {% for entrada in dadosEntrada %}
+
+                        <div class="row">
+                            <ul>
+                                <li>{{entrada.clienteNome}}</li>
+                                <li><span class="cifrao">R$</span> {{entrada.valor}}</li>
+                                <li>{{entrada.dataPagamento}}</li>
+                                <li>{{entrada.tipo}}</li>
+                                  
+                            </ul>
+                        </div>
+                    {% endfor %}
+                         
+                    
+                </div>
+    </div>
+
+    {% endif %}
+    
+        
+</body>
+</html>

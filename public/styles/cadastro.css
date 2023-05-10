@@ -42,7 +42,7 @@ form{
 form label{
     font-size: 1.25em;
     font-weight: bold;
-
+    padding: 2px 0;
 }
 
 form button{

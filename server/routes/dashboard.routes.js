@@ -134,13 +134,16 @@ router.delete('/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
 //! dashboard admin relatorios
 router.get('/dashboard/relatorios', dashboardController.relatorio)
 
+
 router.get('/dashboard/relatorios/financeiro',dashboardController.relatorioFinanceiro)
+router.post('/gerar/relatorio/financeiro', dashboardController.gerarRelatorioFinanceiro)
 
 
 router.get('/dashboard/relatorios/funcionarios', dashboardController.relatorioFuncionario)
+router.post('/gerar/relatorio/funcionarios', dashboardController.gerarRelatorioFuncionarios)
 
 router.get('/dashboard/relatorios/clientes', dashboardController.relatorioClientes)
-
+router.post('/gerar/relatorio/clientes', dashboardController.gerarRelatorioClientes)
 
 
 module.exports = router
