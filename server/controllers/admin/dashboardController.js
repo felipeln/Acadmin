@@ -5,9 +5,24 @@ const path = require('path')
 const nunjucks = require('nunjucks')
 const Boleto = require('../../models/boleto')
 const Financa = require('../../models/financas')
-const { log } = require('console')
-
+const moment = require('moment')
 // model
+
+
+function valorTotal(mes){
+  const total = mes.reduce((total, boleto) =>{
+    return total += boleto.valor
+  }, 0)
+
+  return total
+}
+
+function quantidade(mes){
+  const total = mes.reduce((total, boleto) =>{
+    return total += 1
+  }, 0)
+  return total
+}
 
 
 // ! dashboard admin
@@ -59,94 +74,115 @@ exports.relatorio = async (req,res) => {
 
 
     exports.gerarRelatorioFinanceiro = async (req,res) =>{
+      let context;
+      const {tipo, mesInicio, mesFim} = req.body
 
-        let dadosEntrada;
-        let dadosSaidas;
-        let entradas;
-        let saidas;
-        let renderedHtml;
-        let context;
+      const janeiro = [];
+      const fevereiro = [];
+      const marco = [];
+      const abril = [];
+      const maio = [];
+      const meses = [];
+     
+      for (let i = parseInt(mesInicio); i <= parseInt(mesFim); i++) {
+      meses.push(i.toString().padStart(2, "0"));
+      }
 
-        const {tipo, mesInicio, mesFim} = req.body
+      
+     
 
-        const meses = [];
-        for (let i = parseInt(mesInicio); i <= parseInt(mesFim); i++) {
-        meses.push(i.toString().padStart(2, "0"));
+    if(tipo == 'entradas'){
+      const boletosPagos = await Boleto.find({ status: 'Pago' });
+
+      boletosPagos.forEach(boleto => {
+        const dataPagamento = moment(boleto.dataPagamento, 'DD/MM/YYYY');
+        const mesPagamento = dataPagamento.format('MM');
+      
+        // Verifique se o mês do pagamento está na lista de meses desejados
+        if (meses.includes(mesPagamento)) {
+          // Adicione o boleto à variável correspondente ao mês
+          switch (mesPagamento) {
+            case '01':
+              janeiro.push(boleto);
+              break;
+            case '02':
+              fevereiro.push(boleto);
+              break;
+            case '03':
+              marco.push(boleto);
+              break;
+            case '04':
+              abril.push(boleto);
+              break;
+            case '05':
+              maio.push(boleto);
+              break;
+            // Adicione mais casos para os outros meses, se necessário
+          }
         }
+      });
+      let mes1 = {
+        mes: 'Janeiro',
+        valorTotal: valorTotal(janeiro),
+        quantidade: quantidade(janeiro),
+        tipo: 'Mensalidade',
+        valor: (valorTotal(janeiro)) / (quantidade(janeiro))
+      }
+      let mes2 =  {
+        mes: 'Fevereiro',
+        valorTotal: valorTotal(fevereiro),
+        quantidade: quantidade(fevereiro),
+        tipo: 'Mensalidade',
+        valor: (valorTotal(fevereiro)) / (quantidade(fevereiro))
+      }
+      let mes3 ={
+        mes: 'Março',
+        valorTotal: valorTotal(marco),
+        quantidade: quantidade(marco),
+        tipo: 'Mensalidade',
+        valor: (valorTotal(marco)) / (quantidade(marco))
+      }
+      let mes4 =  {
+        mes: 'Abril',
+        valorTotal: valorTotal(abril),
+        quantidade: quantidade(abril),
+        tipo: 'Mensalidade',
+        valor: (valorTotal(abril)) / (quantidade(abril))
+      }
+      let mes5 = {
+        mes: 'Maio',
+        valorTotal: valorTotal(maio),
+        quantidade: quantidade(maio),
+        tipo: 'Mensalidade',
+        valor: (valorTotal(maio)) / (quantidade(maio))
+      }
+      const boletoMeses = []
+      if(janeiro.length > 0){
+        boletoMeses.push(mes1)
+      }
+      if(fevereiro.length > 0){
+        boletoMeses.push(mes2)
+      }
+      if(marco.length > 0){
+        boletoMeses.push(mes3)
+      }
+      if(abril.length > 0){
+        boletoMeses.push(mes4)
+      }
+      if(maio.length > 0){
+        boletoMeses.push(mes5)
+      }
 
-        // Constrói o padrão de expressão regular dinamicamente usando o array de meses
-        // const regexPattern = `^(${meses.join("|")})/`;
-        const regexPattern = `^(0[1-9]|[1-2][0-9]|3[0-1])/((?:${meses.join("|")})/2023)$`
 
+        context = {boletoMeses}
+        renderedHtml = nunjucks.render('admin/relatorio/financeiro/entradas.njk', context);
+    }if(tipo == 'saidas'){
+         
+        renderedHtml = nunjucks.render('admin/relatorio/financeiro/saidas.njk', context);
+    }if(tipo == 'entradasaida'){
         
-        console.log(tipo);
-
-        if(tipo == 'entradas'){
-                //  dadosEntrada = await Boleto.find({
-                //     status: 'Pago',
-                //     dataPagamento: {
-                //         $regex: regexPattern
-                //     }
-                // }).sort([['dataPagamento', 1], ['clienteNome', 1]]);
-                dadosEntrada = await Boleto.aggregate([
-                    {
-                      $match: {
-                        status: 'Pago',
-                        dataPagamento: {
-                          $regex: regexPattern
-                        }
-                      }
-                    },
-                    {
-                      $addFields: {
-                        mesPagamento: {
-                          $toInt: {
-                            $substr: ['$dataPagamento', 3, 2]
-                          }
-                        },
-                      }
-                    },
-                    {
-                      $sort: {
-                        mesPagamento: 1,
-                        clienteNome: 1
-                      }
-                    }
-                  ]);
-                context = { dadosEntrada}
-                 renderedHtml = nunjucks.render('admin/relatorio/financeiro/entradas.njk', context);
-        }if(tipo == 'saidas'){
-             dadosSaidas = await Financa.find({
-                dataPagamento: {
-                    $regex: regexPattern
-                }
-            })
-            context = { dadosSaidas}
-             renderedHtml = nunjucks.render('admin/relatorio/financeiro/saidas.njk', context);
-        }if(tipo == 'completo'){
-             entradas = await Boleto.find({
-                status: 'Pago',
-                dataPagamento: {
-                    $regex: regexPattern
-                }
-            })
-             saidas = await Financa.find({
-                dataPagamento: {
-                    $regex: regexPattern
-                }
-            })
-
-            context = { entradas, saidas}
-             renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
-        }
-
-        let a = await Boleto.find({
-            status: 'Pago',
-            dataPagamento: '19/01/2023'
-        })
-        
-        
-
+        renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
+    }
 
 
           
@@ -157,6 +193,7 @@ exports.relatorio = async (req,res) => {
           const page = await browser.newPage();
         
           // Defina o conteúdo da página como a saída do template Nunjucks renderizado
+          
           await page.setContent(renderedHtml);
         
           // Gere o PDF a partir da página renderizada
