@@ -6,7 +6,9 @@ const moment = require('moment');
 const financasSchema = new mongoose.Schema({
   desc: String,
   valor: Number,
-  data: String,
+  data: {
+    type: String
+  },
   tipo: String
 });
 

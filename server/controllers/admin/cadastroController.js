@@ -3,7 +3,27 @@ const Funcionario = require('../../models/Funcionario')
 const Instrutor = require('../../models/Instrutores')
 const Admin = require('../../models/Admin')
 const moment = require('moment')
-const mongoose = require('mongoose')
+
+ // ! formatar data.
+
+ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
+    // Verifica se a data está no formato 'DD/MM/YYYY'
+    const dataBR = moment(dataString, 'DD/MM/YYYY', true);
+    if (dataBR.isValid()) {
+      return dataBR.format(formatoRetorno);
+    }
+  
+    // Verifica se a data está no formato 'YYYY-MM-DD'
+    const dataISO = moment(dataString, 'YYYY-MM-DD', true);
+    if (dataISO.isValid()) {
+      return dataISO.format(formatoRetorno);
+    }
+  
+    // Caso nenhum formato seja correspondido, retorna null ou lança um erro, dependendo do caso.
+    return null;
+  }
+  
+  
 
 // ! dashboard cadastro
     // * cliente 
@@ -17,10 +37,11 @@ const mongoose = require('mongoose')
     }
     exports.cadastroClientePost = async (req,res) => {
 
+        let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         const novoCliente = new Cliente({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: moment(req.body.dataNascimento, 'YYYY-MM-DD').format('DD/MM/YYYY'),
+            dataNascimento: dataNascimentoFormatada,
             email: req.body.email,
             senha: req.body.senha,
             cpf: req.body.cpf,
@@ -102,11 +123,11 @@ const mongoose = require('mongoose')
     }
     exports.cadastroFuncionarioPost = async (req,res) => {
         
-
+        let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         const novoFuncionario = new Funcionario({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: moment(req.body.dataNascimento).format('DD/MM/YYYY'),
+            dataNascimento: dataNascimentoFormatada,
             email: req.body.email,
             senha: req.body.senha,
             cpf: req.body.cpf,
@@ -189,10 +210,11 @@ const mongoose = require('mongoose')
     }
     exports.cadastroInstrutorPost = async (req,res) => {
         
+        let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         const novoInstrutor = new Instrutor({
             nome: req.body.nome,
             sobrenome: req.body.sobrenome,
-            dataNascimento: moment(req.body.dataNascimento).format('DD/MM/YYYY'),
+            dataNascimento: dataNascimentoFormatada,
             email: req.body.email,
             cpf: req.body.cpf,
             sexo: req.body.sexo,

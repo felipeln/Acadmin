@@ -1,10 +1,14 @@
 const express = require('express');
 const router = express.Router();
 const {financeiro, pagamentos, searchCliente, searchClientePost,  historicoPagamentos, novaCobranca,novaCobrancaPost, boletoPago, boletoPagoPessoal, pagamentosSearch, excluirBoleto, financeiroAdicionar, financeiroRemover, excluirBoletoPessoal } = require('../controllers/admin/financeiroController')
+
+const {relatorio,  relatorioFinanceiro, gerarRelatorioFinanceiro, relatorioFuncionario, gerarRelatorioFuncionarios, relatorioClientes, gerarRelatorioClientes } = require('../controllers/admin/relatorioController')
 const dashboardController = require('../controllers/admin/dashboardController')
 const GerenciamentoController = require('../controllers/admin/gerenciamentoController')
 const cadastroController = require('../controllers/admin/cadastroController')
 const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch, agendamentoClienteSearchView , agendamentoClienteHistorico ,agendamentoEdit, agendamentoEditPut, agendamentoDelete, agendamentoSearch , instrutoresModalidade, instrutoresHorarios, novoAgendamento }  = require('../controllers/admin/agendamentoController')
+
+
 //! dashboard admin
 
 // router.get('/dashboard',  dashboardController.homepage)
@@ -130,20 +134,19 @@ router.delete('/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
 
 
 
-
 //! dashboard admin relatorios
-router.get('/dashboard/relatorios', dashboardController.relatorio)
+router.get('/dashboard/relatorios', relatorio)
 
 
-router.get('/dashboard/relatorios/financeiro',dashboardController.relatorioFinanceiro)
-router.post('/gerar/relatorio/financeiro', dashboardController.gerarRelatorioFinanceiro)
+router.get('/dashboard/relatorios/financeiro',relatorioFinanceiro)
+router.post('/gerar/relatorio/financeiro', gerarRelatorioFinanceiro)
 
 
-router.get('/dashboard/relatorios/funcionarios', dashboardController.relatorioFuncionario)
-router.post('/gerar/relatorio/funcionarios', dashboardController.gerarRelatorioFuncionarios)
+router.get('/dashboard/relatorios/funcionarios', relatorioFuncionario)
+router.post('/gerar/relatorio/funcionarios', gerarRelatorioFuncionarios)
 
-router.get('/dashboard/relatorios/clientes', dashboardController.relatorioClientes)
-router.post('/gerar/relatorio/clientes', dashboardController.gerarRelatorioClientes)
+router.get('/dashboard/relatorios/clientes', relatorioClientes)
+router.post('/gerar/relatorio/clientes', gerarRelatorioClientes)
 
 
 module.exports = router

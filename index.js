@@ -1,5 +1,4 @@
 require('dotenv').config()
-
 const express = require('express');
 const { flash } = require('express-flash-message')
 const session = require('express-session')

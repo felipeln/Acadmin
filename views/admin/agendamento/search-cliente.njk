@@ -74,6 +74,15 @@
             </ul>
         </div>
 
+        {% for mensagem in msgErro %}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+        {% endfor %}
+
         <div class="table-wrapper">
             <div class="title table-nav">
                 <h1>Pesquisar</h1>
@@ -82,8 +91,8 @@
                 <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
                 </form>
             </div>
-
-
+    
+    
             {% if clientesAcademia.length > 0 %}
                 {%block table%}
                         <div class="table-head search-cliente">
@@ -139,3 +148,7 @@
 {% endblock %}
 
 
+{%block scripts%}
+        <script src="/scripts/flashmsg.js"></script>
+
+    {%endblock%}

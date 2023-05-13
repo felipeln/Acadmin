@@ -3,7 +3,6 @@ const Cliente = require('../../models/Cliente')
 // const Funcionario = require('../../models/Funcionario')
 const Financa = require('../../models/financas')
 const Boleto = require('../../models/boleto')
-const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const moment = require('moment'); // require
 const cron = require('node-cron');
@@ -36,6 +35,7 @@ cron.schedule('* * * * * *', async () => {
       });
 
 });
+
 
 
 // se o cliente estiver com alguem boleto com o status atrasado a mais de 7 dias, desative os futuros agendamentos dele.
@@ -87,15 +87,28 @@ cron.schedule('*/5 * * * * *', async () =>{
 
 
 
+// ! formatar data.
 
+function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
+  // Verifica se a data está no formato 'DD/MM/YYYY'
+  const dataBR = moment(dataString, 'DD/MM/YYYY', true);
+  if (dataBR.isValid()) {
+    return dataBR.format(formatoRetorno);
+  }
 
+  // Verifica se a data está no formato 'YYYY-MM-DD'
+  const dataISO = moment(dataString, 'YYYY-MM-DD', true);
+  if (dataISO.isValid()) {
+    return dataISO.format(formatoRetorno);
+  }
 
-// !
+  // Caso nenhum formato seja correspondido, retorna null ou lança um erro, dependendo do caso.
+  return null;
+}
 
 
 exports.financeiro = async (req, res) => {
 
-  
 
   const financas = await Financa.find()
 
@@ -152,8 +165,7 @@ exports.financeiro = async (req, res) => {
 exports.financeiroAdicionar = async (req, res) => {
   const { desc, valor, data, tipo } = req.body
 
-  const dia = moment(data).format('DD/MM/YYYY')
-
+  let dia = interpretarData(data)
 
   const novaFinanca = new Financa({
     desc: desc,
@@ -272,15 +284,16 @@ exports.novaCobrancaPost = async (req,res) =>{
         const {valor, dataEmissao, dataVencimento, tipo} = req.body
         const cliente = await Cliente.findOne({ _id: req.params.id })
 
-
+        let dataEmissaoFormatada = interpretarData(dataEmissao)
+        let dataVencimentoFormatada = interpretarData(dataVencimento)
         const cobrança = new Boleto({
             clienteId: cliente._id,
             clienteCpf: cliente.cpf,
             clienteNome: `${cliente.nome} ${cliente.sobrenome}`,
             valor: valor,
             tipo: tipo,
-            dataEmissao: moment(dataEmissao).format('DD/MM/YYYY'),
-            dataVencimento: moment(dataVencimento).format('DD/MM/YYYY'),
+            dataEmissao: dataEmissaoFormatada,
+            dataVencimento: dataVencimentoFormatada,
         })
 
         await cobrança.save()
@@ -396,11 +409,11 @@ exports.boletoPago = async (req,res) =>{
     try {
 
         let id = req.params.id
-
+        let dataPagamentoFormatada = interpretarData(moment())
         const boleto = await Boleto.findByIdAndUpdate(req.params.id, {
             status: 'Pago',
-            transictionHash: bcrypt.hashSync(id, 10),
-            dataPagamento: moment().format('DD/MM/YYYY ')
+            transactionHash: bcrypt.hashSync(id, 10),
+            dataPagamento: dataPagamentoFormatada
         })
 
        const cliente = await Cliente.findById(boleto.clienteId)
@@ -423,11 +436,11 @@ exports.boletoPagoPessoal = async (req,res) =>{
     try {
 
        let id = req.params.id
-
+       let dataPagamentoFormatada = interpretarData(moment())
         const boleto = await Boleto.findByIdAndUpdate(req.params.id, {
             status: 'Pago',
             transactionHash: bcrypt.hashSync(id, 10),
-            dataPagamento: moment().format('DD/MM/YYYY ')
+            dataPagamento: dataPagamentoFormatada
             // dataPagamento: '09/01/2023'
             // dataPagamento: '12/02/2023'
             // dataPagamento: '11/03/2023'

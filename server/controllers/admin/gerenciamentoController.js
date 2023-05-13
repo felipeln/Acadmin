@@ -1,9 +1,27 @@
 const Cliente = require('../../models/Cliente')
 const Funcionario = require('../../models/Funcionario')
 const Instrutor = require('../../models/Instrutores')
-const mongoose = require('mongoose')
-
 const moment = require('moment'); 
+
+// ! formatar data.
+
+function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
+  // Verifica se a data está no formato 'DD/MM/YYYY'
+  const dataBR = moment(dataString, 'DD/MM/YYYY', true);
+  if (dataBR.isValid()) {
+    return dataBR.format(formatoRetorno);
+  }
+
+  // Verifica se a data está no formato 'YYYY-MM-DD'
+  const dataISO = moment(dataString, 'YYYY-MM-DD', true);
+  if (dataISO.isValid()) {
+    return dataISO.format(formatoRetorno);
+  }
+
+  // Caso nenhum formato seja correspondido, retorna null ou lança um erro, dependendo do caso.
+  return null;
+}
+
 
 
 // dashboard admin gerenciamento
@@ -62,9 +80,10 @@ exports.funcionarios = async (req,res) => {
 
         try {
             const FuncionariosAcademia = await Funcionario.findOne({ _id: req.params.id })
-
+            let dataNascimento = interpretarData(FuncionariosAcademia.dataNascimento, 'YYYY-MM-DD')
             res.render('admin/gerenciamento/funcionarios/edit', {
-              FuncionariosAcademia
+              FuncionariosAcademia,
+              dataNascimento
             })
         
           } catch (error) {
@@ -74,12 +93,13 @@ exports.funcionarios = async (req,res) => {
     }
     //* salvar edit
     exports.FuncionarioEditPost = async (req,res) => {
-
+        
+      let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         try {
             const FuncionarioAcademia = await Funcionario.findByIdAndUpdate(req.params.id,{
                 nome: req.body.nome,
                 sobrenome: req.body.sobrenome,
-                dataNascimento: req.body.dataNascimento,
+                dataNascimento: dataNascimentoFormatada,
                 telefone: req.body.telefone,
                 email: req.body.email,
                 sexo: req.body.sexo,
@@ -224,12 +244,13 @@ exports.funcionarios = async (req,res) => {
 
     //* edit
     exports.ClienteEdit = async (req,res) => {
-
+      
         try {
             const clienteAcademia = await Cliente.findOne({ _id: req.params.id })
-
+            let dataNascimento = interpretarData(clienteAcademia.dataNascimento, 'YYYY-MM-DD')
             res.render('admin/gerenciamento/clientes/edit', {
-              clienteAcademia
+              clienteAcademia,
+              dataNascimento
             })
         
           } catch (error) {
@@ -239,12 +260,12 @@ exports.funcionarios = async (req,res) => {
     }
     //* salvar edit
     exports.ClienteEditPost = async (req,res) => {
-
+      let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         try {
             const clienteAcademia = await Cliente.findByIdAndUpdate(req.params.id,{
                 nome: req.body.nome,
                 sobrenome: req.body.sobrenome,
-                dataNascimento: req.body.dataNascimento,
+                dataNascimento: dataNascimentoFormatada ,
                 telefone: req.body.telefone,
                 email: req.body.email,
                 sexo: req.body.sexo,
@@ -385,12 +406,12 @@ exports.funcionarios = async (req,res) => {
 
         try {
             const InstrutoresAcademia = await Instrutor.findOne({ _id: req.params.id })
-            
+            let dataNascimento = interpretarData(InstrutoresAcademia.dataNascimento, 'YYYY-MM-DD')
 
 
             res.render('admin/gerenciamento/instrutores/edit', {
               InstrutoresAcademia,
-              
+              dataNascimento
             })
         
 
@@ -401,12 +422,12 @@ exports.funcionarios = async (req,res) => {
     }
     //* salvar edit
     exports.InstrutorEditPost = async (req,res) => {
-
+      let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         try {
             const InstrutoresAcademia = await Instrutor.findByIdAndUpdate(req.params.id,{
               nome: req.body.nome,
               sobrenome: req.body.sobrenome,
-              dataNascimento: req.body.dataNascimento,
+              dataNascimento: dataNascimentoFormatada,
               telefone: req.body.telefone,
               email: req.body.email,
               sexo: req.body.sexo,

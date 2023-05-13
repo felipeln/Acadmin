@@ -31,8 +31,9 @@
   /*
     3. Allow percentage-based heights in the application
   */
-  html, body {
+   html, body {
     height: 100%;
+    padding: 10px;
   }
   /*
     Typographic tweaks!
@@ -79,7 +80,7 @@
         }
 
         .finance-table{
-            padding: 30px 0;
+            padding: 10px 0;
         }
         .finance-head{
         
@@ -88,7 +89,7 @@
         .finance-table .finance-head ul{
             display: grid;
 
-            grid-template-columns:  20% 20% 20% 20% 20%;
+            grid-template-columns:  25% 25% 25% 25%;
 
             width: 100%;
             background-color: #008080;
@@ -127,7 +128,7 @@
              .finance-bottom ul{
             display: grid;
 
-            grid-template-columns:  20% 20% 20% 20% 20%;
+            grid-template-columns:  25% 25% 25% 25%;
 
             width: 100%;
             background-color: #008080;
@@ -138,9 +139,6 @@
 
         }
        
-        
-
-
 
         .finance-rows .row ul li{
             list-style: none;
@@ -158,74 +156,420 @@
 
         .row ul {
         display: grid;
-        grid-template-columns:  20% 20% 20% 20% 20%;
+        grid-template-columns:  25% 25% 25% 25%;
         width: 100%;
         background-color: white;
         color: black;
     }
    
-    h2{
+    h2, h3{
         padding-top: 30px;
     }
+    .apenas-grafico .row{
+        display: none;
+    }
+    
+    .apenas-grafico .grafico-primeiro{
+        min-height: 950px;
+    }
+    .apenas-grafico .grafico-primeiro.n{
+        min-height: 400px;
+    }
+    
 
+    .tabela-grafico .grafico-primeiro{
+        min-height: 600px;
+    
+    
+    }
+    
+    .tabela-grafico .grafico-primeiro.n{
+        min-height: 700px;
+    }
+    .tabela-grafico .grafico-primeiro.nDois{
+        min-height: 900px;
+    }
+    .tabela-grafico h2, h3{
+    
+        padding: 15px 0;
+    }
 
+    
    </style>
 </head>
 <body>
     
     <h1 class="title">Relatorio Financeiro</h1>
-    {% if boletoMeses.length > 1 %}
-        {% set ultimoMes = boletoMeses.length - 1 %}
-        <h2 >Entradas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} </h2>
-    {% endif %}
+    
 
-        <div class="finance-table">
+        {# ! TABELA #}
 
-            <div class="finance-head">
-                     <ul>
-                        <li>Mês <div class="filter-desc"></div></li>
-                        <li>Tipo<div class="filter-valor"></div></li>
-                        <li>Quantidade <div class="filter-data"></div></li>
-                        <li>Valor <div class="filter-tipo"></div></li>
-                        <li>Total</li>
-                </ul>
+        {% if estilo == 'tabela' %}
+            {% if boletoMeses.length > 1 %}
+                {% set ultimoMes = boletoMeses.length - 1 %}
+                <h2 >Entradas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
+            {% endif %}
+
+                
+            <div class="finance-table">
+
+                    <div class="finance-head">
+                            <ul>
+                                <li>Mês <div class="filter-desc"></div></li>
+                                {# <li>Tipo<div class="filter-valor"></div></li> #}
+                                <li>Quantidade <div class="filter-data"></div></li>
+                                <li>Valor Medio <div class="filter-tipo"></div></li>
+                                <li>Total</li>
+                        </ul>
+                    </div>
+
+
+                        <div class="finance-rows">
+                            {% set qtd = 0 %}
+                            {% set total = 0 %}
+                            {% set valor = 0 %}
+                            {% set meses = 0 %}
+
+                            {% for boleto in boletoMeses %}
+                            <div class="row">
+                                <ul>
+                                    <li>{{boleto.mes}}</li>
+                                    {# <li>{{boleto.tipo}}</li> #}
+                                    <li>{{boleto.quantidade}}</li>
+                                    <li>R$ {{boleto.valor}}</li>
+                                    <li>R$ {{boleto.valorTotal}}</li>
+                                </ul>
+                            </div>
+                            {% set qtd = qtd + boleto.quantidade %}
+                            {% set total = total + boleto.valorTotal%}
+                            {% set valor = valor + boleto.valor %}
+                            {% set meses = meses + 1 %}
+                            {% endfor %}
+                        </div>
+
+                        <div class="finance-bottom">
+                        <ul>
+                            {# <li>Em {{meses}} meses<div class="filter-desc"></div></li> #}
+                            <li><div class="filter-desc"></div></li>
+                            {# <li>{{boletoMeses[0].tipo}}<div class="filter-valor"></div></li> #}
+                            {# <li><div class="filter-valor"></div></li> #}
+                            <li>{{qtd}} <div class="filter-data"></div></li>
+                            {# <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li> #}
+                            <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
+                            <li>R$ {{total}}</li>
+                    </ul>
             </div>
+                
+        {% endif %}
 
 
-                <div class="finance-rows">
-                    {% set qtd = 0 %}
-                    {% set total = 0 %}
-                    {% set valor = 0 %}
-                    {% set meses = 0 %}
+
+        {# ! GRAFICO #}
+        {% if estilo == 'grafico' %}
+            <div class="apenas-grafico">
+                    {% if boletoMeses.length > 1 %}
+                        
+                        {% set ultimoMes = boletoMeses.length - 1 %}
+                        <h2>Grafico de Entradas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
+                    {% endif %}
 
                     {% for boleto in boletoMeses %}
-                    <div class="row">
-                        <ul>
-                            <li>{{boleto.mes}}</li>
-                            <li>{{boleto.tipo}}</li>
-                            <li>{{boleto.quantidade}}</li>
-                            <li>R$ {{boleto.valor}}</li>
-                            <li>R$ {{boleto.valorTotal}}</li>
-                        </ul>
-                     </div>
-                    {% set qtd = qtd + boleto.quantidade %}
-                    {% set total = total + boleto.valorTotal%}
-                    {% set valor = valor + boleto.valor %}
-                    {% set meses = meses + 1 %}
-                    {% endfor %}
-                </div>
-                    {% set valorMedio = valor / meses %}
+                            <div class="row">
+                                <ul>
+                                    <li class="mes">{{boleto.mes}}</li>
+                                    <li>{{boleto.tipo}}</li>
+                                    <li class="quantidade">{{boleto.quantidade}}</li>
+                                    <li>R$ {{boleto.valor}}</li>
+                                    <li>R$ <span class="valorTotal">{{boleto.valorTotal}}</span></li>
+                                </ul>
+                            </div>
+                    {% endfor %}    
+        
+                    <div class="grafico-primeiro {%if boletoMeses.length == 1 %}n{%endif%} ">
 
-                <div class="finance-bottom">
-                     <ul>
-                        <li>Em {{meses}} meses<div class="filter-desc"></div></li>
-                        <li>{{boletoMeses[0].tipo}}<div class="filter-valor"></div></li>
-                        <li>{{qtd}} <div class="filter-data"></div></li>
-                        <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
-                        <li>R$ {{total}}</li>
-                </ul>
+                    <h3>Grafico por quantidade</h3>
+                        <div>
+                            <canvas id="graficoQuantidade"></canvas>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="grafico-segundo">
+
+                        <h3>Grafico por Valor R$</h3>
+                            <div>
+                                <canvas id="graficoValor"></canvas>
+                            </div>
+                    </div>
+
             </div>
+        {% endif %}
 
-    </div>
+        {# ! Tabela e grafico #}
+
+        {% if estilo == 'tabelagrafico' %}
+            <div class="tabela-grafico">
+                {% if boletoMeses.length > 1 %}
+                    {% set ultimoMes = boletoMeses.length - 1 %}
+                    <h2 >Entradas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} </h2>
+                    {%else%}
+                    <h2 >Entradas no o mês de {{boletoMeses[0].mes}} </h2>
+                {% endif %}
+
+                <div class="finance-table">
+
+                <div class="finance-head">
+                        <ul>
+                            <li>Mês <div class="filter-desc"></div></li>
+                            {# <li>Tipo<div class="filter-valor"></div></li> #}
+                            <li>Quantidade <div class="filter-data"></div></li>
+                            <li>Valor Medio <div class="filter-tipo"></div></li>
+                            <li>Total</li>
+                    </ul>
+                </div>
+
+
+                    <div class="finance-rows">
+                        {% set qtd = 0 %}
+                        {% set total = 0 %}
+                        {% set valor = 0 %}
+                        {% set meses = 0 %}
+
+                        {% for boleto in boletoMeses %}
+                        <div class="row">
+                            <ul>
+                                <li class="mes">{{boleto.mes}}</li>
+                                {# <li>{{boleto.tipo}}</li> #}
+                                <li class="quantidade">{{boleto.quantidade}}</li>
+                                <li>R$ {{boleto.valor}}</li>
+                                <li>R$ <span class="valorTotal">{{boleto.valorTotal}}</span></li>
+                            </ul>
+                        </div>
+                        {% set qtd = qtd + boleto.quantidade %}
+                        {% set total = total + boleto.valorTotal%}
+                        {% set meses = meses + 1 %}
+                        {% endfor %}
+                    </div>
+                    <div class="finance-bottom">
+                        <ul>
+                            {# <li>Em {{meses}} meses<div class="filter-desc"></div></li> #}
+                            <li><div class="filter-desc"></div></li>
+                            {# <li>{{boletoMeses[0].tipo}}<div class="filter-valor"></div></li> #}
+                            {# <li><div class="filter-valor"></div></li> #}
+                            <li>{{qtd}} <div class="filter-data"></div></li>
+                            {# <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li> #}
+                            <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
+                            <li>R$ {{total}}</li>
+                    </ul>
+                </div>
+
+
+
+                <div class="grafico-primeiro {%if boletoMeses.length > 1 %} n {%endif%} {%if boletoMeses.length == 1 %} nDois{%endif%}">
+                    
+                    {% if boletoMeses.length > 1 %}
+                        <h2>Grafico de Entradas Entre o mês de {{boletoMeses[0].mes}} e     {{boletoMeses[ultimoMes].mes}} </h2>
+                        {%else%}
+                        <h2>Grafico de Entradas no mês de {{boletoMeses[0].mes}}  </h2>
+                    {%endif%}
+                    <h3>Grafico por quantidade</h3>
+                        <div>
+                            <canvas id="graficoQuantidade"></canvas>
+                            
+                        </div>
+                </div>
+                
+                
+                <div class="grafico-segundo">
+
+                    <h3>Grafico por Valor R$</h3>
+                        <div>
+                            <canvas id="graficoValor"></canvas>
+                        </div>
+                </div>
+            </div>
+        {% endif %}
+    
+          
+
+          
+<script src="
+https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
+"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const graficoQuantidade = document.getElementById('graficoQuantidade');
+    const graficoValor = document.getElementById('graficoValor');
+    let meses = document.querySelectorAll('.mes')
+    let quantidade = document.querySelectorAll('.quantidade')
+    let valor = document.querySelectorAll('.valorTotal')
+    
+    let mesesArray = []
+    for(let i of meses){
+       mesesArray.push(i.textContent) 
+    }
+    let quantidadeArray = []
+     for(let i of quantidade){
+       quantidadeArray.push(Number(i.textContent)) 
+    }
+    let valorArray = []
+    for(let i of valor){
+       valorArray.push(Number(i.textContent)) 
+    }
+
+    console.log(quantidadeArray)
+
+     new Chart(graficoQuantidade, {
+      type: 'bar',
+      data: {
+        labels: mesesArray,
+        datasets: [{
+          label: 'Entradas por Quantidade',
+          data: quantidadeArray,
+          backgroundColor: [
+            'rgba(255, 0, 0, 0.8)',
+            'rgba(0, 141, 255, 0.8)',
+            'rgba(205, 255, 0, 0.8)',
+            'rgba(0, 255, 40, 0.8)',
+            'rgba(120, 0, 255, 0.8)'
+          ],
+          borderWidth: 3,
+        }],
+        
+      },
+      plugins: [ChartDataLabels],
+        options: {
+            plugins: {
+                datalabels: {
+                    color: 'black',
+                    anchor: 'end',
+                    align: 'end',
+                    font: {
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+            legend: {
+                display: false, // Desabilita a exibição da legenda
+                
+            },
+            title: {
+                display: true,
+                padding: {
+                        bottom: 40 // Espaçamento inferior do título
+                    },
+                text: 'Entradas Mensais por quantidade',
+                color: 'black', // Define a cor do título como azul
+                font: {
+                    size: 20
+                }
+            }
+            },
+        // indexAxis: 'y', // Definindo o eixo x como o eixo horizontal
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+                    font: {
+                        family: 'Arial',
+                        size: 20,
+                        weight: 'bold'
+                    }
+                }
+          },
+          /* y: {
+            beginAtZero: true
+          } */
+        },
+        responsive: true,
+           datasets: {
+            bar: {
+                barThickness: 70 // Ajuste o valor para alterar a largura das barras
+            }
+        }
+      }
+    });
+
+
+ new Chart(graficoValor, {
+      type: 'bar',
+      data: {
+        labels: mesesArray,
+        datasets: [{
+          label: 'Entradas por Valor R$',
+          data: valorArray,
+          backgroundColor: [
+            'rgba(255, 0, 0, 0.8)',
+            'rgba(0, 141, 255, 0.8)',
+            'rgba(205, 255, 0, 0.8)',
+            'rgba(0, 255, 40, 0.8)',
+            'rgba(120, 0, 255, 0.8)'
+          ],
+          borderWidth: 3
+        }]
+      },
+      plugins: [ChartDataLabels],
+        options: {
+            plugins: {
+                datalabels: {
+                    color: 'black',
+                    anchor: 'end',
+                    align: 'end',
+                    font: {
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+            legend: {
+                display: false // Desabilita a exibição da legenda
+            },
+            title: {
+                display: true,
+                padding: {
+                        bottom: 40 // Espaçamento inferior do título
+                    },
+                text: 'Entradas Mensais por valor R$',
+                color: 'black', // Define a cor do título como azul
+                font: {
+                    size: 20
+                }
+            }
+            },
+      
+        //indexAxis: 'y', // Definindo o eixo x como o eixo horizontal
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+                    font: {
+                        family: 'Arial',
+                        size: 18,
+                    }
+                }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+                    font: {
+                        family: 'Arial',
+                        size: 20,
+                        weight: 'bold'
+                    }
+                }
+          }
+        },
+        responsive: true,
+           datasets: {
+            bar: {
+                barThickness: 50 // Ajuste o valor para alterar a largura das barras
+            }
+        }
+      }
+    });
+
+
+
+</script>
 </body>
 </html>

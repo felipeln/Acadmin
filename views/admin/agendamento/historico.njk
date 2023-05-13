@@ -80,6 +80,9 @@
 
 
          <div class="finance-table">
+
+        {% if agendamentos.length > 0 %}
+
                     <div class="table-head agendamento">
                         <ul>
                             {# <li>Cliente</li> #}
@@ -96,7 +99,6 @@
                     <div class="row agendamento">
                         
 
-                        {% if agendamentos.length > 0 %}
 
                             {% for agendamento in agendamentos %}
                              <div class="row">
