@@ -93,7 +93,7 @@
                 </ul>
             </div>
 
-            <form id="adicionar"  action="/financeiro/financas/adicionar" method="POST">
+            <form id="adicionar"  action="/dashboard/financeiro/financas/adicionar" method="POST">
             <div class="finance-add">
                 <ul>
                     <li><span>Descrição</span> <input type="text" required  name="desc" id="desc"></li>
@@ -127,34 +127,6 @@
 
                 <div class="finance-rows">
                     
-                    {# <div class="row">
-                        <ul>
-                            <li>Salario</li>
-                            <li><span class="cifrao">R$</span> 1000</li>
-                            <li>21/03/2022</li>
-                            <li><ion-icon class="icon saida" name="arrow-down-circle-outline"></ion-icon></li>
-                            <form action="/fincanceiro/excluir/{{financeiro.id}}?_method=DELETE">
-                            <li class="actions">
-                                <span class="deletar"><ion-icon class="icon" name="trash-outline"></ion-icon> </span>
-                            </li>
-                            </form> 
-                        </ul>
-                    </div>
-
-
-                    <div class="row">
-                            <ul>
-                                <li>Mensalidade</li>
-                                <li><span class="cifrao">R$</span> 1000</li>
-                                <li>05/03/2022</li>
-                                <li><ion-icon class="icon entrada" name="arrow-up-circle-outline"></ion-icon></li>
-                                <li class="actions">
-                                    <span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span >
-                                </li>
-                            </ul>
-                    </div> #}
-
-
                     {% for financa in financas %}
                         <div class="row">
                             <ul>
@@ -172,7 +144,7 @@
                                 <li class="actions">
                                     
 
-                                    <form action="/financeiro/financas/Remover/{{financa._id}}?_method=DELETE" method="POST" class="position-relative">
+                                    <form action="/dashboard/financeiro/financas/Remover/{{financa._id}}?_method=DELETE" method="POST" class="position-relative">
                         
                                         <button class="deletar act-btn" type="submit" class="btn btn-primary"><span class="deletar" ><ion-icon class="icon" name="trash-outline"></ion-icon> </span ></button>
                                     </form>

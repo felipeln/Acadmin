@@ -13,7 +13,7 @@ const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch,
 
 // router.get('/dashboard',  dashboardController.homepage)
 router.get('/dashboard/',  dashboardController.homepage)
-router.post('/dashboard', dashboardController.admin)
+router.post('/dashboard/cadastro/admin/', dashboardController.admin)
 
 //! dashboard cadastro
 //? get cliente
@@ -46,9 +46,9 @@ router.post('/dashboard/agendamento/criar/search', agendamentoClienteSearch)
 
 // ? novas rotas para agendamento
 router.get('/dashboard/agendamento/criar/novo/:id', agendamentoCriar)
-router.get('/info/:modalidade', instrutoresModalidade)
-router.get('/info/:instrutor/horarios/:dia', instrutoresHorarios)
-router.post('/criar/novo-agendamento', novoAgendamento)
+router.get('/dashboard/info/:modalidade', instrutoresModalidade)
+router.get('/dashboard/info/:instrutor/horarios/:dia', instrutoresHorarios)
+router.post('/dashboard/criar/novo-agendamento', novoAgendamento)
 
 
 // router.get('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
@@ -114,8 +114,8 @@ router.post('/dashboard/agendamento/search',  agendamentoSearch)
 //! dashboard admin financeiro
 // ? financeiro geral
 router.get('/dashboard/financeiro', financeiro)
-router.post('/financeiro/financas/adicionar', financeiroAdicionar)
-router.delete('/financeiro/financas/Remover/:id', financeiroRemover)
+router.post('/dashboard/financeiro/financas/adicionar', financeiroAdicionar)
+router.delete('/dashboard/financeiro/financas/Remover/:id', financeiroRemover)
 router.get('/dashboard/financeiro/geral', financeiro)
 // ? pagamentos
 router.get('/dashboard/financeiro/pagamentos', pagamentos)
@@ -123,14 +123,14 @@ router.post('/dashboard/financeiro/pagamentos/search', pagamentosSearch)
 router.get('/dashboard/financeiro/criar/search', searchCliente)
 router.post('/dashboard/financeiro/criar/search', searchClientePost)
 router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novaCobranca)
-router.post('/financeiro/criar-novo/pagamento/:id', novaCobrancaPost)
+router.post('/dashboard/financeiro/criar-novo/pagamento/:id', novaCobrancaPost)
 router.get('/dashboard/financeiro/pagamento/historico/:id', historicoPagamentos)
 
-router.put('/financeiro/pagar/boleto/:id', boletoPago)
-router.delete('/financeiro/excluir/boleto/:id', excluirBoleto)
+router.put('/dashboard/financeiro/pagar/boleto/:id', boletoPago)
+router.delete('/dashboard/financeiro/excluir/boleto/:id', excluirBoleto)
 
-router.put('/financeiro/historico/boleto/pagar/:id', boletoPagoPessoal)
-router.delete('/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
+router.put('/dashboard/financeiro/historico/boleto/pagar/:id', boletoPagoPessoal)
+router.delete('/dashboard/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
 // router.get('/dashboard/financeiro/criar-novo/pagamento/:id', criarPagamento)
 // router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novoPagamento)
 
@@ -141,14 +141,14 @@ router.get('/dashboard/relatorios', relatorio)
 
 
 router.get('/dashboard/relatorios/financeiro',relatorioFinanceiro)
-router.post('/gerar/relatorio/financeiro', gerarRelatorioFinanceiro)
+router.post('/dashboard/gerar/relatorio/financeiro', gerarRelatorioFinanceiro)
 
 
 router.get('/dashboard/relatorios/funcionarios', relatorioFuncionario)
-router.post('/gerar/relatorio/funcionarios', gerarRelatorioFuncionarios)
+router.post('/dashboard/gerar/relatorio/funcionarios', gerarRelatorioFuncionarios)
 
 router.get('/dashboard/relatorios/clientes', relatorioClientes)
-router.post('/gerar/relatorio/clientes', gerarRelatorioClientes)
+router.post('/dashboard/gerar/relatorio/clientes', gerarRelatorioClientes)
 
 
 module.exports = router

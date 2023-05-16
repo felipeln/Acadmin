@@ -196,11 +196,11 @@
                         
                         
                         <div class="modal-buttons">
-                            <form action="/financeiro/excluir/boleto/{{boleto._id}}?_method=DELETE" method="POST">
+                            <form action="/dashboard/financeiro/excluir/boleto/{{boleto._id}}?_method=DELETE" method="POST">
                                     <button type="submit" class="btn excluir">Excluir Cobrança</button>
                             </form>
                             {% if boleto.status == 'Pendente' or boleto.status == 'Atrasado' %}
-                                <form action="/financeiro/pagar/boleto/{{boleto._id}}?_method=PUT" method="POST">
+                                <form action="/dashboard/financeiro/pagar/boleto/{{boleto._id}}?_method=PUT" method="POST">
                                     <button type="submit" class="btn">Pagar</button>
                                 </form>
                             {% endif %}

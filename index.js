@@ -7,6 +7,11 @@ const nunjucks = require('nunjucks')
 const app = express();
 const connectDB = require('./server/config/db')
 const port = 1212
+
+
+// ! autenticação
+const autenticacaoMiddleware = require('./server/middleware/auth');
+
 // const axios = require('axios')
 
 // session (cookies)
@@ -54,20 +59,35 @@ app.get('/', (req,res) => {
     res.redirect('/login')
 })
 
-// login routes 
-app.use(require('./server/routes/login.routes'))
 
-// dashboard
-app.use(require('./server/routes/dashboard.routes'),)
+// ? login routes
+app.use(require('./server/routes/login.routes'));
+
+// TODO - Rotas protegidas que exigem autenticação e redirecionamento com base no cargo do usuário
+// ? dashboard
+app.use( autenticacaoMiddleware, require('./server/routes/dashboard.routes'));
+
+// ? portal
+app.use(autenticacaoMiddleware, require('./server/routes/portal.routes'));
+
+// ? atendente
+app.use( autenticacaoMiddleware, require('./server/routes/acadmin.routes'));
 
 
-// portal
-app.use(require('./server/routes/portal.routes'))
+//! login routes 
+// app.use(require('./server/routes/login.routes'))
+
+//! dashboard
+// app.use(require('./server/routes/dashboard.routes'),)
+
+
+//! portal
+// app.use(require('./server/routes/portal.routes'))
 
 
 
-// atendente
-app.use(require('./server/routes/acadmin.routes'))
+//! atendente
+// app.use(require('./server/routes/acadmin.routes'))
 
 
 // pagina de erro
@@ -75,6 +95,7 @@ app.use(require('./server/routes/acadmin.routes'))
 app.get('*', (req, res) => {
   res.status(404).render('errors/404');
 });
+
 
 
 app.listen(port, () =>{

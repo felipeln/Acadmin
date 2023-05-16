@@ -29,7 +29,7 @@ function atualizarHorarios(){
     const instrutor = document.getElementById('instrutor').value
    
 
-    axios.get(`/info/${instrutor}/horarios/${diaEscolhido}`)
+    axios.get(`/dashboard/info/${instrutor}/horarios/${diaEscolhido}`)
     .then(response => {
         // Atualize as informações na página com a resposta do servidor
         const horariosDisponiveis = response.data;
@@ -57,7 +57,7 @@ function atualizarHorarios(){
 
 function atualizarInstrutor() {
     const modalidadeSelecionada = document.getElementById("modalidade").value;
-    axios.get(`/info/${modalidadeSelecionada}`)
+    axios.get(`/dashboard/info/${modalidadeSelecionada}`)
         .then(response => {
             // Atualize as informações na página com a resposta do servidor
             const instrutores = response.data;

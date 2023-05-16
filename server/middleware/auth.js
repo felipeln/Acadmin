@@ -1,53 +1,51 @@
-const jwt = require('jsonwebtoken');
+// autenticacaoMiddleware.js
 
-// ! Verifica se o usuário está autenticado
-const isAuthenticated = (req, res, next) => {
-  const token = req.headers.authorization;
+// function autenticacaoMiddleware(req, res, next) {
+//   if (!req.session.cargo) {
+//     res.redirect('/login');
+//   } else {
+//     if (req.session.cargo === 'Admin') {
+//       res.redirect('/dashboard');
+//     } else if (req.session.cargo === 'funcionario') {
+//       res.redirect('/acadmin');
+//     } else if (req.session.cargo === 'Cliente') {
+//       res.redirect('/portal');
+//     } else {
+//       res.redirect('/error');
+//     }
+//   }
+// }
 
-  if (!token) {
-    return res.status(401).json({ message: 'Token de autenticação não fornecido.' });
+
+
+function autenticacaoMiddleware(req, res, next) {
+  if (!req.session.cargo) {
+    return res.redirect('/login');
   }
 
-  try {
-    const decoded = jwt.verify(token, 'suaChaveSecreta'); // Substitua 'suaChaveSecreta' pela sua chave secreta real
-
-    req.user = decoded;
-    next();
-  } catch (error) {
-    return res.status(401).json({ message: 'Token de autenticação inválido.' });
+  if (req.session.cargo === 'Admin') {
+    if (req.originalUrl.startsWith('/dashboard') || req.originalUrl === '/dashboard') {
+      return next();
+    } else {
+      return res.redirect('/dashboard');
+    }
+  } else if (req.session.cargo === 'funcionario') {
+    if (req.originalUrl.startsWith('/acadmin') || req.originalUrl === '/acadmin') {
+      return next();
+    } else {
+      return res.redirect('/acadmin');
+    }
+  } else if (req.session.cargo === 'Cliente') {
+    if (req.originalUrl.startsWith('/portal') || req.originalUrl === '/portal') {
+      return next();
+    } else {
+      return res.redirect('/portal');
+    }
   }
-};
 
-// ! Verifica se o usuário tem permissão de administrador
-const isAdmin = (req, res, next) => {
-  if (req.user.role === 'admin') {
-    next();
-  } else {
-    return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para acessar esta rota.' });
-  }
-};
+  next();
+}
 
-// ! Verifica se o usuário tem permissão de atendente
-const isAtendente = (req, res, next) => {
-  if (req.user.role === 'atendente') {
-    next();
-  } else {
-    return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para acessar esta rota.' });
-  }
-};
 
-// ! Verifica se o usuário tem permissão de cliente
-const isCliente = (req, res, next) => {
-  if (req.user.role === 'cliente') {
-    next();
-  } else {
-    return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para acessar esta rota.' });
-  }
-};
 
-module.exports = {
-  isAuthenticated,
-  isAdmin,
-  isAtendente,
-  isCliente,
-};
+module.exports = autenticacaoMiddleware;

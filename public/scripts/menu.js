@@ -5,6 +5,15 @@ const openBtn = document.querySelector('.open')
 
 const container = document.querySelector('.container')
 
+const btnLogout = list[list.length - 1]
+const formLogout = document.getElementById('logout')
+
+btnLogout.addEventListener('click', () =>{
+    formLogout.submit()
+    btnLogout
+})
+
+console.log(btnLogout);
 
 function activeLink(){
     list.forEach((item) => {

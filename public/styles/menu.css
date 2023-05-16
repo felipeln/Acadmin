@@ -178,3 +178,8 @@ nav#left-menu ul li.active a::after{
     }
     
   }
+
+#logout{
+    display: none;
+    overflow: hidden;
+}
