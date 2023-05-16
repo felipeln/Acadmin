@@ -55,10 +55,11 @@
     color: white;
     border-top-left-radius: 5px ;
     border-top-right-radius: 5px;
+    padding: 20px 10px;
 }
 .table-head ul li{
     list-style: none;
-    padding: 10px;
+    font-size: 1.125em;
     /* border-right: 2px solid #ccc; */
 }
 .table-head ul li:nth-last-child(1), .row ul li:nth-last-child(1){
@@ -219,6 +220,14 @@
     color: white;
     background-color: #008080;
 }
+.table-nav .add.start{
+    justify-self: start;
+}
+.table-nav .add.historico{
+    background-color: #ffc107 ;
+    color: black;
+    border: none;
+}
 
 
 .not-found{
@@ -256,6 +265,7 @@
 }
 .table-head.search-cliente ul{
     grid-template-columns: 20% 25% 15% 15% 25%;
+    padding: 20px 10px;
 }
 .row.search-cliente ul {
 
@@ -304,6 +314,7 @@
     color: white;
     border-top-left-radius: 5px ;
     border-top-right-radius: 5px;
+    padding: 20px 10px;
 }
 
 .row.agendamento ul{

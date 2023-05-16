@@ -1,0 +1,194 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+        <link rel="stylesheet" href="/styles/gerenciamento.css">
+        <link rel="stylesheet" href="/styles/edit.css">
+        <link rel="stylesheet" href="/styles/modal.css">
+    <title>Portal - Editar Agendamento</title>
+{% endblock %}
+
+
+{%block menu%}
+<aside>
+        <nav class="ativo" id="left-menu">
+            <div class="logo">
+                    <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
+            <ul>
+                <li class="list ">
+                    <a href="/portal">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/portal/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/portal/financeiro">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+    <div class="open">></div>
+</aside>
+{%endblock%}
+
+{%block content%}
+                
+
+        <h1 class="ver-title">Editando Agendamento: {{agendamento.dia}} </h1>
+        <hr>
+        <div class="ver-menu">
+            <ul>
+                <li><a href="/portal/agendamento">Voltar </a></li>
+                <li> / {{agendamento.clienteNome}} </li>
+            </ul>
+        </div>
+
+        {% for mensagem in msgErro %}
+
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+        {% endfor %}
+        
+        {% for mensagem in msgSucesso %}
+
+                <div class="alert-box sucesso">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+        {% endfor %}
+
+
+    <form  action="/portal/agendamento/edit/salvar/{{agendamento._id}}?_method=PUT" method="POST">
+        <div class="edit-form">
+
+
+            <div class="form-field">
+                <label for="cliente">Cliente</label>
+                <select class="disabled" name="cliente" id="cliente">
+                    <option value="{{agendamento.clienteId}}">{{agendamento.clienteNome}}</option>
+                </select>
+            </div>
+
+
+            <div class="form-field">
+                <label for="modalidade">Modalidade</label>
+                <select class="disabled" name="modalidade" id="modalidade">
+                    <option value="{{agendamento.modalidade}}">{{agendamento.modalidade}}</option>
+                </select>
+            </div>
+
+            <div class="form-field">
+                 <label for="instrutor">Instrutor</label>
+                <select name="instrutor" id="instrutor" required>
+                    
+                    {% for instrutor in instrutores %}
+                        {% if instrutor.id == agendamento.instrutorId %}
+                            <option selected value="{{instrutor.id}}">{{instrutor.nome}} {{instrutor.sobrenome}}</option>
+                            {%else%}
+                            <option value="{{instrutor.id}}">{{instrutor.nome}} {{instrutor.sobrenome}}</option>
+
+                        {% endif %}
+                    {% endfor %}
+
+                </select>
+            </div>
+
+    
+
+            <div class="form-field">
+                <label for="dia">Dia:</label>
+               <input type="date" name="dia" id="dia" value="{{dia}}" required>
+            </div>
+
+            <div class="form-field">
+                <label for="horario">Horario:</label>
+               <select name="horario" id="horario" required>
+                <option selected class='escolhida' value="{{agendamento.horarioComeca}}">{{agendamento.horarioComeca}}</option>
+             
+               </select>
+               <span class='erro-horario'></span>
+            </div>
+            
+            
+            <div class="form-field">
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    {% if agendamento.status == "Ativo" %}
+                        <option value="Ativo" selected>Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                        {%- else -%}
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo" Selected>Inativo</option>
+                    {% endif %}
+                </select>
+            </div>
+
+    </div>
+      
+        <div class="form-buttons">
+            <button type="submit" class="btn ver">Atualizar agendamento</button>
+
+            <button type="button" class="btn deletar" id="deleteModal">Deletar Agendamento</button>
+        </div>
+
+    </form>
+
+     
+
+        
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-info">
+                    <h1>Voce esta prestes a excluir um agendamento no dia {{agendamento.dia}} e horario {{agendamento.horarioComeca}} .</h1>
+                </div>
+                <div class="modal-aviso">
+                    <h2>Isso ira excluir o agendamento do Cliente {{agendamento.clienteNome}}  no dia {{agendamento.dia}} e horario {{agendamento.horarioComeca}} , Você tem certeza disso?</h2>
+                </div>
+
+                <div class="modal-buttons">
+                    <a class="close_modal">
+                        fechar
+                    </a>
+                    <form action="/portal/agendamento/edit/{{agendamento._id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn">Sim, Deletar Agendamento</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}
+
+
+
+{%block scripts%}
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/scripts/modal.js"></script>
+    <script src="/scripts/flashmsg.js"></script>
+
+    <script src="/scripts/editCliente.js"></script>
+
+{%endblock%}

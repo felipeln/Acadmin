@@ -1,1 +1,66 @@
-<h1>aa</h1>
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+    <title>Acadmin - Home</title>
+{% endblock %}
+
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
+            <ul>
+                <li class="list active">
+                    <a href="/acadmin">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/financeiro/pagamentos">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{%block content%}
+        <h1>Bem vindo ao Acadmin</h1>
+{%endblock%}
+
+
+
+
+{%block scripts%}
+{%endblock%}

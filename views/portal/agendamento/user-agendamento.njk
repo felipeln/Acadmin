@@ -1,0 +1,123 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+        <link rel="stylesheet" href="/styles/gerenciamento.css">
+        <title>Portal - Agendamentos </title>
+{% endblock %}
+
+
+{%block menu%}
+<aside>
+    <nav class="ativo" id="left-menu">
+        <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+        </div>
+        <ul>
+            <li class="list ">
+                <a href="/portal">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    <span class="title">Home</span>
+                </a>
+            </li>
+            <li class="list active">
+                <a href="/portal/agendamento">
+                    <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                    <span class="title">Agendamento</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/portal/financeiro">
+                    <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                    <span class="title">Financeiro</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/login">
+                    <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                    <span class="title">Sair</span>
+                </a>
+            </li>
+        </ul>               
+    </nav>
+    <div class="open">></div>
+</aside>
+{%endblock%}
+
+
+{%block content%}
+
+        
+        <div class="table-wrapper pagamentos">
+            <h1 class='title'>Agendamentos</h1>
+            <div class="title table-nav">
+
+               {# ! user id <a href="/portal/agendamento/criar/novo/{{cliente.id}}" class="add start">Novo Agendamento</a> #}
+               <a href="/portal/agendamento/criar/novo/" class="add start">Novo Agendamento</a>
+
+                <form class="search-form" role="search" method="POST" action="/acadmin/agendamento/search">
+                <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
+                </form>
+                
+                {# ! user id <a href="/portal/agendamento/historico/:id" class="add historico">Historico de Agendamentos</a> #}
+                <a href="/portal/agendamento/historico/" class="add historico">Historico de Agendamentos</a>
+                
+            </div>
+
+            {% for mensagem in msg %}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+
+         <div class="table-head agendamento">
+            <ul>
+                <li>Cliente</li>
+                <li>Modalidade</li>
+                <li>Instrutor</li>
+                <li>Dia</li>
+                <li>Hora Inicio: </li>
+                <li>Hora Termina: </li>
+                <li>Acões</li>
+            </ul>
+        </div>
+
+        <div class="table">
+
+            {% for agendamento in agendamentos%}
+
+                <div class="row agendamento">
+                <ul>
+                    <li>{{agendamento.clienteNome}} </li>
+                    <li>{{agendamento.modalidade}} </li>
+                    <li>{{agendamento.instrutorNome}}</li>
+                    <li>{{agendamento.dia}} </li>
+                    <li>{{agendamento.horarioComeca}}</li>
+                    <li>{{agendamento.horarioTermina}}</li>
+
+                    <li class="actions">
+                        <a href="/portal/agendamento/ver/{{agendamento._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
+
+                        <a class="editar act-btn" href="/portal/agendamento/edit/{{agendamento._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
+
+                        
+                        
+                    <form action="/portal/agendamento/edit/{{agendamento._id}}?_method=DELETE" method="POST" class="position-relative">
+                        
+                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="trash-outline"></ion-icon> Deletar </button>
+                    </form>
+                    </li>
+
+                </ul>
+            </div>
+
+            {% endfor %}
+        </div>
+{%endblock%}
+
+{%block scripts%}
+    <script src="/scripts/flashmsg.js"></script>
+{%endblock%}

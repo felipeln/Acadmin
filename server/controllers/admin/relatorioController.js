@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer')
 const nunjucks = require('nunjucks')
 const Boleto = require('../../models/boleto')
+const Funcionario = require('../../models/Funcionario')
+const Cliente = require('../../models/Cliente')
 const Financa = require('../../models/financas')
 const moment = require('moment')
 
@@ -293,7 +295,7 @@ exports.relatorio = async (req,res) => {
         tipo: 'Mensalidade',
         valor: ((valorTotal(maio)) / (quantidade(maio))).toFixed(0)
       }
-    //   definindo a variavel boleotMeses e passando os valores para ela.
+    //   definindo a variavel boletoMeses e passando os valores para ela.
       const boletoMeses = []
       if(janeiro.length > 0){
         boletoMeses.push(mes1)
@@ -679,12 +681,12 @@ exports.relatorio = async (req,res) => {
           const browser = await puppeteer.launch();
           const page = await browser.newPage();
          
-          // Defina o conteúdo da página como a saída do template Nunjucks renderizado
+          // // Defina o conteúdo da página como a saída do template Nunjucks renderizado
           
           await page.setContent(renderedHtml);
           const tempoEspera = 1500;
 
-          // Aguarda o tempo de espera antes de gerar o PDF
+          // // Aguarda o tempo de espera antes de gerar o PDF
           await new Promise(resolve => setTimeout(resolve, tempoEspera));
 
 
@@ -692,9 +694,11 @@ exports.relatorio = async (req,res) => {
           // Gere o PDF a partir da página renderizada
           const pdf = await page.pdf({
             printBackground: true,
-        //     format: 'Letter', 
-        //     // format: 'A4',
-        //     margin: { top: '20px', left: '20px', right: '20px', bottom: '40px' }
+            format: 'A4',
+            width: '209.55mm',
+            height: '298.45mm',
+            // format: 'A4',
+            margin: { top: '20px', left: '20px', right: '20px', bottom: '20px' }
           });
         
          
@@ -722,25 +726,43 @@ exports.relatorio = async (req,res) => {
       let renderedHtml
 
       let context;
-      const {tipo, mesInicio, mesFim, estilo} = req.body
+      const {tipo, estilo} = req.body
 
-      const janeiro = [];
-      const fevereiro = [];
-      const marco = [];
-      const abril = [];
-      const maio = [];
-      const meses = [];
-     
-      for (let i = parseInt(mesInicio); i <= parseInt(mesFim); i++) {
-      meses.push(i.toString().padStart(2, "0"));
+      if(tipo == 'ativos'){
+        const funcionariosAtivos = await Funcionario.find({status: 'Ativo'}).sort({nome: 1})
+        const nFuncionarios = await Funcionario.count()
+        
+        const nFuncionariosAtivos = funcionariosAtivos.length
+
+        context = { funcionariosAtivos,nFuncionariosAtivos,estilo,nFuncionarios}
+        renderedHtml = nunjucks.render('admin/relatorio/funcionarios/ativos.njk', context);
+      }
+      if(tipo == 'inativos'){
+        const funcionariosInativos = await Funcionario.find({status: 'Inativo'}).sort({ nome: 1 });
+        const nFuncionarios = await Funcionario.count()
+        const nFuncionariosInativos = funcionariosInativos.length
+        
+        context = {funcionariosInativos,nFuncionariosInativos ,nFuncionarios, estilo}
+        renderedHtml = nunjucks.render('admin/relatorio/funcionarios/inativos.njk', context);
+
+      }
+      if(tipo == 'ativoinativo'){
+        const funcionariosAtivos = await Funcionario.find({status: 'Ativo'}).sort({ nome: 1 });
+
+        const funcionariosInativos = await Funcionario.find({status: 'Inativo'}).sort({ nome: 1 });
+
+        const nFuncionarios = await Funcionario.count()
+        const nFuncionariosAtivos = funcionariosAtivos.length
+        const nFuncionariosInativos = funcionariosInativos.length
+        
+
+        context = {funcionariosAtivos, nFuncionarios, nFuncionariosAtivos,funcionariosInativos, nFuncionariosInativos, estilo}
+        renderedHtml = nunjucks.render('admin/relatorio/funcionarios/completo.njk', context);
+
       }
 
-      
 
-
-        renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
-          
-        //   const renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
+  
         //!
         // Crie uma instância do navegador e crie uma nova página
           const browser = await puppeteer.launch();
@@ -759,9 +781,12 @@ exports.relatorio = async (req,res) => {
           // Gere o PDF a partir da página renderizada
           const pdf = await page.pdf({
             printBackground: true,
-        //     format: 'Letter', 
-        //     // format: 'A4',
-        //     margin: { top: '20px', left: '20px', right: '20px', bottom: '40px' }
+            format: 'A4',
+            width: '209.55mm',
+            height: '298.45mm',
+            // format: 'A4',
+            margin: { top: '20px', left: '20px', right: '20px', bottom: '20px' }
+            
           });
         
          
@@ -778,6 +803,7 @@ exports.relatorio = async (req,res) => {
 
     }
 
+
     exports.relatorioClientes = async (req,res) => {
 
         res.render('admin/relatorio/relatorio_clientes')
@@ -785,9 +811,81 @@ exports.relatorio = async (req,res) => {
     }
 
     exports.gerarRelatorioClientes = async (req,res) =>{
-       
+      let renderedHtml
 
-        const browser = await puppeteer.launch({headless: true})
+      let context;
+      const {tipo, estilo} = req.body
+
+      if(tipo == 'ativos'){
+        const clientesAtivos = await Cliente.find({status: 'Ativo'}).sort({nome: 1})
+        const nClientes = await Cliente.count()
+        
+        const nClientesAtivos = clientesAtivos.length
+
+        context = { clientesAtivos,nClientesAtivos,estilo,nClientes}
+        renderedHtml = nunjucks.render('admin/relatorio/clientes/ativos.njk', context);
+      }
+      if(tipo == 'inativos'){
+        const clientesInativos = await Cliente.find({status: 'Inativo'}).sort({ nome: 1 });
+        const nClientes = await Cliente.count()
+        const nClientesInativos = clientesInativos.length
+        
+        context = {clientesInativos,nClientesInativos ,nClientes, estilo}
+        renderedHtml = nunjucks.render('admin/relatorio/clientes/inativos.njk', context);
+
+      }
+      if(tipo == 'ativoinativo'){
+        const clientesAtivos = await Cliente.find({status: 'Ativo'}).sort({ nome: 1 });
+
+        const clientesInativos = await Cliente.find({status: 'Inativo'}).sort({ nome: 1 });
+
+        const nClientes = await Cliente.count()
+        const nClientesAtivos = clientesAtivos.length
+        const nClientesInativos = clientesInativos.length
+        
+
+        context = {clientesAtivos, nClientes, nClientesAtivos,clientesInativos, nClientesInativos, estilo}
+        renderedHtml = nunjucks.render('admin/relatorio/clientes/completo.njk', context);
+
+      }
+
+
+  
+        //!
+        // Crie uma instância do navegador e crie uma nova página
+          const browser = await puppeteer.launch();
+          const page = await browser.newPage();
+         
+          // Defina o conteúdo da página como a saída do template Nunjucks renderizado
+          
+          await page.setContent(renderedHtml);
+          const tempoEspera = 1500;
+
+          // Aguarda o tempo de espera antes de gerar o PDF
+          await new Promise(resolve => setTimeout(resolve, tempoEspera));
+
+
+
+          // Gere o PDF a partir da página renderizada
+          const pdf = await page.pdf({
+            printBackground: true,
+            format: 'A4',
+            width: '209.55mm',
+            height: '298.45mm',
+            // format: 'A4',
+            margin: { top: '20px', left: '20px', right: '20px', bottom: '20px' }
+            
+          });
+        
+         
+          // Feche o navegador
+          await browser.close();
+
+        //  // Envie o PDF como resposta ao cliente
+           res.contentType('application/pdf');
+          res.send(pdf);
+        // !
+          // res.send(renderedHtml);
 
  
     }

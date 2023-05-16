@@ -54,6 +54,7 @@ app.get('/', (req,res) => {
     res.redirect('/login')
 })
 
+// login routes 
 app.use(require('./server/routes/login.routes'))
 
 // dashboard

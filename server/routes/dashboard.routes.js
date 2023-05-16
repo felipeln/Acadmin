@@ -112,10 +112,12 @@ router.post('/dashboard/agendamento/search',  agendamentoSearch)
 
 
 //! dashboard admin financeiro
+// ? financeiro geral
 router.get('/dashboard/financeiro', financeiro)
 router.post('/financeiro/financas/adicionar', financeiroAdicionar)
 router.delete('/financeiro/financas/Remover/:id', financeiroRemover)
 router.get('/dashboard/financeiro/geral', financeiro)
+// ? pagamentos
 router.get('/dashboard/financeiro/pagamentos', pagamentos)
 router.post('/dashboard/financeiro/pagamentos/search', pagamentosSearch)
 router.get('/dashboard/financeiro/criar/search', searchCliente)
@@ -127,7 +129,7 @@ router.get('/dashboard/financeiro/pagamento/historico/:id', historicoPagamentos)
 router.put('/financeiro/pagar/boleto/:id', boletoPago)
 router.delete('/financeiro/excluir/boleto/:id', excluirBoleto)
 
-router.put('/financeiro//historico/boleto/pagar/:id', boletoPagoPessoal)
+router.put('/financeiro/historico/boleto/pagar/:id', boletoPagoPessoal)
 router.delete('/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
 // router.get('/dashboard/financeiro/criar-novo/pagamento/:id', criarPagamento)
 // router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novoPagamento)

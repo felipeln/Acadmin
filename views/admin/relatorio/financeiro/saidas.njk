@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatorio Financeiro</title>
-    <link rel="stylesheet" href="/styles/relatorioModel.css">
+    {# <link rel="stylesheet" href="/styles/relatorioModel.css"> #}
     {# <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> #}
    <style>
 
@@ -163,34 +163,19 @@
         color: black;
     }
    
+   .apenas-grafico .row{
+            display: none;
+    }
     h2, h3{
-        padding-top: 30px;
+        margin: 20px 0;
     }
-    .apenas-grafico .row{
-        display: none;
-    }
-    
-    .apenas-grafico .grafico-primeiro{
-        min-height: 950px;
-    }
-    .apenas-grafico .grafico-primeiro.n{
-        min-height: 400px;
+    .pagina{
+        width: 209.55mm;
+        height: 298.45mm;
     }
     
-    .tabela-grafico .grafico-primeiro{
-        min-height: 600px;
-    
-    
-    }
-    .tabela-grafico .grafico-primeiro.n{
-        min-height: 700px;
-    }
-    .tabela-grafico .grafico-primeiro.nDois{
-        min-height: 900px;
-    }
-    .tabela-grafico h2, h3{
-    
-        padding: 15px 0;
+    .grafico-segundo{
+        padding-top: 40px;
     }
 
     
@@ -198,82 +183,73 @@
 </head>
 <body>
     
-    <h1 class="title">Relatorio Financeiro</h1>
     
 
-        {# TABELA #}
+        {# ! TABELA #}
 
         {% if estilo == 'tabela' %}
-            {% if boletoMeses.length > 1 %}
-                {% set ultimoMes = boletoMeses.length - 1 %}
-                <h2 >Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
-                {%else%}
-                 <h2 >Saidas no mês de {{boletoMeses[0].mes}} de 2023 </h2>
-            {% endif %}
+        <div class="tabela">
+            <div class="pagina">
+                <h1 class="title">Relatorio Financeiro</h1>
+                {% if boletoMeses.length > 1 %}
+                    {% set ultimoMes = boletoMeses.length - 1 %}
+                    <h2 >Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
+                    {%else%}
+                    <h2 >Saidas no mês de {{boletoMeses[0].mes}} de 2023 </h2>
+                {% endif %}
 
-                
-            <div class="finance-table">
+                    
+                    <div class="finance-table">
+                            <div class="finance-head">
+                                    <ul>
+                                        <li>Mês <div class="filter-desc"></div></li>
+                                        <li>Quantidade <div class="filter-data"></div></li>
+                                        <li>Valor Medio <div class="filter-tipo"></div></li>
+                                        <li>Total</li>
+                                    </ul>
+                            </div>
 
-                    <div class="finance-head">
-                            <ul>
-                                <li>Mês <div class="filter-desc"></div></li>
-                                {# <li>Tipo<div class="filter-valor"></div></li> #}
-                                <li>Quantidade <div class="filter-data"></div></li>
-                                <li>Valor Medio <div class="filter-tipo"></div></li>
-                                <li>Total</li>
-                        </ul>
-                    </div>
+                            <div class="finance-rows">
+                                {% set qtd = 0 %}
+                                {% set total = 0 %}
+                                {% set valor = 0 %}
+                                {% set meses = 0 %}
 
+                                {% for boleto in boletoMeses %}
+                                    <div class="row">
+                                        <ul>
+                                            <li>{{boleto.mes}}</li>
+                                            {# <li>{{boleto.tipo}}</li> #}
+                                            <li>{{boleto.quantidade}}</li>
+                                            <li>R$ {{boleto.valor}}</li>
+                                            <li>R$ {{boleto.valorTotal}}</li>
+                                        </ul>
+                                    </div>
+                                    {% set qtd = qtd + boleto.quantidade %}
+                                    {% set total = total + boleto.valorTotal%}
+                                    {% set valor = valor + boleto.valor %}
+                                    {% set meses = meses + 1 %}
+                                {% endfor %}
+                            </div>
 
-                        <div class="finance-rows">
-                            {% set qtd = 0 %}
-                            {% set total = 0 %}
-                            {% set valor = 0 %}
-                            {% set meses = 0 %}
-
-                            {% for boleto in boletoMeses %}
-                            <div class="row">
+                            <div class="finance-bottom">
                                 <ul>
-                                    <li>{{boleto.mes}}</li>
-                                    {# <li>{{boleto.tipo}}</li> #}
-                                    <li>{{boleto.quantidade}}</li>
-                                    <li>R$ {{boleto.valor}}</li>
-                                    <li>R$ {{boleto.valorTotal}}</li>
+                                    <li><div class="filter-desc"></div></li>
+                                    <li>{{qtd}} <div class="filter-data"></div></li>
+                                    <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
+                                    <li>R$ {{total}}</li>
                                 </ul>
                             </div>
-                            {% set qtd = qtd + boleto.quantidade %}
-                            {% set total = total + boleto.valorTotal%}
-                            {% set valor = valor + boleto.valor %}
-                            {% set meses = meses + 1 %}
-                            {% endfor %}
-                        </div>
-
-                        <div class="finance-bottom">
-                        <ul>
-                            {# <li>Em {{meses}} meses<div class="filter-desc"></div></li> #}
-                            <li><div class="filter-desc"></div></li>
-                            {# <li>{{boletoMeses[0].tipo}}<div class="filter-valor"></div></li> #}
-                            {# <li><div class="filter-valor"></div></li> #}
-                            <li>{{qtd}} <div class="filter-data"></div></li>
-                            {# <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li> #}
-                            <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
-                            <li>R$ {{total}}</li>
-                    </ul>
+                    </div>
             </div>
-                
+        </div>
         {% endif %}
 
 
 
-        {# GRAFICO #}
+        {# ! GRAFICO #}
         {% if estilo == 'grafico' %}
             <div class="apenas-grafico">
-                    {% if boletoMeses.length > 1 %}
-                        
-                        {% set ultimoMes = boletoMeses.length - 1 %}
-                        <h2>Grafico de Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
-                    {% endif %}
-
                     {% for boleto in boletoMeses %}
                             <div class="row">
                                 <ul>
@@ -284,111 +260,124 @@
                                     <li>R$ <span class="valorTotal">{{boleto.valorTotal}}</span></li>
                                 </ul>
                             </div>
-                    {% endfor %}    
-        
-                    <div class="grafico-primeiro {%if boletoMeses.length == 1 %}n{%endif%} ">
+                    {% endfor %}
 
-                    <h3>Grafico por quantidade</h3>
-                        <div>
-                            <canvas id="graficoQuantidade"></canvas>
-                            
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="grafico-segundo">
+                 <div class="pagina">
+                        <h1 class="title">Relatorio Financeiro</h1>
+                        {% if boletoMeses.length > 1 %}
+                            {% set ultimoMes = boletoMeses.length - 1 %}
+                            <h2>Grafico de Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
+                            {%else%}
+                            <h2>Grafico de Saida no mês de {{boletoMeses[0].mes}}</h2>
+                        {% endif %}
 
-                        <h3>Grafico por Valor R$</h3>
+
+                        <div class="grafico-primeiro">
+
+                            <h3>Grafico por quantidade</h3>
                             <div>
-                                <canvas id="graficoValor"></canvas>
+                                <canvas id="graficoQuantidade"></canvas>
+                                
                             </div>
-                    </div>
+                        </div>
+                        
+                        
+                        <div class="grafico-segundo">
+
+                                <h3>Grafico por Valor R$</h3>
+                                <div>
+                                    <canvas id="graficoValor"></canvas>
+                                </div>
+                        </div>
+                </div>
+                    
 
             </div>
         {% endif %}
 
-        {# Tabela e grafico #}
+
+
+        {# ! Tabela e grafico #}
 
         {% if estilo == 'tabelagrafico' %}
             <div class="tabela-grafico">
-                {% if boletoMeses.length > 1 %}
-                    {% set ultimoMes = boletoMeses.length - 1 %}
-                    <h2 >Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} </h2>
-                    {%else%}
-                    <h2 >Saidas no o mês de {{boletoMeses[0].mes}} </h2>
-                {% endif %}
+                    <div class="pagina">
+                        <h1 class="title">Relatorio Financeiro</h1>
 
-                <div class="finance-table">
+                        {% if boletoMeses.length > 1 %}
+                            {% set ultimoMes = boletoMeses.length - 1 %}
+                            <h2 >Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} </h2>
+                            {%else%}
+                            <h2 >Saidas no o mês de {{boletoMeses[0].mes}} </h2>
+                        {% endif %}
 
-                <div class="finance-head">
-                        <ul>
-                            <li>Mês <div class="filter-desc"></div></li>
-                            {# <li>Tipo<div class="filter-valor"></div></li> #}
-                            <li>Quantidade <div class="filter-data"></div></li>
-                            <li>Valor Medio <div class="filter-tipo"></div></li>
-                            <li>Total</li>
-                    </ul>
-                </div>
+                        <div class="finance-table">
 
+                                <div class="finance-head">
+                                        <ul>
+                                            <li>Mês <div class="filter-desc"></div></li>
+                                            {# <li>Tipo<div class="filter-valor"></div></li> #}
+                                            <li>Quantidade <div class="filter-data"></div></li>
+                                            <li>Valor Medio <div class="filter-tipo"></div></li>
+                                            <li>Total</li>
+                                        </ul>
+                                </div>
 
-                    <div class="finance-rows">
-                        {% set qtd = 0 %}
-                        {% set total = 0 %}
-                        {% set valor = 0 %}
-                        {% set meses = 0 %}
+                                <div class="finance-rows">
+                                        {% set qtd = 0 %}
+                                        {% set total = 0 %}
+                                        {% set valor = 0 %}
+                                        {% set meses = 0 %}
 
-                        {% for boleto in boletoMeses %}
-                        <div class="row">
-                            <ul>
-                                <li class="mes">{{boleto.mes}}</li>
-                                {# <li>{{boleto.tipo}}</li> #}
-                                <li class="quantidade">{{boleto.quantidade}}</li>
-                                <li>R$ {{boleto.valor}}</li>
-                                <li>R$ <span class="valorTotal">{{boleto.valorTotal}}</span></li>
-                            </ul>
+                                        {% for boleto in boletoMeses %}
+                                        <div class="row">
+                                            <ul>
+                                                <li class="mes">{{boleto.mes}}</li>
+                                                <li class="quantidade">{{boleto.quantidade}}</li>
+                                                <li>R$ {{boleto.valor}}</li>
+                                                <li>R$ <span class="valorTotal">{{boleto.valorTotal}}</span></li>
+                                            </ul>
+                                        </div>
+                                        {% set qtd = qtd + boleto.quantidade %}
+                                        {% set total = total + boleto.valorTotal%}
+                                        {% set meses = meses + 1 %}
+                                        {% endfor %}
+                                </div>
+
+                                <div class="finance-bottom">
+                                    <ul>
+                                        <li><div class="filter-desc"></div></li>
+                                        <li>{{qtd}} <div class="filter-data"></div></li>
+                                        <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
+                                        <li>R$ {{total}}</li>
+                                    </ul>
+                                </div>
                         </div>
-                        {% set qtd = qtd + boleto.quantidade %}
-                        {% set total = total + boleto.valorTotal%}
-                        {% set meses = meses + 1 %}
-                        {% endfor %}
-                    </div>
-                    <div class="finance-bottom">
-                        <ul>
-                            {# <li>Em {{meses}} meses<div class="filter-desc"></div></li> #}
-                            <li><div class="filter-desc"></div></li>
-                            {# <li>{{boletoMeses[0].tipo}}<div class="filter-valor"></div></li> #}
-                            {# <li><div class="filter-valor"></div></li> #}
-                            <li>{{qtd}} <div class="filter-data"></div></li>
-                            {# <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li> #}
-                            <li>R$ {{valorMedio}}<div class="filter-tipo"></div></li>
-                            <li>R$ {{total}}</li>
-                    </ul>
-                </div>
-
-
-
-                <div class="grafico-primeiro {%if boletoMeses.length > 1 %} n {%endif%} {%if boletoMeses.length == 1 %} nDois{%endif%}">
-                    
-                    {% if boletoMeses.length > 1 %}
-                        <h2>Grafico de Saidas Entre o mês de {{boletoMeses[0].mes}} e     {{boletoMeses[ultimoMes].mes}} </h2>
-                        {%else%}
-                        <h2>Grafico de Saidas no mês de {{boletoMeses[0].mes}}  </h2>
-                    {%endif%}
-                    <h3>Grafico por quantidade</h3>
-                        <div>
-                            <canvas id="graficoQuantidade"></canvas>
                             
-                        </div>
-                </div>
-                
-                
-                <div class="grafico-segundo">
+                            <div class="grafico-primeiro">
+                                
+                                    {% if boletoMeses.length > 1 %}
+                                        <h2>Grafico de Saidas Entre o mês de {{boletoMeses[0].mes}} e     {{boletoMeses[ultimoMes].mes}} </h2>
+                                        {%else%}
+                                        <h2>Grafico de Saidas no mês de {{boletoMeses[0].mes}}  </h2>
+                                    {%endif%}
+                                    <h3>Grafico por quantidade</h3>
+                                    <div>
+                                        <canvas id="graficoQuantidade"></canvas>
+                                        
+                                    </div>
+                            </div>
+                    </div>
 
-                    <h3>Grafico por Valor R$</h3>
-                        <div>
-                            <canvas id="graficoValor"></canvas>
+                     <div class="pagina">     
+                        <div class="grafico-segundo">
+                                <h3>Grafico por Valor R$</h3>
+                                <div>
+                                    <canvas id="graficoValor"></canvas>
+                                </div>
                         </div>
-                </div>
+                    </div> 
+
             </div>
         {% endif %}
     

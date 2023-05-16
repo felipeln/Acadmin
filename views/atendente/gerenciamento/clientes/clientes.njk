@@ -1,0 +1,154 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="/styles/gerenciamento.css">
+    <title>Acadmin - Clientes </title>
+{% endblock %}
+
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
+            <ul>
+                <li class="list">
+                    <a href="/acadmin">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/acadmin/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/financeiro/pagamentos">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{%block content%}
+
+        <h1>Gerenciamento</h1>
+        <div class="table-wrapper">
+
+            <div class="title table-nav gerencia">
+                <h1>Clientes</h1>
+                <form class="search-form" role="search" method="POST" action="/acadmin/gerenciamento/clientes/search">
+                <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
+                </form>
+
+                <div class="filtro-contaienr">
+                        <label for="filtro">Filtrar por Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option value="">Todos</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                </div>
+
+
+                <a href="/acadmin/cadastro/cliente" class="add">+ Cliente</a>
+            </div>
+
+            {% for mensagem in msg%}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+            
+    {%block table%}
+
+
+        <div class="table-head">
+            <ul>
+                <li>Nome <div class="filter nome"></div></li>
+                <li>Email <div class="filter email"></div></li>
+                <li>Telefone <div class="filter telefone"></div></li>
+                <li>Status <div class="filter status"></div></li>
+                <li>Acões</li>
+            </ul>
+        </div>
+
+        <div class="table" id="cliente-list">
+            
+
+            {% for cliente in clientesAcademia %}
+
+                <div class="row" data-status="{{cliente.status}}">
+                <ul>
+                    <li>{{cliente.nome}} {{cliente.sobrenome}}</li>
+                    <li>{{cliente.email}}</li>
+                    <li>{{cliente.telefone}}</li>
+                    <li>{{cliente.status}}</li>
+
+                    <li class="actions">
+                        <a href="/acadmin/gerenciamento/clientes/ver/{{cliente._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
+
+                        <a class="editar act-btn" href="/acadmin/gerenciamento/clientes/edit/{{cliente._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
+
+                        
+                        
+                    <form action="/acadmin/gerenciamento/clientes/edit/{{cliente._id}}?_method=DELETE" method="POST" class="position-relative">
+                        
+                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="person-remove-outline"></ion-icon> Deletar </button>
+                    </form>
+                        
+                        
+                    </li>
+
+                </ul>
+            </div>
+
+            {% endfor %}
+         
+
+            
+        </div>
+    {%endblock%}
+            
+        </div>
+
+                
+{%endblock%}
+
+
+
+{%block scripts%}
+
+    <script src="/scripts/flashmsg.js"></script>
+    <script src="/scripts/filtroCliente.js"></script>
+
+{%endblock%}

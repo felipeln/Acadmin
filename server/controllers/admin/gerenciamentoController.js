@@ -271,6 +271,7 @@ exports.funcionarios = async (req,res) => {
                 sexo: req.body.sexo,
                 status: req.body.status,
                 cpf: req.body.cpf,
+                endereco: req.body.endereco,
                 dataModificado: moment().format('DD/MM/YYYY HH:mm:ss')
             })
             

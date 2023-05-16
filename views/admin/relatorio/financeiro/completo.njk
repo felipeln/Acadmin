@@ -34,7 +34,6 @@
   */
   html, body {
     height: 100%;
-    padding: 10px;
   }
   /*
     Typographic tweaks!
@@ -70,10 +69,6 @@
   #root, #__next {
     isolation: isolate;
   }
-
-
-
-
 
         .title{
             text-align: center;
@@ -167,47 +162,7 @@
         color: black;
     }
    
-    h2, h3{
-        padding-top: 30px;
-    }
-    .apenas-grafico .row{
-        display: none;
-    }
     
-    .apenas-grafico .grafico-primeiro{
-        min-height: 500px;
-    }
-    .apenas-grafico .grafico-primeiro.n{
-        min-height: 400px;
-    }
-    
-    .tabela-grafico .grafico-primeiro{
-        min-height: 600px;
-    
-    
-    }
-    .tabela-grafico .grafico-primeiro.n{
-        min-height: 1000px;
-    }
-    .tabela-grafico .grafico-primeiro.nDois{
-        min-height: 900px;
-    }
-    .tabela-grafico .grafico-segundo{
-        min-height: 950px;
-    }
-    .tabela-grafico h2, h3{
-    
-        padding: 15px 0;
-    }
-
-    .saldo-final{
-       margin-top: 80px;
-       padding: 10px 0;
-    }
-    .saldo-final.tabela{
-        margin: 0;
-        padding: 0;
-    }
 
     .saldo-final .finance-result ul{
             display: grid;
@@ -225,160 +180,183 @@
         .saldo-final .finance-result ul li{
          list-style: none;
 
-                list-style: none;
+            list-style: none;
 
-                font-weight: bold;
+            font-weight: bold;
 
-                font-size: 1.25em;
+            font-size: 1.25em;
             padding: 10px;
         }
     
+
+   /* .tabela-grafico .tabelas.Maisde1{
+        height: 1128px;
+    }*/
+
+    /* ? Apenas grafico*/
+        .apenas-grafico .row{
+            display: none;
+        }
+    h2, h3{
+        margin: 20px 0;
+    }
+    .pagina{
+        width: 209.55mm;
+        height: 298.45mm;
+    }
+    
+    .grafico-segundo{
+        margin-top: 20px;
+    }
+
    </style>
 </head>
 <body>
     
-    <h1 class="title">Relatorio Financeiro</h1>
     
 
         {# ? TABELA #}
 
         {% if estilo == 'tabela' %}
 
-            {# Entradas #}
+            {# ! Entradas #}
+            <div class="tabelas pagina">
+                <h1 class="title">Relatorio Financeiro</h1>
 
-            {% if boletoMeses.entradas.length > 1 %}
-                {% set ultimoMes = boletoMeses.entradas.length - 1 %}
-                <h2 >Entradas Entre o mês de {{boletoMeses.entradas[0].mes}} e {{boletoMeses.entradas[ultimoMes].mes}} de 2023 </h2>
-                {%else%}
-                    <h2 >Entradas no mês de {{boletoMeses.entradas[0].mes}} de 2023 </h2>
-            {% endif %}
+                {% if boletoMeses.entradas.length > 1 %}
+                    {% set ultimoMes = boletoMeses.entradas.length - 1 %}
+                    <h2 >Entradas Entre o mês de {{boletoMeses.entradas[0].mes}} e {{boletoMeses.entradas[ultimoMes].mes}} de 2023 </h2>
+                    {%else%}
+                        <h2 >Entradas no mês de {{boletoMeses.entradas[0].mes}} de 2023 </h2>
+                {% endif %}
 
-                <div class="finance-table entrada">
+                    <div class="finance-table entrada">
 
-                        <div class="finance-head">
-                                <ul>
-                                    <li>Mês <div class="filter-desc"></div></li>
-                                    <li>Quantidade <div class="filter-data"></div></li>
-                                    <li>Valor Medio <div class="filter-tipo"></div></li>
-                                    <li>Total</li>
-                            </ul>
-                        </div>
-
-
-                            <div class="finance-rows">
-                                {% set qtdEntrada = 0 %}
-                                {% set totalEntrada = 0 %}
-                                {% set valorEntrada = 0 %}
-                                {% set mesesEntrada = 0 %}
-
-                                {% for boleto in boletoMeses.entradas %}
-                                <div class="row">
+                            <div class="finance-head">
                                     <ul>
-                                        <li>{{boleto.mes}}</li>
-                                        <li>{{boleto.quantidade}}</li>
-                                        <li>R$ {{boleto.valorMedio}}</li>
-                                        <li>R$ {{boleto.valorTotal}}</li>
-                                    </ul>
-                                </div>
-                                {% set qtdEntrada = qtdEntrada + boleto.quantidade %}
-                                {% set totalEntrada = totalEntrada + boleto.valorTotal%}
-                                {% set valorEntrada = valorEntrada + boleto.valorMedio %}
-                                {% set mesesEntrada = mesesEntrada + 1 %}
-                                {% endfor %}
-                        </div>
-
-                            <div class="finance-bottom">
-                                <ul>
-                                    <li><div class="filter-desc"></div></li>
-                                    <li>{{qtdEntrada}} <div class="filter-data"></div></li>
-                            
-                                    <li>R$ {{valorMedioEntrada}}<div class="filter-tipo"></div></li>
-                                    <li>R$ {{totalEntrada}}</li>
+                                        <li>Mês <div class="filter-desc"></div></li>
+                                        <li>Quantidade <div class="filter-data"></div></li>
+                                        <li>Valor Medio <div class="filter-tipo"></div></li>
+                                        <li>Total</li>
                                 </ul>
-                         </div>
-                </div>
-                
+                            </div>
 
-            {# SAIDAS  #}
-            {% if boletoMeses.saidas.length > 1 %}
-                {% set ultimoMes = boletoMeses.saidas.length - 1 %}
-                    <h2 >Saidas Entre o mês de {{boletoMeses.saidas[0].mes}} e {{boletoMeses.saidas[ultimoMes].mes}} de 2023 </h2>
-                {%else%}
-                 <h2 >Saidas no mês de {{boletoMeses.saidas[0].mes}} de 2023 </h2>
-            {% endif %}
-            
-            <div class="finance-table saida">
 
-                        <div class="finance-head">
-                                <ul>
-                                    <li>Mês <div class="filter-desc"></div></li>
+                                <div class="finance-rows">
+                                    {% set qtdEntrada = 0 %}
+                                    {% set totalEntrada = 0 %}
+                                    {% set valorEntrada = 0 %}
+                                    {% set mesesEntrada = 0 %}
+
+                                    {% for boleto in boletoMeses.entradas %}
+                                    <div class="row">
+                                        <ul>
+                                            <li>{{boleto.mes}}</li>
+                                            <li>{{boleto.quantidade}}</li>
+                                            <li>R$ {{boleto.valorMedio}}</li>
+                                            <li>R$ {{boleto.valorTotal}}</li>
+                                        </ul>
+                                    </div>
+                                    {% set qtdEntrada = qtdEntrada + boleto.quantidade %}
+                                    {% set totalEntrada = totalEntrada + boleto.valorTotal%}
+                                    {% set valorEntrada = valorEntrada + boleto.valorMedio %}
+                                    {% set mesesEntrada = mesesEntrada + 1 %}
+                                    {% endfor %}
+                            </div>
+
+                                <div class="finance-bottom">
+                                    <ul>
+                                        <li><div class="filter-desc"></div></li>
+                                        <li>{{qtdEntrada}} <div class="filter-data"></div></li>
                                 
-                                    <li>Quantidade <div class="filter-data"></div></li>
-                                    <li>Valor Medio <div class="filter-tipo"></div></li>
-                                    <li>Total</li>
-                            </ul>
-                        </div>
-
-
-                            <div class="finance-rows">
-                                {% set qtdSaida = 0 %}
-                                {% set totalSaida = 0 %}
-                                {% set valorSaida = 0 %}
-                                {% set mesesSaida = 0 %}
-
-                                {% for boleto in boletoMeses.saidas %}
-                                <div class="row">
-                                    <ul>
-                                        <li>{{boleto.mes}}</li>
-                                        <li>{{boleto.quantidade}}</li>
-                                        <li>R$ {{boleto.valorMedio}}</li>
-                                        <li>R$ {{boleto.valorTotal}}</li>
+                                        <li>R$ {{valorMedioEntrada}}<div class="filter-tipo"></div></li>
+                                        <li>R$ {{totalEntrada}}</li>
                                     </ul>
-                                </div>
-                                {% set qtdSaida = qtdSaida + boleto.quantidade %}
-                                {% set totalSaida = totalSaida + boleto.valorTotal%}
-                                {% set valorSaida = valorSaida + boleto.valorMedio %}
-                                {% set mesesSaida = mesesSaida + 1 %}
-                                {% endfor %}
-                        </div>
-
-                            <div class="finance-bottom">
-                                <ul>
-                                    <li><div class="filter-desc"></div></li>
-                                    <li>{{qtdSaida}} <div class="filter-data"></div></li>
-                            
-                                    <li>R$ {{valorMedioSaida}}<div class="filter-tipo"></div></li>
-                                    <li>R$ {{totalSaida}}</li>
-                                </ul>
-                         </div>
-            </div>
-
-            {# Saldo final #}
-            <div class="saldo-final tabela">
-                <h2>Saldo final</h2>
-
-                <div class="finance-result">
-                        {# <ul>
-                            <li>Em {{mesesEntrada}} meses<div class="filter-desc"></div></li>
-                            <li> o saldo final <div class="filter-data"></div></li>
+                            </div>
+                    </div>
                     
-                            <li> foi
-                                {% if totalEntrada > totalSaida %}
-                                    positivo com o acumulo de
-                                {% endif %}
-                            </li>
-                            <li>R$ {{totalEntrada - totalSaida}} em caixa</li>
-                        </ul> #}
-                        <ul>
-                            <li>Em {{mesesEntrada}} meses o saldo final foi
-                                {% if totalEntrada > totalSaida %}
-                                    positivo com o total de R$ {{totalEntrada - totalSaida}} em caixa
-                                    {%else%}
-                                    negativo com total de R$ {{totalEntrada - totalSaida}} de divida
-                                {% endif %}
+
+                {# SAIDAS  #}
+                {% if boletoMeses.saidas.length > 1 %}
+                    {% set ultimoMes = boletoMeses.saidas.length - 1 %}
+                        <h2 >Saidas Entre o mês de {{boletoMeses.saidas[0].mes}} e {{boletoMeses.saidas[ultimoMes].mes}} de 2023 </h2>
+                    {%else%}
+                    <h2 >Saidas no mês de {{boletoMeses.saidas[0].mes}} de 2023 </h2>
+                {% endif %}
+                
+                <div class="finance-table saida">
+
+                            <div class="finance-head">
+                                    <ul>
+                                        <li>Mês <div class="filter-desc"></div></li>
                                     
-                            </li>
-                        </ul>
+                                        <li>Quantidade <div class="filter-data"></div></li>
+                                        <li>Valor Medio <div class="filter-tipo"></div></li>
+                                        <li>Total</li>
+                                </ul>
+                            </div>
+
+
+                                <div class="finance-rows">
+                                    {% set qtdSaida = 0 %}
+                                    {% set totalSaida = 0 %}
+                                    {% set valorSaida = 0 %}
+                                    {% set mesesSaida = 0 %}
+
+                                    {% for boleto in boletoMeses.saidas %}
+                                    <div class="row">
+                                        <ul>
+                                            <li>{{boleto.mes}}</li>
+                                            <li>{{boleto.quantidade}}</li>
+                                            <li>R$ {{boleto.valorMedio}}</li>
+                                            <li>R$ {{boleto.valorTotal}}</li>
+                                        </ul>
+                                    </div>
+                                    {% set qtdSaida = qtdSaida + boleto.quantidade %}
+                                    {% set totalSaida = totalSaida + boleto.valorTotal%}
+                                    {% set valorSaida = valorSaida + boleto.valorMedio %}
+                                    {% set mesesSaida = mesesSaida + 1 %}
+                                    {% endfor %}
+                            </div>
+
+                                <div class="finance-bottom">
+                                    <ul>
+                                        <li><div class="filter-desc"></div></li>
+                                        <li>{{qtdSaida}} <div class="filter-data"></div></li>
+                                
+                                        <li>R$ {{valorMedioSaida}}<div class="filter-tipo"></div></li>
+                                        <li>R$ {{totalSaida}}</li>
+                                    </ul>
+                            </div>
+                </div>
+
+                {# Saldo final #}
+                <div class="saldo-final tabela">
+                    <h2>Saldo final</h2>
+
+                    <div class="finance-result">
+                            {# <ul>
+                                <li>Em {{mesesEntrada}} meses<div class="filter-desc"></div></li>
+                                <li> o saldo final <div class="filter-data"></div></li>
+                        
+                                <li> foi
+                                    {% if totalEntrada > totalSaida %}
+                                        positivo com o acumulo de
+                                    {% endif %}
+                                </li>
+                                <li>R$ {{totalEntrada - totalSaida}} em caixa</li>
+                            </ul> #}
+                            <ul>
+                                <li>Em {{mesesEntrada}} meses o saldo final foi
+                                    {% if totalEntrada > totalSaida %}
+                                        positivo com o total de R$ {{totalEntrada - totalSaida}} em caixa
+                                        {%else%}
+                                        negativo com total de R$ {{totalEntrada - totalSaida}} de divida
+                                    {% endif %}
+                                        
+                                </li>
+                            </ul>
+                    </div>
                 </div>
             </div>
         {% endif %}
@@ -388,12 +366,6 @@
         {# ? GRAFICO #}
         {% if estilo == 'grafico' %}
             <div class="apenas-grafico">
-                    {% if boletoMeses.length > 1 %}
-                        
-                        {% set ultimoMes = boletoMeses.length - 1 %}
-                        <h2>Grafico de Saidas Entre o mês de {{boletoMeses[0].mes}} e {{boletoMeses[ultimoMes].mes}} de 2023 </h2>
-                    {% endif %}
-
                         {% set qtdEntrada = 0 %}
                         {% set totalEntrada = 0 %}
                         {% set valorEntrada = 0 %}
@@ -437,14 +409,22 @@
                             {% set valorSaida = valorSaida + boleto.valorMedio %}
                             {% set mesesSaida = mesesSaida + 1 %}
                         {% endfor %}
-        
-                    <div class="grafico-primeiro {%if boletoMeses.length == 1 %}n{%endif%} ">
 
-                    <h3>Grafico por quantidade</h3>
-                        <div>
-                            <canvas id="graficoQuantidade"></canvas>
-                            
-                        </div>
+                <div class="graficos pagina">
+                        <h1 class="title">Relatorio Financeiro</h1>
+                        {% if boletoMeses.entradas.length > 1 %}
+                            {% set ultimoMes = boletoMeses.entradas.length - 1 %}
+                            <h2>Grafico de Entradas e Saidas Entre o mês de {{boletoMeses.entradas[0].mes}} e {{boletoMeses.entradas[ultimoMes].mes}} de 2023 </h2>
+                            {%else%}
+                            <h2>Grafico de Entradas e Saidas no mês de {{boletoMeses.entradas[0].mes}} de 2023 </h2>
+                        {% endif %}
+                    <div class="grafico-primeiro">
+
+                        <h3>Grafico por quantidade</h3>
+                            <div>
+                                <canvas id="graficoQuantidade"></canvas>
+                                
+                            </div>
                     </div>
                     
                     
@@ -456,6 +436,8 @@
                             </div>
                     </div>
 
+                </div>
+
             </div>
         {% endif %}
 
@@ -464,6 +446,8 @@
         {% if estilo == 'tabelagrafico' %}
             <div class="tabela-grafico">
 
+                <div class="tabelas pagina">
+                    <h1 class="title">Relatorio Financeiro</h1>
                     {# ! ENTRADAS #}
                     {% if boletoMeses.entradas.length > 1 %}
                         {% set ultimoMes = boletoMeses.entradas.length - 1 %}
@@ -577,7 +561,7 @@
                     </div>
 
                     {# ! Saldo final #}
-                    <div class="saldo-final">
+                    <div class="saldo-final ">
                         <h2>Saldo final</h2>
 
                         <div class="finance-result">
@@ -604,13 +588,14 @@
                                 </ul>
                         </div>
                     </div>
+                </div>
 
-
+                <div class="graficos pagina">
                     {# ! graficos #}
-                        <div class="grafico-primeiro {%if boletoMeses.entradas.length > 1 %} n {%endif%} {%if boletoMeses.entradas.length == 1 %} nDois{%endif%}">
+                        <div class="grafico-primeiro">
                             
                             {% if boletoMeses.entradas.length > 1 %}
-                                <h2>Grafico de Entradas eSaidas Entre o mês de {{boletoMeses.entradas[0].mes}} e     {{boletoMeses.entradas[ultimoMes].mes}} </h2>
+                                <h2>Grafico de Entradas e Saidas Entre o mês de {{boletoMeses.entradas[0].mes}} e     {{boletoMeses.entradas[ultimoMes].mes}} </h2>
                                 {%else%}
                                 <h2>Grafico de Entradas e Saidas no mês de {{boletoMeses.entradas[0].mes}}  </h2>
                             {%endif%}
@@ -628,6 +613,7 @@
                                     <canvas id="graficoValor"></canvas>
                                 </div>
                         </div>
+                </div>
             </div>
         {% endif %}
     
@@ -816,7 +802,7 @@ https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
                     padding: {
                         bottom: 50 // Espaçamento inferior do título
                     },
-                    text: 'Entradas e Saidas Mensais por quantidade',
+                    text: 'Entradas e Saidas Mensais valor R$',
                     color: 'black', // Define a cor do título como azul
                     font: {
                         size: 18

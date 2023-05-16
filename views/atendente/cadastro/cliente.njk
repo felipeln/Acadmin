@@ -1,0 +1,151 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+    <title>Acadmin - Cadastrar Clientes </title>
+    <link rel="stylesheet" href="/styles/cadastro.css">
+{% endblock %}
+
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
+            <ul>
+                <li class="list ">
+                    <a href="/acadmin">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/acadmin/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/financeiro/pagamentos">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{%block content%}
+                
+        <div class="form-wrapper ativo"  id="cliente">
+                <h1>Cadastrar Cliente</h1>
+
+            {% for mensagem in sucesso %}
+
+                <div class="alert-box sucesso">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+            {% for mensagem in erro %}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+            {% endfor %}
+
+                <div id="error"></div>
+                <form action="/acadmin/cadastro/cliente" method="POST" id="form" class="cliente">
+
+                    <div class="input-wrapper">
+                        <label for="nome">Nome </label>
+                        <input type="text" name="nome" id="nome" required placeholder="nome">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="sobrenome">Sobrenome </label>
+                        <input type="text" name="sobrenome" id="sobrenome" required placeholder="sobrenome">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="dataNascimento">Data De Nascimento </label>
+                        <input type="Date" name="dataNascimento" id="dataNascimento" required placeholder="dataNascimento" 
+                        min="1930-01-01" max='2023-03-31'>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="email">Email </label>
+                        <input type="text" name="email" id="email" required placeholder="seu@email.com">
+                        <span id="email-error" class="error-message"></span>
+                    </div>
+
+                     <div class="input-wrapper">
+                        <label for="senha">Senha </label>
+                        <input type="password" name="senha" id="senha" required placeholder="senha">
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="cpf">CPF </label>
+                        <input type="text" name="cpf" id="cpf" required placeholder="cpf">
+                        <span id="cpf-error" class="error-message"></span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="sexo">Sexo</label>
+                        <select name="sexo" id="sexo">
+                            <option value="Masculino">Masculino</option>
+                            <option value="Feminino">Feminino</option>
+                            <option value="Outro">Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="telefone">Telefone </label>
+                        <input type="text" name="telefone" id="telefone" required placeholder="telefone">
+                        <span id="telefone-error" class="error-message"></span>
+                    </div>
+
+                    <div class="input-wrapper">
+                        <label for="endereco">Endereço </label>
+                        <input type="text" name="endereco" id="endereco" required placeholder="endereco">
+                    </div>
+                   
+                    <button type="submit" id="logar">Cadastrar</button>
+                </form>
+              
+            </div>
+
+
+{%endblock%}
+
+
+{%block scripts%}
+
+    <script src="/scripts/cadastro.js"></script>
+    <script src="/scripts/flashmsg.js"></script>
+
+{%endblock%}

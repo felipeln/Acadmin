@@ -180,7 +180,7 @@
                                         <button type="submit" class="btn excluir">Excluir Cobrança</button>
                                 </form>
                                 {% if boleto.status == 'Pendente' or boleto.status == 'Atrasado' %}
-                                    <form action="/financeiro//historico/boleto/pagar/{{boleto._id}}?_method=PUT" method="POST">
+                                    <form action="/financeiro/historico/boleto/pagar/{{boleto._id}}?_method=PUT" method="POST">
                                         <button type="submit" class="btn">Pagar</button>
                                     </form>
                                 {% endif %}

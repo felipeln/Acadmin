@@ -1,69 +1,53 @@
-// const Cliente = require('../models/Cliente')
-// const Funcionario = require('../models/Funcionario')
-// const Admin = require('../models/Admin')
+const jwt = require('jsonwebtoken');
 
+// ! Verifica se o usuário está autenticado
+const isAuthenticated = (req, res, next) => {
+  const token = req.headers.authorization;
 
-
-// exports.ClienteAutenticado = async (req,res) =>{
-
-// }
-// exports.FuncionarioAutenticado = async (req,res) =>{
-
-// }
-// exports.AdminAutenticado = async (req,res) =>{
-
-// }
-
-
-// const authAdmin = (permissons) =>{
-    
-//     return (req,res,next) =>{
-//         const userRole = req.body.cargo
-//         if(permissons.includes(userRole)){
-//             next()
-//         }else{
-//             return res.status(401).json("You dont have permission")
-//         }
-//     }
-// }
-// const authCliente = () =>{
-
-// }
-// const AuthFuncionario = () =>{
-
-// }
-
-// function checkRole(role) {
-//     return (req, res, next) => {
-//       if (req.user && req.user.role === role) {
-//         next();
-//       } else {
-//         res.status(401).json({ message: 'Unauthorized' });
-//         console.log(req.user);
-
-//       }
-//     };
-//   }
-
-
-
-function checkToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-
-  if (!token) return res.status(401).json({ msg: "Acesso negado!" });
+  if (!token) {
+    return res.status(401).json({ message: 'Token de autenticação não fornecido.' });
+  }
 
   try {
-    const secret = process.env.SECRET;
+    const decoded = jwt.verify(token, 'suaChaveSecreta'); // Substitua 'suaChaveSecreta' pela sua chave secreta real
 
-    jwt.verify(token, secret);
-
+    req.user = decoded;
     next();
-  } catch (err) {
-    res.status(400).json({ msg: "O Token é inválido!" });
+  } catch (error) {
+    return res.status(401).json({ message: 'Token de autenticação inválido.' });
   }
-}
+};
 
+// ! Verifica se o usuário tem permissão de administrador
+const isAdmin = (req, res, next) => {
+  if (req.user.role === 'admin') {
+    next();
+  } else {
+    return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para acessar esta rota.' });
+  }
+};
 
-  module.exports = {checkToken}
-// module.exports = {authAdmin, authCliente, AuthFuncionario}
+// ! Verifica se o usuário tem permissão de atendente
+const isAtendente = (req, res, next) => {
+  if (req.user.role === 'atendente') {
+    next();
+  } else {
+    return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para acessar esta rota.' });
+  }
+};
+
+// ! Verifica se o usuário tem permissão de cliente
+const isCliente = (req, res, next) => {
+  if (req.user.role === 'cliente') {
+    next();
+  } else {
+    return res.status(403).json({ message: 'Acesso negado. Você não tem permissão para acessar esta rota.' });
+  }
+};
+
+module.exports = {
+  isAuthenticated,
+  isAdmin,
+  isAtendente,
+  isCliente,
+};

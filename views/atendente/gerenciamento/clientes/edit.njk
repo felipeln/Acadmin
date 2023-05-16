@@ -1,0 +1,191 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="/styles/gerenciamento.css">
+    <link rel="stylesheet" href="/styles/edit.css">
+    <link rel="stylesheet" href="/styles/modal.css">
+    <title>Acadmin - Editar Clientes </title>
+{% endblock %}
+
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
+            <ul>
+                <li class="list">
+                    <a href="/acadmin">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list active">
+                    <a href="/acadmin/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/financeiro/pagamentos">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{%block content%}
+                
+
+        <h1 class="ver-title">{{clienteAcademia.nome}} {{clienteAcademia.sobrenome}}</h1>
+<hr>
+        <div class="ver-menu">
+            <ul>
+                <li><a href="/acadmin/gerenciamento/clientes">Voltar </a></li>
+                <li> / {{clienteAcademia.nome}} {{clienteAcademia.sobrenome}} </li>
+            </ul>
+        </div>
+
+
+
+
+    <form  action="/acadmin/gerenciamento/clientes/edit/salvar/{{clienteAcademia._id}}?_method=PUT" method="POST">
+        <div class="edit-form">
+            <div class="form-field">
+                <label for="nome">Nome</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{clienteAcademia.nome}}" placeholder="Primeiro Nome" required>
+            </div>
+
+            <div class="form-field">
+                <label for="sobrenome">Sobrenome</label>
+                <input type="text" class="form-control" id="sobrenome" name="sobrenome" value="{{clienteAcademia.sobrenome}}" placeholder="Sobrenome" required>
+            </div>
+
+            <div class="form-field">
+                <label for="cpf">CPF </label>
+                <input type="text" class="form-control" id="cpf" name="cpf" value="{{clienteAcademia.cpf}}" placeholder="First Name" required>
+            </div>
+
+            <div class="form-field">
+                <label for="dataNascimento">Data de nascimento</label>
+                <input type="date" class="form-control" id="dataNascimento" name="dataNascimento" value="{{dataNascimento}}" placeholder="data de nascimento" required>
+            </div>
+
+            <div class="form-field">
+                <label for="telefone">Telefone</label>
+                <input type="text" class="form-control" id="telefone" name="telefone" value="{{clienteAcademia.telefone}}" placeholder="(00) 00000-0000" required>
+            </div>
+
+            <div class="form-field">
+                <label for="email">Email</label>
+                <input type="text" class="form-control" id="email" name="email" value="{{clienteAcademia.email}}" placeholder="email@email.com" required>
+            </div>
+            <div class="form-field">
+                <label for="endereco">Endereço</label>
+                <input type="text" class="form-control" id="endereco" name="endereco" value="{{clienteAcademia.endereco}}" placeholder="Rua blabla" required>
+            </div>
+
+            <div class="form-field">
+                <label for="sexo">Sexo</label>
+                <select name="sexo" id="sexo">
+                    {% if  clienteAcademia.sexo == "Masculino"   %}
+                        <option value="Masculino" selected> Masculino</option>
+                        <option value="Feminino" >Feminino</option>
+                        <option value="Outro" >Outro</option>
+                    {% endif %}
+                    {% if clienteAcademia.sexo == "Feminino"  %}
+                        <option value="Masculino" >Masculino</option>
+                        <option value="Feminino" selected>Feminino</option>
+                        <option value="Outro" >Outro</option>
+                    {% endif %}
+                    {% if clienteAcademia.sexo == "Outro"  %}
+                        <option value="Masculino" >Masculino</option>
+                        <option value="Feminino" >Feminino</option>
+                        <option value="Outro" selected>Outro</option>
+                    {% endif %}
+                </select>
+
+            </div>
+            
+            <div class="form-field">
+                <label for="status">Status</label>
+                <select name="status" id="status">
+                    {% if clienteAcademia.status == "Ativo" %}
+                        <option value="Ativo" selected>Ativo</option>
+                        <option value="Inativo">Inativo</option>
+                        {%- else -%}
+                        <option value="Ativo">Ativo</option>
+                        <option value="Inativo" Selected>Inativo</option>
+                    {% endif %}
+                </select>
+            </div>
+
+    </div>
+      
+        <div class="form-buttons">
+            <button type="submit" class="btn ver">Atualizar Cliente</button>
+
+            <button type="button" class="btn deletar" id="deleteModal">Deletar Cliente</button>
+        </div>
+
+    </form>
+
+     
+
+        
+    <div class="modal-overlay">
+        <div class="modal">
+            <div class="modal-content">
+                <div class="modal-info">
+                    <h1>Voce esta prestes a excluir o registro de um Cliente.</h1>
+                </div>
+                <div class="modal-aviso">
+                    <h2>Isso ira excluir o registro do Cliente {{clienteAcademia.nome}} {{clienteAcademia.sobrenome}} , Você tem certeza disso?</h2>
+                </div>
+
+                <div class="modal-buttons">
+                    <a class="close_modal">
+                        fechar
+                    </a>
+                    <form action="/acadmin/gerenciamento/clientes/edit/{{clienteAcademia._id}}?_method=DELETE" method="POST">
+                        <button type="submit" class="btn">Sim, Deletar Cliente</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+{%endblock%}
+
+
+
+{%block scripts%}
+
+        <script src="/scripts/modal.js"></script>
+
+{%endblock%}

@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {# <link rel="stylesheet" href="/styles/relatorioModel.css"> #}
+    <title>Relatorio Financeiro</title>
+   <style>
+
+                @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
+
+
+        /*
+        1. Use a more-intuitive box-sizing model.
+        */
+        *, *::before, *::after {
+            box-sizing: border-box;
+        }
+        /*
+            2. Remove default margin
+        */
+        * {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+        ul{
+            margin: 0;
+            padding: 0;
+        }
+        /*
+            3. Allow percentage-based heights in the application
+        */
+        html, body {
+            height: 100%;
+        }
+        /*
+            Typographic tweaks!
+            4. Add accessible line-height
+            5. Improve text rendering
+        */
+        body {
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+        /*
+            6. Improve media defaults
+        */
+        img, picture, video, canvas, svg {
+            display: block;
+            max-width: 100%;
+        }
+        /*
+            7. Remove built-in form typography styles
+        */
+        input, button, textarea, select {
+            font: inherit;
+        }
+        /*
+            8. Avoid text overflows
+        */
+        p, h1, h2, h3, h4, h5, h6 {
+            overflow-wrap: break-word;
+        }
+        /*
+            9. Create a root stacking context
+        */
+        #root, #__next {
+            isolation: isolate;
+        }
+
+
+                .title{
+                    text-align: center;
+                    
+                }
+
+                .finance-table{
+                    padding: 10px 0;
+                }
+                .finance-head{
+                
+                    
+                }
+                .finance-table .finance-head ul{
+                    display: grid;
+
+                   /* grid-template-columns:  25% 25% 25% 25%; */
+                    grid-template-columns:  25% 25% 25% 25%;;
+
+                    width: 100%;
+                    background-color: #008080;
+
+                    color: white;
+                    border-top-left-radius: 5px ;
+                    border-top-right-radius: 5px;
+
+                }
+            
+                .finance-head ul li{
+                    list-style: none;
+
+                    list-style: none;
+
+                    font-weight: bold;
+
+                    font-size: 1.25em;
+                    padding: 10px;
+
+
+                }
+
+                    .finance-bottom ul li{
+                        list-style: none;
+
+                        list-style: none;
+
+                        font-weight: bold;
+
+                        font-size: 1.25em;
+                        padding: 10px;
+
+                    }
+                
+                    .finance-bottom ul{
+                    display: grid;
+
+                   /* grid-template-columns:  25% 25% 25% 25%; */
+                    grid-template-columns:  25% 25% 25% 25%;;
+
+                    width: 100%;
+                    background-color: #008080;
+
+                    color: white;
+                    border-bottom-left-radius: 5px ;
+                    border-bottom-right-radius: 5px;
+
+                }
+            
+
+                .finance-rows .row ul li{
+                    list-style: none;
+                    
+                    font-size: 1.125em;
+                    
+                    padding: 10px;
+                    border: 1px solid black;
+                    word-break: break-all;
+                    
+                }
+
+                .finance-rows .row ul li .icon{
+                    font-size: 1.5em;
+                }
+
+                .row ul {
+                display: grid;
+                grid-template-columns: 25% 25% 25% 25%;;
+                width: 100%;
+                background-color: white;
+                color: black;
+            }
+        
+
+            .saldo-final .finance-result ul{
+            display: grid;
+
+            /*grid-template-columns:  25% 25% 25% 25%;*/
+            grid-template-columns:  1fr;
+
+            width: 100%;
+            background-color: #424242;
+
+            color: white;
+            border-radius: 5px;
+
+        }
+        .saldo-final .finance-result ul li{
+         list-style: none;
+
+            list-style: none;
+
+            font-weight: bold;
+
+            font-size: 1.25em;
+            padding: 10px;
+        }
+
+            .none{
+                    display: none;
+                }
+            h2, h3{
+                margin: 20px 0;
+            }
+            .pagina{
+                width: 209.55mm;
+                height: 298.45mm;
+            }
+            
+            .grafico-segundo{
+                padding-top: 40px;
+            }
+            .finance-head.inativo ul{
+                background-color: #dc3545;
+            }
+
+    
+   </style>
+</head>
+<body>
+
+        {# ! TABELA #}
+        {% if estilo == 'tabela' %}
+                    <div class="tabelas">
+                        {# ! Coloca limite de funcionarios por pagina, aqui nacaso é 10, a cada 10 eles criam uma nova pagina #}
+                            {% set batchSize = 10 %}
+                            {% set gruposFuncionarios = funcionariosInativos|batch(batchSize) %}
+                            {% set nova = 1 %}
+                                {% for grupo in gruposFuncionarios %}
+
+                                <div class="pagina">
+                                        {% if loop.first %}
+                                            <h1 class="title">Relatório de Controle de Funcionários</h1>
+                                        {% endif %}
+                                        <div class="finance-table">
+                                            <h2>Funcionários Inativos</h2>
+                                            <div class="finance-head inativo">
+                                                <ul>
+                                                    <li>Nome <div class="filter-desc"></div></li>
+                                                    <li>Data de Nascimento<div class="filter-valor"></div></li>
+                                                    <li>Email<div class="filter-data"></div></li>
+                                                    <li>Telefone</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="finance-rows">
+                                                {% for funcionario in grupo %}
+                                                    <div class="row">
+                                                        <ul>
+                                                            <li>{{funcionario.nome}} {{funcionario.sobrenome}}</li>
+                                                            <li>{{funcionario.dataNascimento}}</li>
+                                                            <li>{{funcionario.email}}</li>
+                                                            <li>{{funcionario.telefone}}</li>
+                                                        </ul>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    {# ! se tiver espaço adiciona essa div, caso o numero de itens no ultimo loop seja menor q 8 #}
+                                    {% if loop.last and grupo.length <= 8 %}
+                                        {% set nova = 1 %}
+                                        <div class="saldo-final tabela">
+                                            <h2>Numero Total De Funcionarios Inativos</h2>
+                                            <div class="finance-result">
+                                                <ul>
+                                                    <li>O Numero Total De Funcionarios Inativos no sistema é de {{nFuncionariosInativos}} Funcionarios</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        {% else %}
+                                        {% set nova = 2 %}
+                                    {% endif %}
+
+
+
+                                </div>
+                                {% endfor %}
+
+                            {#  #}
+                             {% if nova == 2 %}
+                                <div class="pagina">
+                                    <div class="saldo-final tabela">
+                                        <h2>Numero Total De Funcionarios Inativos</h2>
+                                        <div class="finance-result">
+                                                <ul>
+                                                    <li>O Numero Total De Funcionarios Inativos no sistema é de {{nFuncionariosInativos}} Funcionarios
+                                                    </li>
+                                                </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                             {% endif %}
+                    </div>
+        {% endif %}
+
+
+
+        {# ! GRAFICO #}
+        {% if estilo == 'grafico' %}
+            <div class="apenas-grafico">
+                    <div class='none'>
+                        <li class="nFuncionariosInativos">{{nFuncionariosInativos}}</li>
+                        <li class="nFuncionarios">{{nFuncionarios}}</li>
+                    </div>
+
+                    <div class="pagina">
+                        <h1 class="title">Relatorio de Controle de Funcionarios</h1>
+
+                        <h2>Grafico de Funcionarios Inativos</h2>
+            
+                        <div class="grafico-primeiro">
+                                <div>
+                                    <canvas id="graficoQuantidade"></canvas>
+                                    
+                                </div>
+                        </div>
+
+
+                    </div>
+            </div>
+        {% endif %}
+
+        {# ! Tabela e grafico #}
+
+        {% if estilo == 'tabelagrafico' %}
+            <div class="tabela-grafico">
+                    <div class='none'>
+                        <li class="nFuncionariosInativos">{{nFuncionariosInativos}}</li>
+                        <li class="nFuncionarios">{{nFuncionarios}}</li>
+                    </div>
+
+                    <div class="tabelas">
+                        {# ! Coloca limite de funcionarios por pagina, aqui nacaso é 10, a cada 10 eles criam uma nova pagina #}
+                            {% set batchSize = 10 %}
+                            {% set gruposFuncionarios = funcionariosInativos|batch(batchSize) %}
+                            {% set nova = 1 %}
+                                {% for grupo in gruposFuncionarios %}
+
+                                <div class="pagina">
+                                        {% if loop.first %}
+                                            <h1 class="title">Relatório de Controle de Funcionários</h1>
+                                        {% endif %}
+                                        <div class="finance-table">
+                                            <h2>Funcionários Inativos</h2>
+                                            <div class="finance-head inativo">
+                                                <ul>
+                                                    <li>Nome <div class="filter-desc"></div></li>
+                                                    <li>Data de Nascimento<div class="filter-valor"></div></li>
+                                                    <li>Email<div class="filter-data"></div></li>
+                                                    <li>Telefone</li>
+                                                </ul>
+                                            </div>
+
+                                            <div class="finance-rows">
+                                                {% for funcionario in grupo %}
+                                                    <div class="row">
+                                                        <ul>
+                                                            <li>{{funcionario.nome}} {{funcionario.sobrenome}}</li>
+                                                            <li>{{funcionario.dataNascimento}}</li>
+                                                            <li>{{funcionario.email}}</li>
+                                                            <li>{{funcionario.telefone}}</li>
+                                                        </ul>
+                                                    </div>
+                                                {% endfor %}
+                                            </div>
+                                        </div>
+
+                                    {# ! se tiver espaço adiciona essa div, caso o numero de itens no ultimo loop seja menor q 8 #}
+                                    {% if loop.last and grupo.length <= 5 %}
+                                        {% set nova = 1 %}
+                                        <div class="saldo-final tabela">
+                                            <h2>Numero Total De Funcionarios Inativos</h2>
+                                            <div class="finance-result">
+                                                <ul>
+                                                    <li>O Numero Total De Funcionarios Inativos no sistema é de {{nFuncionariosInativos}} Funcionarios</li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div class="graficos">
+
+                                                <h2>Grafico de Funcionarios Inativos</h2>
+                                    
+                                                <div class="grafico-primeiro">
+                                                        <div>
+                                                            <canvas id="graficoQuantidade"></canvas>
+                                                            
+                                                        </div>
+                                                </div>
+                                        </div>
+
+                                        {% else %}
+                                        {% set nova = 2 %}
+                                    {% endif %}
+
+
+
+                                </div>
+                                {% endfor %}
+
+                            {# ! se nao tiver espaço ele cria uma nova pagina e adiciona isso  #}
+                             {% if nova == 2 %}
+                                <div class="pagina">
+                                    <div class="saldo-final tabela">
+                                        <h2>Numero Total De Funcionarios Inativos</h2>
+                                        <div class="finance-result">
+                                                <ul>
+                                                    <li>O Numero Total De Funcionarios Inativos no sistema é de {{nFuncionariosInativos}} Funcionarios
+                                                    </li>
+                                                </ul>
+                                        </div>
+                                    </div>
+
+                                    <div class="graficos">
+
+                                                <h2>Grafico de Funcionarios Inativos</h2>
+                                    
+                                                <div class="grafico-primeiro">
+                                                        <div>
+                                                            <canvas id="graficoQuantidade"></canvas>
+                                                            
+                                                        </div>
+                                                </div>
+                                    </div>
+
+                                </div>
+                             {% endif %}
+                    </div>
+                    
+            </div>
+        {% endif %}
+    
+          
+
+          
+<script src="
+https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
+"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+<script>
+    const graficoQuantidade = document.getElementById('graficoQuantidade');
+    {# const graficoValor = document.getElementById('graficoValor'); #}
+    {# let meses = document.querySelectorAll('.mes') #}
+    let quantidade = document.querySelectorAll('.quantidade')
+    let valor = document.querySelectorAll('.valorTotal')
+    
+    {# let mesesArray = []
+    for(let i of meses){
+       mesesArray.push(i.textContent) 
+    } #}
+    {# let quantidadeArray = []
+     for(let i of quantidade){
+       quantidadeArray.push(Number(i.textContent)) 
+    }
+    let valorArray = []
+    for(let i of valor){
+       valorArray.push(Number(i.textContent)) 
+    } #}
+    let funcionariosInativos = [Number(document.querySelector('.nFuncionariosInativos').textContent)]
+    let funcionarios = [Number(document.querySelector('.nFuncionarios').textContent)]
+
+    console.log(funcionarios, funcionariosInativos)
+
+     new Chart(graficoQuantidade, {
+      type: 'bar',
+      data: {
+        labels: 'x',
+        datasets: [
+                    {
+                    label: 'Numero de Funcionarios Inativos',
+                    data: funcionariosInativos,
+                    backgroundColor: [
+                    // 'rgba(255, 0, 0, 0.8)',
+                        'rgba(0, 141, 255, 0.8)',
+                    // 'rgba(205, 255, 0, 0.8)',
+                    // 'rgba(0, 255, 40, 0.8)',
+                    // 'rgba(120, 0, 255, 0.8)'
+                    ],
+                    borderWidth: 5,
+                    },
+                    {
+                    label: 'Numero Total de Funcionarios ',
+                    data: funcionarios,
+                    backgroundColor: [
+                    // 'rgba(255, 0, 0, 0.8)',
+                    //    'rgba(0, 141, 255, 0.8)',
+                    // 'rgba(205, 255, 0, 0.8)',
+                    // 'rgba(0, 255, 40, 0.8)',
+                     'rgba(120, 0, 255, 0.8)'
+                    ],
+                    borderWidth: 5,
+                    },
+
+                ],
+        
+      },
+      plugins: [ChartDataLabels],
+        options: {
+            plugins: {
+                datalabels: {
+                    color: 'black',
+                    anchor: 'end',
+                    align: 'end',
+                    font: {
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+            legend: {
+                display: true, // Desabilita a exibição da legenda
+                position: 'bottom',
+                    labels: {
+                        font: {
+                        size: 20
+                        },
+                         padding: 30
+                    }
+            },
+            title: {
+                display: true,
+                padding: {
+                        bottom: 40 // Espaçamento inferior do título
+                    },
+                text: 'Funcionarios Inativos',
+                color: 'black', // Define a cor do título como azul
+                font: {
+                    size: 20
+                }
+            }
+            },
+        //indexAxis: 'x', // Definindo o eixo x como o eixo horizontal
+        scales: {
+            x: {
+                display: false
+            },
+             y: {
+                beginAtZero: true,
+                 ticks: {
+                        font: {
+                            family: 'Arial',
+                            size: 16,
+                            weight: 'bold'
+                        }
+                    }
+            } 
+            },
+            responsive: true,
+            datasets: {
+                bar: {
+                    barThickness: 70 // Ajuste o valor para alterar a largura das barras
+                }
+            }
+      }
+    });
+
+   
+    {# new Chart(graficoValor, {
+      type: 'bar',
+      data: {
+        labels: mesesArray,
+        datasets: [{
+          label: 'Entradas por Valor R$',
+          data: valorArray,
+          backgroundColor: [
+            'rgba(255, 0, 0, 0.8)',
+            'rgba(0, 141, 255, 0.8)',
+            'rgba(205, 255, 0, 0.8)',
+            'rgba(0, 255, 40, 0.8)',
+            'rgba(120, 0, 255, 0.8)'
+          ],
+          borderWidth: 3
+        }]
+      },
+      plugins: [ChartDataLabels],
+        options: {
+            plugins: {
+                datalabels: {
+                    color: 'black',
+                    anchor: 'end',
+                    align: 'end',
+                    font: {
+                        size: 18,
+                        weight: 'bold'
+                    },
+                },
+            legend: {
+                display: false // Desabilita a exibição da legenda
+            },
+            title: {
+                display: true,
+                padding: {
+                        bottom: 40 // Espaçamento inferior do título
+                    },
+                text: 'Entradas Mensais por valor R$',
+                color: 'black', // Define a cor do título como azul
+                font: {
+                    size: 20
+                }
+            }
+            },
+      
+        //indexAxis: 'y', // Definindo o eixo x como o eixo horizontal
+        scales: {
+          x: {
+            beginAtZero: true,
+            ticks: {
+                    font: {
+                        family: 'Arial',
+                        size: 18,
+                    }
+                }
+          },
+          y: {
+            beginAtZero: true,
+            ticks: {
+                    font: {
+                        family: 'Arial',
+                        size: 20,
+                        weight: 'bold'
+                    }
+                }
+          }
+        },
+        responsive: true,
+           datasets: {
+            bar: {
+                barThickness: 50 // Ajuste o valor para alterar a largura das barras
+            }
+        }
+      }
+    }); #}
+
+
+
+</script>
+</body>
+</html>

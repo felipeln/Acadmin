@@ -1,0 +1,212 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="/styles/portal/user-financeiro.css">
+    <link rel="stylesheet" href="/styles/pagamentos.css">
+    <link rel="stylesheet" href="/styles/boleto.css">
+    <title>Acadmin - Pagamentos </title>
+{% endblock %}
+
+
+{%block menu%}
+    <aside>
+        <nav class="ativo" id="left-menu">
+            <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+            </div>
+            <ul>
+                <li class="list">
+                    <a href="/acadmin">
+                        <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                        <span class="title">Home</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/cadastro">
+                        <span class="icon"><ion-icon name="person-add-outline"></ion-icon></span>
+                        <span class="title">Cadastro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/agendamento">
+                        <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                        <span class="title">Agendamento</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/acadmin/gerenciamento">
+                        <span class="icon"><ion-icon name="business-outline"></ion-icon></span>
+                        <span class="title">Gerenciamento</span>
+                    </a>
+                </li>
+                <li class="list  active">
+                    <a href="/acadmin/financeiro/pagamentos">
+                        <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                        <span class="title">Financeiro</span>
+                    </a>
+                </li>
+                <li class="list">
+                    <a href="/login">
+                        <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                        <span class="title">Sair</span>
+                    </a>
+                </li>
+            </ul>               
+        </nav>
+        <div class="open">></div>
+    </aside>
+{%endblock%}
+
+{%block content%}
+
+
+        <div class="finance-wrapper">
+            <h1>Pagamentos</h1>
+
+
+            <div class="table-wrapper pagamentos">
+
+                <div class="title table-nav">
+
+                    <form class="search-form" role="search" method="POST" action="/acadmin/financeiro/pagamentos/search" >
+                    <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
+                    </form>
+                    
+                    <div class="filtro-contaienr">
+                        <label for="filtro">Filtrar por Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option value="">Todos</option>
+                            <option value="Pago">Pago</option>
+                            <option value="Pendente">Pendente</option>
+                            <option value="Atrasado">Atrasado</option>
+                        </select>
+                    </div>
+                    
+
+                    <a href="/acadmin/financeiro/criar/search" class="add">+ Pagamento</a>
+                </div>
+
+
+
+
+                <div class="finance-table">
+                    <div class="finance-head">
+                        <ul>
+                            <li>Cliente </li>
+                            <li>Data de Emissao</li>
+                            <li>Data de vencimento </li>
+                            <li>Data de pagamento </li>
+                            <li>Valor</li>
+                            <li>Status</li>
+                            <li>Detalhes</li>
+                    </ul>
+                    </div>
+
+                    <div class="finance-rows">
+
+                        <div id="boletos-list">
+                            {% if boletos.length > 0 %}
+
+                                {% for boleto in boletos %}
+                                    <div class="row boletos-row" data-status="{{boleto.status}}">
+                                        <ul>
+                                            <li>{{boleto.clienteNome}}</li>
+                                            <li>{{boleto.dataEmissao}}</li>
+                                            <li>{{boleto.dataVencimento}}</li>
+                                            <li>{{boleto.dataPagamento}}</li>
+                                            <li><span class="cifrao">R$</span>{{boleto.valor}},00</li>
+                                            <li class="status">{{boleto.status}}</li>
+                                            <li class="detalhes">
+                                                <a  class="details-btn" data-cliente-id="{{boleto.id}}" >Detalhes</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                {% endfor %}
+
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+
+    </div>
+    
+    
+    {% block boletoModal %}
+    
+    {% for boleto in boletos %}
+
+        <div id="{{boleto.id}}" class="modal-overlay " >
+        <div class="modal ">
+            <div class="modal-content">
+                <div class="boleto-container">
+                        <div class="boleto">
+                            <div class="boleto__header">
+                                <div class="boleto__logo">
+                                    <img src="/img/acadmin4.png" alt="Acadmin Logo">
+                                </div>
+                                <div>Boleto bancário</div>
+                            </div>
+                            <div class="boleto__barcode">
+                                <img src="https://barcode.tec-it.com/barcode.ashx?data=12345678901234567890123456789012345678901234&amp;code=Code128&amp;dpi=96&amp;dataseparator=" alt="Código de barras do boleto">
+                            </div>
+                            <div class="boleto__details">
+                                <div class="boleto__details__item">Cliente: {{boleto.clienteNome}}</div>
+                                <div class="boleto__details__item"> CPF: {{boleto.clienteCpf}}</div>
+                            </div>
+                            <div class="boleto__details">
+                                <div class="boleto__details__item">Data Vencimento: {{boleto.dataVencimento}}</div>
+                                <div class="boleto__details__item">Valor: R$ {{boleto.valor}},00</div>
+                            </div>
+
+                            {% if boleto.status == 'Pago' %}
+                            
+                                <div class="boleto__details">
+                                    <div class="boleto__details__item">Data Pagamento: {{boleto.dataPagamento}}</div>
+
+
+                                </div>
+                            {% endif %}
+
+                            <div class="boleto__instructions">
+                                <p>Pagável em qualquer banco até o vencimento.</p>
+                                <p>Após o vencimento, acrescer juros de 1% ao mês e multa de 2% sobre o valor total.</p>
+                            </div>
+                        </div>
+                        
+
+                        
+                        
+                        <div class="modal-buttons">
+
+                            {% if boleto.status == 'Pendente' or boleto.status == 'Atrasado' %}
+                                <form action="/acadmin/financeiro/pagar/boleto/{{boleto._id}}?_method=PUT" method="POST">
+                                    <button type="submit" class="btn">Pagar</button>
+                                </form>
+                            {% endif %}
+                            <a class="close_modal" id="close-{{boleto.id}}">
+                                fechar
+                            </a>
+                            
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% endfor %}
+
+    {% endblock boletoModal %}
+
+                
+{%endblock%}
+
+
+
+{%block scripts%}
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/scripts/boletoModal.js"></script>
+    <script src="/scripts/filtroPagamento.js"></script>
+
+{%endblock%}

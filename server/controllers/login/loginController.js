@@ -2,16 +2,12 @@ const Cliente = require('../../models/Cliente')
 const Admin = require('../../models/Admin')
 const Funcionario = require('../../models/Funcionario')
 
-const mongoose = require('mongoose')
-
-
 
 exports.login = async (req,res) =>{
 
   res.render('login/login')
 
 }
-
 
 
 
@@ -67,94 +63,90 @@ exports.login = async (req,res) =>{
   
 // }
 
+// !
+  exports.loginPost = async (req,res) =>{
 
-exports.loginPost = async (req,res) =>{
 
 
-
-  try {
-    
-    let msg = await req.consumeFlash()
-    
-    const {email, senha} = req.body
-
-    // veirificando se usuario ja existe
-      let user = await Cliente.findOne(({email: email}))
+    try {
       
-      if (!user) {
-        user = await Admin.findOne(({email: email}))
+      let msg = await req.consumeFlash()
+      
+      const {email, senha} = req.body
+
+      // veirificando se usuario ja existe
+        let user = await Cliente.findOne(({email: email}))
+        
+        if (!user) {
+          user = await Admin.findOne(({email: email}))
+        }
+
+        if (!user) {
+          user = await Funcionario.findOne(({email: email}))
+        }
+
+      // verify email
+
+      if(!user){
+        // return res.status(400).json({
+        //   sucess: '2',
+        //   message: 'Credenciais invaldias'
+        // })
+      
+        return res.status(404).render('login/login', {msg: ['email invalido']})
       }
 
-      if (!user) {
-        user = await Funcionario.findOne(({email: email}))
+      // verify password
+      const isMatched = await user.comparePassword(senha)
+      if(!isMatched){
+        // return res.status(400).json({
+        //   sucess: false,
+        //   message: 'Credenciais invaldias'
+        // })
+      
+        return res.status(422).render('login/login', {msg: ["Senha invlida"]})
       }
 
-    // verify email
-
-    if(!user){
-      // return res.status(400).json({
-      //   sucess: '2',
-      //   message: 'Credenciais invaldias'
-      // })
     
-      return res.status(404).render('login/login', {msg: ['email invalido']})
-    }
 
-    // verify password
-    const isMatched = await user.comparePassword(senha)
-    if(!isMatched){
-      // return res.status(400).json({
-      //   sucess: false,
-      //   message: 'Credenciais invaldias'
-      // })
+      switch (user.cargo) {
+        case "Admin":
+          return res.redirect(`/dashboard`)
+          break;
+      
+        case "Cliente":
+          return res.redirect(`/portal`)
+          break;
+      
+        case "funcionario":
+          return res.redirect(`/acadmin`)
+          break;
+      
+        default:
+          return res.status(400).json({
+            success: false,
+            message: "Usuario invalido",
+          });
+          break;
+      }
+
+
+      // await req.flash('sucesso',`Login efetuado,  bem vindo ${user.nome} ${user.sobrenome}`)
+      // let msgLogin = await req.consumeFlash('sucesso')
+      
+      // return res.status(200).render('admin/dashboard', {msg: msgLogin })
+
     
-      return res.status(422).render('login/login', {msg: ["Senha invlida"]})
-    }
 
-   
+    } catch (error) {
 
-    switch (user.cargo) {
-      case "Admin":
-        return res.redirect(`/dashboard`)
-        break;
+
+      console.log(error);
+      return res.status(400).redirect('/login')
+
+  }
     
-      case "Cliente":
-        return res.redirect(`/portal`)
-        break;
-    
-      case "funcionario":
-        return res.redirect(`/acadmin`)
-        break;
-    
-      default:
-        return res.status(400).json({
-          success: false,
-          message: "Usuario invalido",
-        });
-        break;
-    }
-
-
-    // await req.flash('sucesso',`Login efetuado,  bem vindo ${user.nome} ${user.sobrenome}`)
-    // let msgLogin = await req.consumeFlash('sucesso')
-    
-    // return res.status(200).render('admin/dashboard', {msg: msgLogin })
-
-   
-
-  } catch (error) {
-
-
-    console.log(error);
-    return res.status(400).redirect('/login')
-
-}
-  
-}
-
-
-
-
+  }
 
 
 

@@ -98,41 +98,28 @@
             {% endfor %}
 
                 <div id="error"></div>
-                <form action="/gerar/relatorio/clientes" method="POST" id="form" class="cliente">
+                <form target="_blank" action="/gerar/relatorio/clientes" method="POST" id="form" class="cliente">
 
                    <div class="input-wrapper">
                         <label for="tipo">Tipo</label>
                         <select name="tipo" id="tipo">
-                            <option value="completo">Completo</option>
-                            <option value="ativo">Ativo</option>
-                            <option value="inativo">Inativo</option>
+                            <option value="ativoinativo">Ativos e Inativos</option>
+                            <option value="ativos">Ativos</option>
+                            <option value="inativos">Inativos</option>
                         </select>
                     </div>
                     
-                   <div class="input-wrapper">
-                        <label for="mesInicio">Mês Inicio</label>
-                        <select name="mesInicio" id="mesInicio">
-                            <option value="janeiro">Janeiro</option>
-                            <option value="fevereiro">Fevereiro</option>
-                            <option value="marco">Março</option>
-                            <option value="abril">Abril</option>
-                            <option value="maio">Maio</option>
+
+                    <div class="input-wrapper">
+                        <label for="estilo">Estilo</label>
+                        <select name="estilo" id="estilo">
+                            <option value="tabelagrafico">Tabela e Grafico</option>
+                            <option value="tabela">Tabela</option>
+                            <option value="grafico">Grafico</option>
+
                         </select>
                     </div>
 
-
-                   <div class="input-wrapper">
-                        <label for="mesFim">Mês Fim</label>
-                        <select name="mesFim" id="mesFim">
-                            <option value="janeiro">Janeiro</option>
-                            <option value="fevereiro">Fevereiro</option>
-                            <option value="marco">Março</option>
-                            <option value="abril">Abril</option>
-                            <option value="maio">Maio</option>
-                        </select>
-                    </div>
-
-                    
                    
                     <button type="submit">Gerar Relatorio</button>
                 </form>

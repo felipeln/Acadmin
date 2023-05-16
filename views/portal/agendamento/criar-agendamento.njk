@@ -1,0 +1,138 @@
+{% extends 'layout.njk' %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="/styles/gerenciamento.css">
+    <link rel="stylesheet" href="/styles/criar.css">
+    <title>Portal - Agendamentos </title>
+{% endblock %}
+
+
+{%block menu%}
+<aside>
+    <nav class="ativo" id="left-menu">
+        <div class="logo">
+                <img src="/img/acadmin3.png" alt="Acadmin Logo">
+        </div>
+        <ul>
+            <li class="list ">
+                <a href="/portal">
+                    <span class="icon"><ion-icon name="home-outline"></ion-icon></span>
+                    <span class="title">Home</span>
+                </a>
+            </li>
+            <li class="list active">
+                <a href="/portal/agendamento">
+                    <span class="icon"><ion-icon name="calendar-number-outline"></ion-icon></span>
+                    <span class="title">Agendamento</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/portal/financeiro">
+                    <span class="icon"><ion-icon name="cash-outline"></ion-icon></span>
+                    <span class="title">Financeiro</span>
+                </a>
+            </li>
+            <li class="list">
+                <a href="/login">
+                    <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
+                    <span class="title">Sair</span>
+                </a>
+            </li>
+        </ul>               
+    </nav>
+    <div class="open">></div>
+</aside>
+{%endblock%}
+
+{% block content %}
+
+     <h1>Escolha uma modalidade</h1>
+
+        {% for mensagem in msgErro %}
+
+                <div class="alert-box deleted">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+        {% endfor %}
+        
+        {% for mensagem in msgSucesso %}
+
+                <div class="alert-box sucesso">
+                    <p>{{mensagem}}</p>
+                    <button class="close-alert"><ion-icon name="close"></ion-icon></button>
+                </div>
+
+        {% endfor %}
+
+      <div class="ver-menu">
+            <ul>
+                <li><a href="/portal/agendamento">Agendamentos</a> ></li>
+            </ul>
+             <ul>
+                <li> Novo agendamento </li>
+            </ul>
+        </div>
+
+
+
+        <div class="form-wrapper">
+            <form action="/portal/agendamento/criando/novo" method="POST">
+          
+                <div class="input-wrapper">
+                    <label for="cliente">Cliente</label>
+                    <select class="disabled"  name="cliente" id="cliente">
+                        <option selected value="{{cliente.id}}">{{cliente.nome}} {{cliente.sobrenome}}</option>
+                        
+                    </select>
+                </div>
+
+                <div class="input-wrapper">
+                    <label for="modalidade">Modalidade</label>
+                    <select name="modalidade" id="modalidade">
+                        <option value="Boxe">Boxe</option>
+                        <option value="FitDance">FitDance</option>
+                        <option value="Musculacao">Musculação</option>
+                        <option value="Jiu Jitsu">Jiu Jitsu</option>
+                        <option value="Natacao">Natação</option>
+                        <option value="Pilates">Pilates</option>
+                    </select>
+                </div>
+
+
+                <div class="input-wrapper">
+                <label for="instrutor">Instrutor</label>
+                <select name="instrutor" id="instrutor" required>
+           
+                </select>
+                </div>
+
+            <div class="input-wrapper">
+                    <label for="dia">Dia:</label>
+                <input type="date" name="dia" id="dia" required>
+            </div>
+            <div class="input-wrapper">
+                <label for="horario">Horario:</label>
+                <select name="horario" id="horario" required>
+
+                </select>
+                <span class="erro-horario"></span>
+            </div>
+
+         <button type="submit" id="agendar">Agendar</button>
+
+            </form>
+        </div>
+
+
+{% endblock content %}
+
+{% block scripts %}
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+
+    <script src="/scripts/modalidadeCliente.js"></script>
+    <script src="/scripts/flashmsg.js"></script>
+
+{% endblock scripts %}
