@@ -36,7 +36,7 @@
                     </a>
                 </li>
                 <li class="list">
-                    <a href="/login">
+                    <a href="#">
                         <span class="icon"><ion-icon name="arrow-forward-circle-outline"></ion-icon></span>
                         <span class="title">Sair</span>
                     </a>
@@ -92,19 +92,17 @@
                                     <li>{{agendamento.horarioTermina}}</li>
                                     <li>{{agendamento.status}}</li>
 
-                                    <li class="actions">
+                                    <li class="actions historico">
                                         <a href="/portal/agendamento/ver/{{agendamento._id}}" class="ver act-btn"><ion-icon class="icon" name="eye-outline"></ion-icon> ver</a>
 
                                         <a class="editar act-btn" href="/portal/agendamento/edit/{{agendamento._id}}"><ion-icon class="icon"  name="pencil-outline"></ion-icon> Editar</a>
 
                                         
-                                        
-                                    <form action="/portal/agendamento/edit/{{agendamento._id}}?_method=DELETE" method="POST" class="position-relative">
-                                        
-                                        <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="trash-outline"></ion-icon> Deletar </button>
-                                    </form>
-                                        
-                                        
+                                        <form action="/portal/agendamento/edit/{{agendamento._id}}?_method=DELETE" method="POST" class="position-relative">
+                                            
+                                            <button class="deletar act-btn" type="submit" class="btn btn-primary"><ion-icon class="icon" name="trash-outline"></ion-icon> Deletar </button>
+                                        </form>
+                                            
                                     </li>
 
                                 </ul>

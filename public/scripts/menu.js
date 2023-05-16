@@ -9,8 +9,10 @@ const btnLogout = list[list.length - 1]
 const formLogout = document.getElementById('logout')
 
 btnLogout.addEventListener('click', () =>{
-    formLogout.submit()
-    btnLogout
+    setTimeout(() => {
+        formLogout.submit();
+      }, 300);
+    
 })
 
 console.log(btnLogout);

@@ -33,10 +33,9 @@ exports.financeiroPagamentos = async (req,res) =>{
     try {
         // ! id do usuario logado
         // ? usuario teste
-        let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
-        let id = clienteTeste.id
+        // let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
+        let id = req.session.userId
         const boletos = await Boleto.find({clienteId: id}).sort({status: -1})
-        
         
         res.render('portal/financeiro/user-pagamentos', {
             boletos,

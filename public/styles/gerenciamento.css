@@ -137,6 +137,7 @@
  .editar{
     background-color: #ffc107 ;
     color: black;
+    font-weight: bold;
     text-decoration: none;
 }
  .deletar{
@@ -219,6 +220,7 @@
 
     color: white;
     background-color: #008080;
+    font-weight: bold;
 }
 .table-nav .add.start{
     justify-self: start;
@@ -226,6 +228,7 @@
 .table-nav .add.historico{
     background-color: #ffc107 ;
     color: black;
+    font-weight: bold;
     border: none;
 }
 
@@ -345,4 +348,20 @@
 }
 .row.pagamentos ul li {
     word-wrap: break-word;
+}
+
+
+h3{
+    padding: 20px 0;
+}
+
+a.add{
+    border: 1px solid #008080;
+    text-decoration: none;
+
+    padding: 5px;
+    justify-self: end;
+
+    color: white;
+    background-color: #008080;
 }

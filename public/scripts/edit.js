@@ -36,7 +36,7 @@ function atualizarHorarios(){
 
 
 
-  axios.get(`/info/${instrutor}/horarios/${diaEscolhido}`)
+  axios.get(`/dashboard/info/${instrutor}/horarios/${diaEscolhido}`)
   .then(response => {
     horarioSelect.innerHTML = ''
     // limpar opçoes do select antes de mostrar as novas.

@@ -1,6 +1,7 @@
 const Agendamentos = require('../../models/Agendamento')
 const Instrutor = require('../../models/Instrutores')
 const Cliente = require('../../models/Cliente')
+const { ObjectId } = require('bson');
 const moment = require('moment'); // require
 moment.locale('pt-br');
 
@@ -32,14 +33,11 @@ exports.agendamento = async (req,res) =>{
 
              // ! id do usuario logado
             // ? usuario teste
-            let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
-            let id = clienteTeste._id
+            // let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
+            let id = new ObjectId(req.session.userId)
 
             let msg = await req.consumeFlash('excluido')
-
-            // const cursor = Agendamentos.aggregate([
-            //     { $match: { status: 'Ativo'} }
-            // ]).cursor();
+            let msgErro = await req.consumeFlash('inativo')
 
             const cursor = Agendamentos.aggregate([
                 { $match: { clienteId: id, status: 'Ativo' } }
@@ -63,10 +61,10 @@ exports.agendamento = async (req,res) =>{
                 }
             });
         
-
             res.render('portal/agendamento/user-agendamento', {
                 agendamentos,
-                msg
+                msg,
+                msgErro
             });
         } catch (error) {
             console.log(error);
@@ -79,9 +77,7 @@ exports.agendamentoVer = async (req,res) =>{
     
     // res.render('portal/agendamento/ver')
     try {
-        // ! id do usuario logado
-        let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
-        let id = clienteTeste._id
+        
         // const agendamento = await Agendamentos.findOne({ _id: id })
         const agendamento = await Agendamentos.findOne({ _id: req.params.id })
     
@@ -100,8 +96,7 @@ exports.agendamentoCriar = async (req,res) =>{
     // res.render('portal/agendamento/criar-agendamento')
     try {
         // ! id do usuario logado
-        let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
-        let id = clienteTeste._id
+        let id = req.session.userId
         const cliente = await Cliente.findOne({ _id: id })
         // const cliente = await Cliente.findOne({ _id: req.params.id })
 
@@ -110,7 +105,7 @@ exports.agendamentoCriar = async (req,res) =>{
             let msgSucesso = await req.consumeFlash('AgendamentoMsgSucesso')
             res.render('portal/agendamento/criar-agendamento',{cliente, msgErro, msgSucesso})
         }else{
-            await req.flash('erro',`Não é possivel criar Agendamentos para usuarios Inativos`)
+            await req.flash('inativo',`Não é possivel criar Agendamentos para usuarios Inativos`)
             const previousUrl = req.get('referer') 
             res.redirect(previousUrl)
         }
@@ -380,7 +375,7 @@ exports.agendamentoDelete= async (req,res) =>{
         if (!agendamento) {
             return res.status(404).send("Esse agendamento nao existe");
         }else{
-            await req.flash('excluido',`o agendamento do cliente ${agendamento.clienteNome}, com o instrutor ${agendamento.instrutorNome} no dia ${agendamento.dia} as ${agendamento.horarioComeca} foi excluido`)
+            await req.flash('excluido',`Seu agendamento com o instrutor ${agendamento.instrutorNome} no dia ${agendamento.dia} as ${agendamento.horarioComeca} foi excluido`)
         }
 
         res.redirect('/portal/agendamento/')
@@ -391,8 +386,6 @@ exports.agendamentoDelete= async (req,res) =>{
 }
 
 
-
-
 exports.agendamentoHistorico = async (req,res) =>{
     // ! id do usuario logado
 
@@ -401,8 +394,8 @@ exports.agendamentoHistorico = async (req,res) =>{
     try {
          // ! id do usuario logado
         // ? usuario teste
-        let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
-        let id = clienteTeste._id
+        // let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
+        let id = req.session.userId
 
         //! const id = req.params.id
         const agendamentos = await Agendamentos.find({clienteId: id}).sort({status: 1})

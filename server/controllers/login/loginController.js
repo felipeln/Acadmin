@@ -20,11 +20,13 @@ exports.loginPost = async (req, res) => {
     // Verificar se o usuário é um cliente
     let user = await Cliente.findOne({ email: email });
     if (user) {
-      const isMatched = await user.comparePassword(senha);
-      if (isMatched) {
+        const isMatched = await user.comparePassword(senha);
+        if (isMatched) {
         req.session.cargo = 'Cliente';
+        req.session.userId = user.id
         return res.redirect('/portal');
       }
+      
     }
 
     // Verificar se o usuário é um admin
@@ -33,6 +35,7 @@ exports.loginPost = async (req, res) => {
       const isMatched = await user.comparePassword(senha);
       if (isMatched) {
         req.session.cargo = 'Admin';
+        req.session.userId = user.id
         return res.redirect('/dashboard');
       }
     }
@@ -40,10 +43,16 @@ exports.loginPost = async (req, res) => {
     // Verificar se o usuário é um funcionário
     user = await Funcionario.findOne({ email: email });
     if (user) {
-      const isMatched = await user.comparePassword(senha);
-      if (isMatched) {
-        req.session.cargo = 'funcionario';
-        return res.redirect('/acadmin');
+        if(user.status == 'Ativo'){
+          const isMatched = await user.comparePassword(senha);
+          if (isMatched) {
+            req.session.cargo = 'funcionario';
+            req.session.userId = user.id
+            return res.redirect('/acadmin');
+          }
+      }else{
+        await req.flash('erro',`Acesso do usuario bloqueado`)
+        return res.status(400).redirect('/login');
       }
     }
 
