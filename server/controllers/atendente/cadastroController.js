@@ -40,6 +40,7 @@ exports.cadastroClientePost = async (req,res) => {
     
 
     let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
+
     const {nome, sobrenome, email, senha, cpf, sexo, telefone,endereco} = req.body
     
         const novoCliente = new Cliente({
@@ -108,7 +109,7 @@ exports.cadastroClientePost = async (req,res) => {
             console.log(error); 
             }
         }else{
-            res.status(400).render('atendente/cadastro/cliente', {erro})
+            res.status(400).render('atendente/cadastro/cliente', {erro, nome, sobrenome, email, cpf, telefone,endereco})
         }
 
 

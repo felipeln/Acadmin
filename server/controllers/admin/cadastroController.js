@@ -37,22 +37,24 @@ const moment = require('moment')
     }
     exports.cadastroClientePost = async (req,res) => {
 
-        let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
+        const {nome, sobrenome, email,senha,cpf,sexo,telefone,endereco, dataNascimento} = req.body
+
+        let dataNascimentoFormatada = interpretarData(dataNascimento)
         const novoCliente = new Cliente({
-            nome: req.body.nome,
-            sobrenome: req.body.sobrenome,
+            nome: nome,
+            sobrenome: sobrenome,
             dataNascimento: dataNascimentoFormatada,
-            email: req.body.email,
-            senha: req.body.senha,
-            cpf: req.body.cpf,
-            sexo: req.body.sexo,
-            telefone: req.body.telefone,
-            endereco: req.body.endereco,
+            email: email,
+            senha: senha,
+            cpf: cpf,
+            sexo: sexo,
+            telefone: telefone,
+            endereco: endereco,
         })
 
 
-        let userCpf = req.body.cpf
-        let userEmail = req.body.email
+        let userCpf = cpf
+        let userEmail = email
 
         let funcionario = await Funcionario.findOne({
             $or: [
@@ -105,11 +107,10 @@ const moment = require('moment')
             console.log(error); 
             }
         }else{
-            res.status(400).render('admin/cadastro/cliente', {erro})
+            res.status(400).render('admin/cadastro/cliente', {erro, nome,sobrenome,email,cpf,telefone,endereco, dataNascimento})
             console.log(req.body);
             console.log('erro, usuario ja cadastrado');
         }
-
        
     }
 
@@ -123,23 +124,25 @@ const moment = require('moment')
     }
     exports.cadastroFuncionarioPost = async (req,res) => {
         
-        let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
+        const {nome,sobrenome,dataNascimento,email,senha,cpf,sexo,cargo,telefone,endereco} = req.body
+
+        let dataNascimentoFormatada = interpretarData(dataNascimento)
         const novoFuncionario = new Funcionario({
-            nome: req.body.nome,
-            sobrenome: req.body.sobrenome,
+            nome: nome,
+            sobrenome: sobrenome,
             dataNascimento: dataNascimentoFormatada,
-            email: req.body.email,
-            senha: req.body.senha,
-            cpf: req.body.cpf,
-            sexo: req.body.sexo,
-            cargo: req.body.cargo,
-            telefone: req.body.telefone,
-            endereco: req.body.endereco,
+            email: email,
+            senha: senha,
+            cpf: cpf,
+            sexo: sexo,
+            cargo: cargo,
+            telefone: telefone,
+            endereco: endereco,
         })
 
         
-        let userCpf = req.body.cpf
-        let userEmail = req.body.email
+        let userCpf = cpf
+        let userEmail = email
 
         let funcionario = await Funcionario.findOne({
             $or: [
@@ -192,8 +195,9 @@ const moment = require('moment')
             console.log(error); 
             }
         }else{
-            res.status(400).render('admin/cadastro/funcionario', {erro})
-            console.log(req.body);
+            res.status(400).render('admin/cadastro/funcionario', {
+                erro,  nome,sobrenome,dataNascimento,email,cpf,cargo,telefone,endereco
+            })
             console.log('erro, usuario ja cadastrado');
         }
 
@@ -209,24 +213,26 @@ const moment = require('moment')
         }
     }
     exports.cadastroInstrutorPost = async (req,res) => {
-        
+
+        const {nome,sobrenome,dataNascimento,email,cpf,sexo,cargo,modalidade,telefone,endereco} = req.body
+
         let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         const novoInstrutor = new Instrutor({
-            nome: req.body.nome,
-            sobrenome: req.body.sobrenome,
+            nome: nome,
+            sobrenome: sobrenome,
             dataNascimento: dataNascimentoFormatada,
-            email: req.body.email,
-            cpf: req.body.cpf,
-            sexo: req.body.sexo,
-            cargo: req.body.cargo,
-            modalidade: req.body.modalidade,
-            telefone: req.body.telefone,
-            endereco: req.body.endereco,
+            email: email,
+            cpf: cpf,
+            sexo: sexo,
+            cargo: cargo,
+            modalidade: modalidade,
+            telefone: telefone,
+            endereco: endereco,
         })
 
 
-        let userCpf = req.body.cpf
-        let userEmail = req.body.email
+        let userCpf = cpf
+        let userEmail = email
 
         let funcionario = await Funcionario.findOne({
             $or: [
@@ -279,7 +285,7 @@ const moment = require('moment')
             console.log(error); 
             }
         }else{
-            res.status(400).render('admin/cadastro/instrutor', {erro})
+            res.status(400).render('admin/cadastro/instrutor', {erro,nome,sobrenome,dataNascimento,email,cpf,telefone,endereco })
             console.log(req.body);
             console.log('erro, usuario ja cadastrado');
         }

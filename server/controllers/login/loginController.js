@@ -66,8 +66,6 @@ exports.login = async (req,res) =>{
 // !
   exports.loginPost = async (req,res) =>{
 
-
-
     try {
       
       let msg = await req.consumeFlash()
@@ -92,7 +90,7 @@ exports.login = async (req,res) =>{
         //   sucess: '2',
         //   message: 'Credenciais invaldias'
         // })
-      
+        
         return res.status(404).render('login/login', {msg: ['email invalido']})
       }
 
@@ -105,32 +103,35 @@ exports.login = async (req,res) =>{
         // })
       
         return res.status(422).render('login/login', {msg: ["Senha invlida"]})
+      }else{
+
+
+        switch (user.cargo) {
+          case "Admin":
+            return res.redirect(`/dashboard`)
+            break;
+        
+          case "Cliente":
+            return res.redirect(`/portal`)
+            break;
+        
+          case "funcionario":
+            return res.redirect(`/acadmin`)
+            break;
+        
+          default:
+            return res.status(400).json({
+              success: false,
+              message: "Usuario invalido",
+            });
+            break;
+        }
+
       }
 
     
 
-      switch (user.cargo) {
-        case "Admin":
-          return res.redirect(`/dashboard`)
-          break;
       
-        case "Cliente":
-          return res.redirect(`/portal`)
-          break;
-      
-        case "funcionario":
-          return res.redirect(`/acadmin`)
-          break;
-      
-        default:
-          return res.status(400).json({
-            success: false,
-            message: "Usuario invalido",
-          });
-          break;
-      }
-
-
       // await req.flash('sucesso',`Login efetuado,  bem vindo ${user.nome} ${user.sobrenome}`)
       // let msgLogin = await req.consumeFlash('sucesso')
       

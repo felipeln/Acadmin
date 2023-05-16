@@ -1,6 +1,5 @@
 const Cliente = require('../../models/Cliente')
-const Funcionario = require('../../models/Funcionario')
-const Instrutor = require('../../models/Instrutores')
+
 const moment = require('moment'); 
 
 // ! formatar data.

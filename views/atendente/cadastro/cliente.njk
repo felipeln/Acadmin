@@ -83,23 +83,23 @@
 
                     <div class="input-wrapper">
                         <label for="nome">Nome </label>
-                        <input type="text" name="nome" id="nome" required placeholder="nome">
+                        <input type="text" name="nome" id="nome" required placeholder="nome" value='{{nome}}'>
                     </div>
 
                     <div class="input-wrapper">
                         <label for="sobrenome">Sobrenome </label>
-                        <input type="text" name="sobrenome" id="sobrenome" required placeholder="sobrenome">
+                        <input type="text" name="sobrenome" id="sobrenome" required placeholder="sobrenome" value='{{sobrenome}}'>
                     </div>
 
                     <div class="input-wrapper">
                         <label for="dataNascimento">Data De Nascimento </label>
                         <input type="Date" name="dataNascimento" id="dataNascimento" required placeholder="dataNascimento" 
-                        min="1930-01-01" max='2023-03-31'>
+                        min="1930-01-01" max='2023-03-31' value='{{dataNascimento}}'>
                     </div>
 
                     <div class="input-wrapper">
                         <label for="email">Email </label>
-                        <input type="text" name="email" id="email" required placeholder="seu@email.com">
+                        <input type="text" name="email" id="email" required placeholder="seu@email.com" value='{{email}}'>
                         <span id="email-error" class="error-message"></span>
                     </div>
 
@@ -110,7 +110,7 @@
 
                     <div class="input-wrapper">
                         <label for="cpf">CPF </label>
-                        <input type="text" name="cpf" id="cpf" required placeholder="cpf">
+                        <input type="text" name="cpf" id="cpf" required placeholder="cpf" value='{{cpf}}'>
                         <span id="cpf-error" class="error-message"></span>
                     </div>
 
@@ -125,13 +125,13 @@
 
                     <div class="input-wrapper">
                         <label for="telefone">Telefone </label>
-                        <input type="text" name="telefone" id="telefone" required placeholder="telefone">
+                        <input type="text" name="telefone" id="telefone" required placeholder="telefone" value='{{telefone}}'>
                         <span id="telefone-error" class="error-message"></span>
                     </div>
 
                     <div class="input-wrapper">
                         <label for="endereco">Endereço </label>
-                        <input type="text" name="endereco" id="endereco" required placeholder="endereco">
+                        <input type="text" name="endereco" id="endereco" required placeholder="endereco" value='{{endereco}}'>
                     </div>
                    
                     <button type="submit" id="logar">Cadastrar</button>
