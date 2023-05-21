@@ -683,13 +683,13 @@ exports.relatorio = async (req,res) => {
          
           // // Defina o conteúdo da página como a saída do template Nunjucks renderizado
           
+          
+
+
           await page.setContent(renderedHtml);
-          const tempoEspera = 1500;
 
           // // Aguarda o tempo de espera antes de gerar o PDF
-          await new Promise(resolve => setTimeout(resolve, tempoEspera));
-
-
+          await new Promise(resolve => setTimeout(resolve, 2000));
 
           // Gere o PDF a partir da página renderizada
           const pdf = await page.pdf({

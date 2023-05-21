@@ -544,7 +544,6 @@ try {
 
   const instrutores = await Instrutor.find({modalidade: agendamento.modalidade}).select('nome _id sobrenome');
 
-  console.log(dia);
 
   res.render('admin/agendamento/edit', {
     agendamento,

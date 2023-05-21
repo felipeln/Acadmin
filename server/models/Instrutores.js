@@ -68,7 +68,7 @@ const InstrutorSchema = new Schema({
 })
 
 
-module.exports = mongoose.model('Instrutores', InstrutorSchema)
+module.exports = mongoose.model('Instrutor', InstrutorSchema)
 
 
 

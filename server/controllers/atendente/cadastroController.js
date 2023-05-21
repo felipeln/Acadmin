@@ -89,7 +89,7 @@ exports.cadastroClientePost = async (req,res) => {
         })
 
 
-        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('erro',`Ja existe um cadastro com esse Cpf ou email no sistema.`)
         await req.flash('sucesso',`Cadastro realizado com sucesso`)
 
         let erro = await req.consumeFlash('erro')

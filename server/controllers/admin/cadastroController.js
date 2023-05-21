@@ -87,7 +87,7 @@ const moment = require('moment')
 
         
 
-        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('erro',`Ja existe um cadastro com esse Cpf ou email no sistema.`)
         await req.flash('sucesso',`Cadastro realizado com sucesso`)
 
         let erro = await req.consumeFlash('erro')
@@ -100,7 +100,6 @@ const moment = require('moment')
 
                 await Cliente.create(novoCliente)
 
-                console.log('Cadastro realizado');
                 
                 res.status(200).render('admin/cadastro/cliente', {sucesso})
             } catch (error) {
@@ -108,8 +107,7 @@ const moment = require('moment')
             }
         }else{
             res.status(400).render('admin/cadastro/cliente', {erro, nome,sobrenome,email,cpf,telefone,endereco, dataNascimento})
-            console.log(req.body);
-            console.log('erro, usuario ja cadastrado');
+            
         }
        
     }
@@ -175,7 +173,7 @@ const moment = require('moment')
 
         
 
-        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('erro',`Ja existe um cadastro com esse Cpf ou email no sistema.`)
         await req.flash('sucesso',`Cadastro realizado com sucesso`)
 
         let erro = await req.consumeFlash('erro')
@@ -265,7 +263,7 @@ const moment = require('moment')
 
         
 
-        await req.flash('erro',`cpf ou email ja esta cadastrado no sistema`)
+        await req.flash('erro',`Ja existe um cadastro com esse Cpf ou email no sistema.`)
         await req.flash('sucesso',`Cadastro realizado com sucesso`)
 
         let erro = await req.consumeFlash('erro')

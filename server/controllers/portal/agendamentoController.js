@@ -267,7 +267,6 @@ exports.agendamentoEdit = async (req,res) =>{
             
             const instrutores = await Instrutor.find({modalidade: agendamento.modalidade}).select('nome _id sobrenome');
             
-            console.log(dia);
             
             res.render('portal/agendamento/edit', {
                 agendamento,
