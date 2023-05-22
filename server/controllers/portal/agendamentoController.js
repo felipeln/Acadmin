@@ -262,19 +262,25 @@ exports.agendamentoEdit = async (req,res) =>{
             // let id = clienteTeste._id
             const agendamento = await Agendamentos.findOne({ _id: req.params.id })
             // const agendamento = await Agendamentos.findOne({ _id: req.params.id })
+
+            if(agendamento.status == "Ativo") {
+                let dia = interpretarData(agendamento.dia, "YYYY-MM-DD")
             
-            let dia = interpretarData(agendamento.dia, "YYYY-MM-DD")
+                const instrutores = await Instrutor.find({modalidade: agendamento.modalidade}).select('nome _id sobrenome');
+                
+                
+                res.render('portal/agendamento/edit', {
+                    agendamento,
+                    instrutores,
+                    dia,
+                    msgErro,
+                    msgSucesso
+                })
+            }if(agendamento.status == "Inativo"){
+                res.redirect('/portal/agendamento/')
+            }
             
-            const instrutores = await Instrutor.find({modalidade: agendamento.modalidade}).select('nome _id sobrenome');
-            
-            
-            res.render('portal/agendamento/edit', {
-                agendamento,
-                instrutores,
-                dia,
-                msgErro,
-                msgSucesso
-            })
+           
         
         } catch (error) {
             console.log(error);
@@ -398,8 +404,28 @@ exports.agendamentoHistorico = async (req,res) =>{
         let id = req.session.userId
 
         //! const id = req.params.id
-        const agendamentos = await Agendamentos.find({clienteId: id}).sort({status: 1})
-    
+        const cursor = await Agendamentos.find({clienteId: id}).sort({status: 1}).cursor()
+
+        const agendamentosAtivos = await cursor.toArray();
+
+        const agendamentos = agendamentosAtivos.sort((a, b) => {
+            const diaA = moment(a.dia, 'DD/MM/YYYY');
+            const diaB = moment(b.dia, 'DD/MM/YYYY');
+        
+            if (diaA.isBefore(diaB)) {
+            return 1;
+            } else if (diaA.isAfter(diaB)) {
+            return -1;
+            } else {
+            const horarioComecaA = moment(a.horarioComeca, 'HH:mm');
+            const horarioComecaB = moment(b.horarioComeca, 'HH:mm');
+            return horarioComecaA.isBefore(horarioComecaB) ? -1 : 1;
+            }
+        });
+
+
+
+
         const clienteDados = await Cliente.findById(id, {nome: 1, sobrenome: 1, _id: 0})
         const nomeCompleto = `${clienteDados.nome} ${clienteDados.sobrenome}`
         res.render('portal/agendamento/historico', {

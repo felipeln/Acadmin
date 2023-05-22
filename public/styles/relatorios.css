@@ -19,9 +19,12 @@
     background-color: whitesmoke;
     padding: 30px;
     
+    border: 2px solid #A1D7D7;
+    
     border-left: 5px solid teal;
     border-radius: 5px;
     cursor: pointer;
+    
 
     align-items: center;
 }

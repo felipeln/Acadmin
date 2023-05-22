@@ -55,6 +55,7 @@
     border-radius: 5px;
     background-color: whitesmoke;
 
+    border: 1px solid #A1D7D7;
     border-left: 5px solid teal;
     padding: 30px;
     
@@ -99,13 +100,15 @@
 
     width: 100%;
     background-color: whitesmoke;
+    /* background-color: #A1D7D7; */
 
+    border: 1px solid #444;
     color: black;
     border-top-left-radius: 5px ;
     border-top-right-radius: 5px;
 }
 .finance-head{
-    border-bottom: 3px #444 solid;
+    border-bottom: 2px solid #444;
 }
 .finance-head ul li{
     list-style: none;
@@ -125,8 +128,8 @@
 
     grid-template-columns: 1fr 1.5fr 1fr 1fr 1fr;
     width: 100%;
-    background-color: whitesmoke;
-
+    background-color: #f5f5f5;
+    
     color: black;
     border-top-left-radius: 5px ;
     border-top-right-radius: 5px;
@@ -158,6 +161,7 @@
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
 
     background-color: whitesmoke;
+    border: 1px solid #A1D7D7;
 
     color: black;
 

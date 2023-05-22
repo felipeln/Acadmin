@@ -36,7 +36,14 @@ exports.financeiroPagamentos = async (req,res) =>{
         // let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
         let id = req.session.userId
         const boletos = await Boleto.find({clienteId: id}).sort({status: -1})
-        
+
+        boletos.sort((a, b) => {
+            const dataA = moment(a.dataEmissao, 'DD/MM/YYYY');
+            const dataB = moment(b.dataEmissao, 'DD/MM/YYYY');
+          
+            return dataA.diff(dataB);
+          });
+          
         res.render('portal/financeiro/user-pagamentos', {
             boletos,
         })

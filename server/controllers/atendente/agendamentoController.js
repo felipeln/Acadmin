@@ -76,22 +76,26 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
 
         try {
             let searchTerm = req.body.searchTerm.trim()
-            const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
+            const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
         
-            const cursor = Agendamentos.find({
-                $or: [
-                    {
-                        clienteNome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                    },
-                    
-                    {
-                        instrutorNome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                    },
-                
-                ],
-                status: 'Ativo'
-            }).cursor()
-        
+
+                const cursor = Agendamentos.find({
+                    $or: [
+                        {
+                            clienteNome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")}
+                        },
+                        
+                        {
+                            instrutorNome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")}
+                        },
+                        {
+                            modalidade: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")} 
+                        }
+                    ],
+                    status: 'Ativo'
+                }).cursor()
+           
+
             const agendamentosAtivos = await cursor.toArray();
         
             const agendamentos = agendamentosAtivos.sort((a, b) => {
@@ -289,28 +293,78 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     exports.agendamentoSearchClientePost = async (req,res) =>{
 
         try {
-            let searchTerm = req.body.searchTerm
-            const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
-    
-            let msgErro = await req.consumeFlash('erro')
-    
-            const clientesAcademia = await Cliente.find({
-                $or: [
-                    {
-                        nome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                    },
-                    
-                    {
-                        sobrenome: { $regex: new RegExp(searcNoSpecialChar, "i")}
-                    },
-    
-                ]
-            })
-    
-            res.render('atendente/agendamento/search-cliente', {
-            clientesAcademia,
-            msgErro
+            const searchWithSpace = req.body.searchTerm
+      const searchTerm = req.body.searchTerm.trim();
+      const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+      const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
+
+        let msgErro = await req.consumeFlash('erro')
+        if(searchTerm.includes('@') || searchTerm.includes('.com')){
+          
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {email:  searchTerm}
+            ]
           })
+
+         res.render('atendente/agendamento/search-cliente', {
+            clientesAcademia,
+            msgErro})
+        }else if(searchTermIsNumber){
+
+          const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
+          const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
+
+
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {
+                cpf: cpfWithSpecialCharRegex,
+              },
+              {
+                cpf: cpfWithoutSpecialChar,
+              },
+            ],
+          });
+
+          res.render('atendente/agendamento/search-cliente', {
+            clientesAcademia,
+            msgErro})
+        }
+        else{
+          const regex = new RegExp(`^${searchWithSpace}`, 'i');
+          const clientesAcademia = await Cliente.find({
+            $or: [
+                {
+                    nome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")}
+                },
+                
+                {
+                    sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")}
+                },
+                {
+                  $expr: {
+                    $regexMatch: {
+                      input: {
+                        $concat: [
+                          { $ifNull: ['$nome', ''] },
+                          ' ',
+                          { $ifNull: ['$sobrenome', ''] },
+                        ],
+                      },
+                      regex,
+                    },
+                  },
+                },
+
+            ]
+        })
+
+          res.render('atendente/agendamento/search-cliente', {
+            clientesAcademia,
+            msgErro})
+      }
+
         
         } catch (error) {
             console.log(error);
@@ -322,8 +376,28 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     exports.agendamentoClienteHistorico = async (req,res) =>{
         try {
             const id = req.params.id
-            const agendamentos = await Agendamentos.find({clienteId: id})
-        
+            const cursor = await Agendamentos.find({clienteId: id}).sort({status: 1}).cursor()
+
+            const agendamentosAtivos = await cursor.toArray();
+
+            const agendamentos = agendamentosAtivos.sort((a, b) => {
+                const diaA = moment(a.dia, 'DD/MM/YYYY');
+                const diaB = moment(b.dia, 'DD/MM/YYYY');
+            
+                if (diaA.isBefore(diaB)) {
+                return 1;
+                } else if (diaA.isAfter(diaB)) {
+                return -1;
+                } else {
+                const horarioComecaA = moment(a.horarioComeca, 'HH:mm');
+                const horarioComecaB = moment(b.horarioComeca, 'HH:mm');
+                return horarioComecaA.isBefore(horarioComecaB) ? -1 : 1;
+                }
+            });
+
+
+
+
             const clienteDados = await Cliente.findById(id, {nome: 1, sobrenome: 1, _id: 0})
             const nomeCompleto = `${clienteDados.nome} ${clienteDados.sobrenome}`
             res.render('atendente/agendamento/historico', {

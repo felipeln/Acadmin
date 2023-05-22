@@ -18,6 +18,8 @@ form{
     display: block;
     
     animation: moving .5s ease;
+    border: 5px solid #A1D7D7;
+    border-top: none;
 }
 
 @keyframes moving{

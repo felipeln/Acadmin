@@ -112,6 +112,13 @@ exports.financeiro = async (req, res) => {
 
   const financas = await Financa.find()
 
+  financas.sort((a, b) => {
+    const dataA = moment(a.data, 'DD/MM/YYYY');
+    const dataB = moment(b.data, 'DD/MM/YYYY');
+  
+    return dataA.diff(dataB);
+  });
+
 
   let entradaTotal
   let saidaTotal
@@ -195,11 +202,18 @@ exports.financeiroRemover = async (req,res) =>{
   }
 }
 
+
+// ! Pagamentos
 exports.pagamentos = async (req,res) => {
     try {
         const boletos = await Boleto.find().sort({status: -1})
        
-
+        boletos.sort((a, b) => {
+          const dataA = moment(a.dataEmissao, 'DD/MM/YYYY');
+          const dataB = moment(b.dataEmissao, 'DD/MM/YYYY');
+        
+          return dataA.diff(dataB);
+        });
         // let count = await Boleto.count()
         
 
@@ -213,10 +227,6 @@ exports.pagamentos = async (req,res) => {
         console.log(error);
     }
 }
-
-// exports.filtrarPagamento = async (req,res) =>{
-    
-// }
 
 exports.pagamentosSearch = async (req,res) =>{
     try {
@@ -324,59 +334,76 @@ exports.searchCliente = async (req,res) =>{
 
 exports.searchClientePost = async (req,res) =>{
     try {
-        let searchTerm = req.body.searchTerm.trim();
-        const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
-
-        let searchTermWithSpace =  req.body.searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
-        // verificando se tem espaço no search term.
-        let searchRegex;
-        if (searchTermWithSpace.includes(' ')) {
-          const [firstName, lastName] = searchTermWithSpace.split(' ');
-          searchRegex = new RegExp(`^${firstName}.*${lastName}$`, "i");
-        } else {
-          searchRegex = new RegExp(searchTermWithSpace, "i");
-        }
-
-        // verificando se é numero
-        const searchTermIsNumber = !isNaN(searchNoSpecialChar);
-        if (searchTermIsNumber) {
-            const cpfWithoutSpecialChar = searchNoSpecialChar.replace(/[^\d]/g, "");
-            const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
-
-            const clientesAcademia = await Cliente.find({
-                $or: [
-                    {
-                      cpf: cpfWithSpecialCharRegex,
-                    },
-                    {
-                      cpf: cpfWithoutSpecialChar,
-                    },
-                  ],
-              });
-
-            res.render('admin/financeiro/search-cliente', { clientesAcademia });
-
         
-        }else{
-            const clientesAcademia = await Cliente.find({
-                $or: [
-                  // Pesquisa por nome ou sobrenome
-                  { nome: { $regex: searchRegex } },
-                  { sobrenome: { $regex: searchRegex } },
-            
-                  // Pesquisa por e-mail
-                  { email: { $regex: searchRegex } },
-            
-                  // Pesquisa por CPF
-                  { cpf: { $regex: searchRegex } }
-                ]
-              });
-        
-        res.render('admin/financeiro/search-cliente', { clientesAcademia });
+
+      const searchWithSpace = req.body.searchTerm
+      const searchTerm = req.body.searchTerm.trim();
+      const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+      const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
+
+        let msgErro = await req.consumeFlash('erro')
+        if(searchTerm.includes('@') || searchTerm.includes('.com')){
+          
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {email:  searchTerm}
+            ]
+          })
+
+          res.render('admin/financeiro/search-cliente', { clientesAcademia }); 
+
+        }else if(searchTermIsNumber){
+
+          const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
+          const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
+
+
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {
+                cpf: cpfWithSpecialCharRegex,
+              },
+              {
+                cpf: cpfWithoutSpecialChar,
+              },
+            ],
+          });
+
+          res.render('admin/financeiro/search-cliente', { clientesAcademia }); 
 
         }
+        else{
+          const regex = new RegExp(`^${searchWithSpace}`, 'i');
+          const clientesAcademia = await Cliente.find({
+            $or: [
+                {
+                    nome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")}
+                },
+                
+                {
+                    sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i")}
+                },
+                {
+                  $expr: {
+                    $regexMatch: {
+                      input: {
+                        $concat: [
+                          { $ifNull: ['$nome', ''] },
+                          ' ',
+                          { $ifNull: ['$sobrenome', ''] },
+                        ],
+                      },
+                      regex,
+                    },
+                  },
+                },
 
-      
+            ]
+        })
+
+        res.render('admin/financeiro/search-cliente', { clientesAcademia }); 
+      }
+
       } catch (error) {
         console.log(error);
       }

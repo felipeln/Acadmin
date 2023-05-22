@@ -139,12 +139,25 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
 
         try {
         
-
+            const searchWithSpace = req.body.searchTerm
             const searchTerm = req.body.searchTerm.trim();
             const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
             const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
+            
+            if(searchTerm.includes('@') || searchTerm.includes('.com')){ 
+
+              const clientesAcademia = await Cliente.find({
+                $or: [
+                  {email:  searchTerm}
+                ]
+              })
     
-            if (searchTermIsNumber) {
+              res.render('atendente/gerenciamento/clientes/search', {
+                clientesAcademia,
+              })
+            
+            }
+            else if (searchTermIsNumber) {
               const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
               const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
     
@@ -164,6 +177,7 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
               })
             
             } else {
+              const regex = new RegExp(`^${searchWithSpace}`, 'i');
               const clientesAcademia = await Cliente.find({
                 $or: [
                   {
@@ -171,6 +185,20 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                   },
                   {
                     sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+                  },
+                  {
+                    $expr: {
+                      $regexMatch: {
+                        input: {
+                          $concat: [
+                            { $ifNull: ['$nome', ''] },
+                            ' ',
+                            { $ifNull: ['$sobrenome', ''] },
+                          ],
+                        },
+                        regex,
+                      },
+                    },
                   },
                 ],
               });

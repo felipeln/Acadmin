@@ -140,12 +140,25 @@ exports.funcionarios = async (req,res) => {
 
     try {
         
-
+      const searchWithSpace = req.body.searchTerm
       const searchTerm = req.body.searchTerm.trim();
       const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
       const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
 
-      if (searchTermIsNumber) {
+
+
+      if(searchTerm.includes('@') || searchTerm.includes('.com')){
+        const FuncionariosAcademia = await Funcionario.find({
+          $or: [
+            {email: searchTerm}
+          ]
+        })
+
+        res.render('admin/gerenciamento/funcionarios/search', {
+          FuncionariosAcademia,
+        })
+      }
+      else if (searchTermIsNumber) {
         const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
         const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
 
@@ -166,6 +179,7 @@ exports.funcionarios = async (req,res) => {
         })
       
       } else {
+        const regex = new RegExp(`^${searchWithSpace}`, 'i');
         const FuncionariosAcademia = await Funcionario.find({
           $or: [
             {
@@ -173,6 +187,20 @@ exports.funcionarios = async (req,res) => {
             },
             {
               sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+            },
+            {
+              $expr: {
+                $regexMatch: {
+                  input: {
+                    $concat: [
+                      { $ifNull: ['$nome', ''] },
+                      ' ',
+                      { $ifNull: ['$sobrenome', ''] },
+                    ],
+                  },
+                  regex,
+                },
+              },
             },
           ],
         });
@@ -304,12 +332,26 @@ exports.funcionarios = async (req,res) => {
 
       try {
         
-
+        const searchWithSpace = req.body.searchTerm
         const searchTerm = req.body.searchTerm.trim();
         const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
         const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
 
-        if (searchTermIsNumber) {
+        if(searchTerm.includes('@') || searchTerm.includes('.com')){ 
+
+          const clientesAcademia = await Cliente.find({
+            $or: [
+              {email:  searchTerm}
+            ]
+          })
+
+          res.render('admin/gerenciamento/clientes/search', {
+            clientesAcademia,
+          })
+        
+        }
+
+        else if (searchTermIsNumber) {
           const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
           const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
 
@@ -329,6 +371,7 @@ exports.funcionarios = async (req,res) => {
           })
         
         } else {
+          const regex = new RegExp(`^${searchWithSpace}`, 'i');
           const clientesAcademia = await Cliente.find({
             $or: [
               {
@@ -336,6 +379,20 @@ exports.funcionarios = async (req,res) => {
               },
               {
                 sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+              },
+              {
+                $expr: {
+                  $regexMatch: {
+                    input: {
+                      $concat: [
+                        { $ifNull: ['$nome', ''] },
+                        ' ',
+                        { $ifNull: ['$sobrenome', ''] },
+                      ],
+                    },
+                    regex,
+                  },
+                },
               },
             ],
           });
@@ -470,12 +527,25 @@ exports.funcionarios = async (req,res) => {
 
         try {
         
-
+          const searchWithSpace = req.body.searchTerm
           const searchTerm = req.body.searchTerm.trim();
           const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
           const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
   
-          if (searchTermIsNumber) {
+
+          if(searchTerm.includes('@') || searchTerm.includes('.com')){
+            const InstrutoresAcademia = await Instrutor.find({
+              $or: [
+                { email: searchTerm}
+              ]
+            })
+
+            res.render('admin/gerenciamento/instrutores/search', {
+              InstrutoresAcademia,
+            })
+          }
+
+          else if (searchTermIsNumber) {
             const cpfWithoutSpecialChar = searchTermWithoutSpecialChar.replace(/[^\d]/g, "");
             const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
   
@@ -495,6 +565,7 @@ exports.funcionarios = async (req,res) => {
             })
           
           } else {
+            const regex = new RegExp(`^${searchWithSpace}`, 'i');
             const InstrutoresAcademia = await Instrutor.find({
               $or: [
                 {
@@ -502,6 +573,20 @@ exports.funcionarios = async (req,res) => {
                 },
                 {
                   sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+                },
+                {
+                  $expr: {
+                    $regexMatch: {
+                      input: {
+                        $concat: [
+                          { $ifNull: ['$nome', ''] },
+                          ' ',
+                          { $ifNull: ['$sobrenome', ''] },
+                        ],
+                      },
+                      regex,
+                    },
+                  },
                 },
               ],
             });

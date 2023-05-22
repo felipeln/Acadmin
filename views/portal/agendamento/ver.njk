@@ -56,9 +56,14 @@
                 <li> / {{agendamento.clienteNome}} </li>
             </ul>
 
-             <span>
-                <a class="editar" href="/portal/agendamento/edit/{{agendamento._id}}">Editar</a>
-            </span>
+            {% if agendamento.status == "Ativo" %}
+                <span>
+                    <a class="editar" href="/portal/agendamento/edit/{{agendamento._id}}">Editar</a>
+                </span>
+                {%else%}
+                <span></span>
+            {% endif %}
+             
         </div>
 
      
