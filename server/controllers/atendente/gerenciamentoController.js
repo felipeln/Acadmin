@@ -1,5 +1,5 @@
 const Cliente = require('../../models/Cliente')
-
+const Agendamento = require('../../models/Agendamento')
 const moment = require('moment'); 
 
 // ! formatar data.
@@ -124,8 +124,19 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
         try {
 
             let person = await Cliente.findByIdAndDelete(req.params.id)
-         
-             await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema`)
+
+            //?  excluindo todos os agendamentos desse cliente
+            let agendamentos = await Agendamento.find({clienteId: person.id})
+            
+            const agendamentoIds = agendamentos.map(agendamento => agendamento._id);
+
+              // Exclua os agendamentos com base nos IDs
+              await Agendamento.deleteMany({ _id: { $in: agendamentoIds } });
+
+              // Verifique se os agendamentos foram excluídos com sucesso
+              const deletedAgendamentos = await Agendamento.find({ _id: { $in: agendamentoIds } });
+          
+             await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema, junto com todos os seus agendamentos`)
  
              res.redirect("/acadmin/gerenciamento/clientes")
            } catch (error) {

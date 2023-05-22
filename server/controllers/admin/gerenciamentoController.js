@@ -1,6 +1,7 @@
 const Cliente = require('../../models/Cliente')
 const Funcionario = require('../../models/Funcionario')
 const Instrutor = require('../../models/Instrutores')
+const Agendamento = require('../../models/Agendamento')
 const moment = require('moment'); 
 
 // ! formatar data.
@@ -318,9 +319,22 @@ exports.funcionarios = async (req,res) => {
     exports.ClienteDelete = async (req,res) => {
         try {
 
+          //? excluindo cliente
            let person = await Cliente.findByIdAndDelete(req.params.id)
-        
-            await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema`)
+
+          //?  excluindo todos os agendamentos desse cliente
+           let agendamentos = await Agendamento.find({clienteId: person.id})
+          
+           const agendamentoIds = agendamentos.map(agendamento => agendamento._id);
+
+            // Exclua os agendamentos com base nos IDs
+            await Agendamento.deleteMany({ _id: { $in: agendamentoIds } });
+
+            // Verifique se os agendamentos foram excluídos com sucesso
+            const deletedAgendamentos = await Agendamento.find({ _id: { $in: agendamentoIds } });
+
+
+            await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema ,junto com todos os seus agendamentos.`)
 
             res.redirect("/dashboard/gerenciamento/clientes")
           } catch (error) {
@@ -513,6 +527,18 @@ exports.funcionarios = async (req,res) => {
         try {
 
             let person = await Instrutor.findByIdAndDelete(req.params.id)
+
+
+          //?  excluindo todos os agendamentos desse Instrutor
+           let agendamentos = await Agendamento.find({instrutorId: person.id})
+          
+           const agendamentoIds = agendamentos.map(agendamento => agendamento._id);
+
+            // Exclua os agendamentos com base nos IDs
+            await Agendamento.deleteMany({ _id: { $in: agendamentoIds } });
+
+            // Verifique se os agendamentos foram excluídos com sucesso
+            const deletedAgendamentos = await Agendamento.find({ _id: { $in: agendamentoIds } });
         
             await req.flash('excluido',`${person.nome} ${person.sobrenome} foi excluido do sistema`)
 
@@ -573,6 +599,9 @@ exports.funcionarios = async (req,res) => {
                 },
                 {
                   sobrenome: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
+                },
+                {
+                  modalidade: { $regex: new RegExp(searchTermWithoutSpecialChar, "i") },
                 },
                 {
                   $expr: {
