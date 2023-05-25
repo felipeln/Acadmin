@@ -69,15 +69,7 @@
                 <div class="title table-nav">
 
                 
-
-                    <form class="search-form" role="search" method="POST" action="/acadmin/financeiro/pagamentos/search" >
-                    <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
-                    <button type="submit" class="searchButton">
-                        <ion-icon name="search-outline"></ion-icon>
-                    </button>
-                    </form>
-                    
-                    <div class="filtro-contaienr">
+                     <div class="filtro-container">
                         <label for="filtro">Filtrar por Status:</label>
                         <select name="filtro" id="filtro">
                             <option value="">Todos</option>
@@ -86,6 +78,15 @@
                             <option value="Atrasado">Atrasado</option>
                         </select>
                     </div>
+
+                    <form class="search-form" role="search" method="POST" action="/acadmin/financeiro/pagamentos/search" >
+                    <input type="search" name="searchTerm" class="search-input" placeholder="Search..." aria-label="Search">
+                    <button type="submit" class="searchButton">
+                        <ion-icon name="search-outline"></ion-icon>
+                    </button>
+                    </form>
+                    
+                   
                     
 
                     <a href="/acadmin/financeiro/criar/search" class="add">Novo Pagamento</a>

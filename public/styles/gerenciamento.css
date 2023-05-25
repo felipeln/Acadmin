@@ -120,14 +120,13 @@
     align-items: center;
     justify-items: center;
     
-    /* max-height: 30px; */
-    /* padding: 10px 5px; */
 
     padding: 5px;
 
     flex-grow: 1;
     justify-content: center;
     flex-basis: 0;
+    text-align: center;
 }
 .actions .act-btn .icon{
     font-size: 1.25em;
@@ -202,6 +201,15 @@
     display: grid;
 
     grid-template-columns: 1fr 3fr 1fr;
+    gap: 20px;
+
+    align-items: center;
+    margin-bottom: 20px;
+}
+.table-nav.escolhe-cliente{
+    display: grid;
+
+    grid-template-columns: 1fr 3fr 1.5fr;
     gap: 20px;
 
     align-items: center;
@@ -414,3 +422,4 @@ a.add{
     display: none;
     overflow: hidden;
 }
+

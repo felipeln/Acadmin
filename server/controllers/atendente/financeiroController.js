@@ -65,8 +65,27 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
             const searchTerm = req.body.searchTerm.trim();
             const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
             const searchTermIsNumber = !isNaN(searcNoSpecialChar);
+
+            if(searchTerm.includes('/')){
+              let currentYear = moment().format('YYYY')
+              let data = moment(searchTerm + '/' + currentYear, 'DD/MM/YYYY').format('DD/MM/YYYY')
+              
+              const boletos = await Boleto.find({
+                $or: [
+                  {
+                    dataPagamento: data
+                  }
+                ],
+              });
+
+
+
+              res.render('atendente/financeiro/search-pagamento', {
+                boletos,
+            })
     
-            if (searchTermIsNumber) {
+            }
+            else if (searchTermIsNumber) {
                 const cpfWithoutSpecialChar = searcNoSpecialChar.replace(/[^\d]/g, "");
                 const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
       

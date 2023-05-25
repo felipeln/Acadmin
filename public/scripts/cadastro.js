@@ -17,6 +17,51 @@ const today = new Date().toISOString().split("T")[0];
 dateInput.setAttribute("max", today);
 
 
+function validarCPF(cpf) {
+  cpf = cpf.replace(/[^\d]+/g, ''); // Remove caracteres não numéricos
+
+  if (cpf.length !== 11 || /^(\d)\1+$/.test(cpf)) {
+    return false; // Verifica se o CPF possui 11 dígitos e não é uma sequência repetida
+  }
+
+  // Verifica os dígitos verificadores
+  var soma = 0;
+  var resto;
+  
+  for (var i = 1; i <= 9; i++) {
+    soma += parseInt(cpf.substring(i - 1, i)) * (11 - i);
+  }
+  
+  resto = (soma * 10) % 11;
+  
+  if (resto === 10 || resto === 11) {
+    resto = 0;
+  }
+  
+  if (resto !== parseInt(cpf.substring(9, 10))) {
+    return false; // Primeiro dígito verificador inválido
+  }
+  
+  soma = 0;
+  
+  for (i = 1; i <= 10; i++) {
+    soma += parseInt(cpf.substring(i - 1, i)) * (12 - i);
+  }
+  
+  resto = (soma * 10) % 11;
+  
+  if (resto === 10 || resto === 11) {
+    resto = 0;
+  }
+  
+  if (resto !== parseInt(cpf.substring(10, 11))) {
+    return false; // Segundo dígito verificador inválido
+  }
+  
+  return true; // CPF válido
+}
+
+
 telefoneInput.addEventListener("input", function() {
     // Remove all non-numeric characters from the input
     let phoneNumber = telefoneInput.value.replace(/\D/g, "");
@@ -59,12 +104,19 @@ formulario.addEventListener('submit', function(event) {
     emailError.textContent = '';
   }
 
+  // ! Validando cpf
+
+  
   if (!cpfRegex.test(cpfInput.value)) {
     cpfError.textContent = 'Por favor, insira um CPF válido.';
     isValid = false;
-  } else {
+  }else if(validarCPF(cpfInput.value) === false){
+    cpfError.textContent = 'Por favor, insira um CPF válido.';
+    isValid = false;
+  }else{
     cpfError.textContent = '';
   }
+
 
   if (!telefoneRegex.test(telefoneInput.value)) {
     telefoneError.textContent = 'Por favor, insira um telefone válido no formato (DD) 90000-0000.';
@@ -91,3 +143,5 @@ cpfInput.addEventListener('focus', function() {
 telefoneInput.addEventListener('focus', function() {
   telefoneError.textContent = '';
 });
+
+

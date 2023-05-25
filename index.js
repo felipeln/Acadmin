@@ -52,7 +52,6 @@ app.use(express.static(__dirname + '/public'));
 // db
 connectDB()
 
-
 // login routes
 
 app.get('/', (req,res) => {
@@ -72,22 +71,6 @@ app.use(autenticacaoMiddleware, require('./server/routes/portal.routes'));
 
 // ? atendente
 app.use( autenticacaoMiddleware, require('./server/routes/acadmin.routes'));
-
-
-//! login routes 
-// app.use(require('./server/routes/login.routes'))
-
-//! dashboard
-// app.use(require('./server/routes/dashboard.routes'),)
-
-
-//! portal
-// app.use(require('./server/routes/portal.routes'))
-
-
-
-//! atendente
-// app.use(require('./server/routes/acadmin.routes'))
 
 
 // pagina de erro

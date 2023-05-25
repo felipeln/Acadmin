@@ -38,148 +38,6 @@ exports.relatorio = async (req,res) => {
 
     }
 
-
-    // exports.gerarRelatorioFinanceiro = async (req,res) =>{
-    //   let context;
-    //   const {tipo, mesInicio, mesFim, estilo} = req.body
-
-    //   const janeiro = [];
-    //   const fevereiro = [];
-    //   const marco = [];
-    //   const abril = [];
-    //   const maio = [];
-    //   const meses = [];
-     
-    //   for (let i = parseInt(mesInicio); i <= parseInt(mesFim); i++) {
-    //   meses.push(i.toString().padStart(2, "0"));
-    //   }
-
-      
-     
-
-    // if(tipo == 'entradas'){
-    //   const boletosPagos = await Boleto.find({ status: 'Pago' });
-
-    //   boletosPagos.forEach(boleto => {
-    //     const dataPagamento = moment(boleto.dataPagamento, 'DD/MM/YYYY');
-    //     const mesPagamento = dataPagamento.format('MM');
-      
-    //     // Verifique se o mês do pagamento está na lista de meses desejados
-    //     if (meses.includes(mesPagamento)) {
-    //       // Adicione o boleto à variável correspondente ao mês
-    //       switch (mesPagamento) {
-    //         case '01':
-    //           janeiro.push(boleto);
-    //           break;
-    //         case '02':
-    //           fevereiro.push(boleto);
-    //           break;
-    //         case '03':
-    //           marco.push(boleto);
-    //           break;
-    //         case '04':
-    //           abril.push(boleto);
-    //           break;
-    //         case '05':
-    //           maio.push(boleto);
-    //           break;
-    //         // Adicione mais casos para os outros meses, se necessário
-    //       }
-    //     }
-    //   });
-    //   let mes1 = {
-    //     mes: 'Janeiro',
-    //     valorTotal: valorTotal(janeiro),
-    //     quantidade: quantidade(janeiro),
-    //     tipo: 'Mensalidade',
-    //     valor: (valorTotal(janeiro)) / (quantidade(janeiro))
-    //   }
-    //   let mes2 =  {
-    //     mes: 'Fevereiro',
-    //     valorTotal: valorTotal(fevereiro),
-    //     quantidade: quantidade(fevereiro),
-    //     tipo: 'Mensalidade',
-    //     valor: (valorTotal(fevereiro)) / (quantidade(fevereiro))
-    //   }
-    //   let mes3 ={
-    //     mes: 'Março',
-    //     valorTotal: valorTotal(marco),
-    //     quantidade: quantidade(marco),
-    //     tipo: 'Mensalidade',
-    //     valor: (valorTotal(marco)) / (quantidade(marco))
-    //   }
-    //   let mes4 =  {
-    //     mes: 'Abril',
-    //     valorTotal: valorTotal(abril),
-    //     quantidade: quantidade(abril),
-    //     tipo: 'Mensalidade',
-    //     valor: (valorTotal(abril)) / (quantidade(abril))
-    //   }
-    //   let mes5 = {
-    //     mes: 'Maio',
-    //     valorTotal: valorTotal(maio),
-    //     quantidade: quantidade(maio),
-    //     tipo: 'Mensalidade',
-    //     valor: (valorTotal(maio)) / (quantidade(maio))
-    //   }
-    //   const boletoMeses = []
-    //   if(janeiro.length > 0){
-    //     boletoMeses.push(mes1)
-    //   }
-    //   if(fevereiro.length > 0){
-    //     boletoMeses.push(mes2)
-    //   }
-    //   if(marco.length > 0){
-    //     boletoMeses.push(mes3)
-    //   }
-    //   if(abril.length > 0){
-    //     boletoMeses.push(mes4)
-    //   }
-    //   if(maio.length > 0){
-    //     boletoMeses.push(mes5)
-    //   }
-
-
-    //     context = {boletoMeses, estilo}
-    //     renderedHtml = nunjucks.render('admin/relatorio/financeiro/entradas.njk', context);
-    // }if(tipo == 'saidas'){
-         
-    //     renderedHtml = nunjucks.render('admin/relatorio/financeiro/saidas.njk', context);
-    // }if(tipo == 'entradasaida'){
-        
-    //     renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
-    // }
-
-
-          
-    //     //   const renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
-        
-    //       // Crie uma instância do navegador e crie uma nova página
-    //       const browser = await puppeteer.launch();
-    //       const page = await browser.newPage();
-        
-    //       // Defina o conteúdo da página como a saída do template Nunjucks renderizado
-    //       await page.setContent(renderedHtml);
-        
-    //       // Gere o PDF a partir da página renderizada
-    //       const pdf = await page.pdf({
-    //         printBackground: true,
-    //         format: 'Letter', 
-    //         // format: 'A4',
-    //         margin: { top: '20px', left: '20px', right: '20px', bottom: '40px' }
-    //       });
-        
-         
-    //       // Feche o navegador
-    //       await browser.close();
-
-    //        // Envie o PDF como resposta ao cliente
-    //        res.contentType('application/pdf');
-    //        res.send(pdf);
-         
-    // }
-
-
     exports.gerarRelatorioFinanceiro = async (req,res) =>{
       let context;
       const {tipo, mesInicio, mesFim, estilo} = req.body
@@ -681,14 +539,14 @@ exports.relatorio = async (req,res) => {
           const browser = await puppeteer.launch();
           const page = await browser.newPage();
          
-          // // Defina o conteúdo da página como a saída do template Nunjucks renderizado
+          // Defina o conteúdo da página como a saída do template Nunjucks renderizado
           
           
 
 
           await page.setContent(renderedHtml);
 
-          // // Aguarda o tempo de espera antes de gerar o PDF
+          // Aguarda o tempo de espera antes de gerar o PDF
           await new Promise(resolve => setTimeout(resolve, 2000));
 
           // Gere o PDF a partir da página renderizada
@@ -705,9 +563,9 @@ exports.relatorio = async (req,res) => {
           // Feche o navegador
           await browser.close();
 
-        //  // Envie o PDF como resposta ao cliente
+         // Envie o PDF como resposta ao cliente
            res.contentType('application/pdf');
-          res.send(pdf);
+            res.send(pdf);
         // !
           //  res.send(renderedHtml);
          
@@ -793,7 +651,7 @@ exports.relatorio = async (req,res) => {
           // Feche o navegador
           await browser.close();
 
-        //  // Envie o PDF como resposta ao cliente
+         // Envie o PDF como resposta ao cliente
            res.contentType('application/pdf');
           res.send(pdf);
         // !

@@ -84,7 +84,7 @@
         {% endfor %}
 
         <div class="table-wrapper">
-            <div class="title table-nav">
+            <div class="title table-nav escolhe-cliente">
                 <h1>Pesquisar</h1>
 
                 <form class="search-form" role="search" method="POST" action="/dashboard/agendamento/criar/search">
@@ -93,6 +93,15 @@
                         <ion-icon name="search-outline"></ion-icon>
                     </button>
                 </form>
+
+                <div class="filtro-container">
+                        <label for="filtro">Filtrar por Status:</label>
+                        <select name="filtro" id="filtro">
+                            <option value="">Todos</option>
+                            <option value="Ativo">Ativo</option>
+                            <option value="Inativo">Inativo</option>
+                        </select>
+                </div>
             </div>
     
     
@@ -108,12 +117,12 @@
                             </ul>
                         </div>
 
-                        <div class="table">
+                        <div class="table" id="cliente-list">
                             
 
                             {% for cliente in clientesAcademia %}
 
-                                <div class="row search-cliente">
+                                <div class="row search-cliente" data-status="{{cliente.status}}">
                                     <ul>
                                         <li>{{cliente.nome}} {{cliente.sobrenome}}</li>
                                         <li>{{cliente.email}}</li>
@@ -149,5 +158,5 @@
 
 {%block scripts%}
         <script src="/scripts/flashmsg.js"></script>
-
-    {%endblock%}
+        <script src="/scripts/filtroCliente.js"></script>
+{%endblock%}
