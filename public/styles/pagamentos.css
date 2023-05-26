@@ -190,3 +190,9 @@
 .details-btn{
     cursor: pointer;
 }
+
+/* user pagamentos */
+
+.table-nav.user-pagamentos{
+    grid-template-columns: 2fr 2fr 2fr;
+}

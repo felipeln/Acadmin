@@ -36,9 +36,11 @@
 
 /* ver  menu */
 hr{
-    margin: 10px 0;
+    margin: 5px 0px 10px 0;
     outline: none;
-    color: whitesmoke;
+    border: none;
+    height: 4px;
+    background-color: #424242;
 }
 .ver-menu.relatorio{
     padding: 20px 0;
@@ -68,4 +70,13 @@ hr{
     color: black;
 
     
+}
+
+
+/* testando */
+.ver-menu{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 1.125em;
 }
