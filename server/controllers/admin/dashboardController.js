@@ -4,8 +4,8 @@ const Admin = require('../../models/Admin')
 // ! dashboard admin
 
 exports.homepage = async (req,res) => {
-
-    res.render('admin/dashboard')
+    const user =  await Admin.findById(req.session.userId)
+    res.render('admin/dashboard', {user})
 }
 exports.admin = async (req,res) => {
 

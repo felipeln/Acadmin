@@ -3,6 +3,7 @@
 
 {% block head %}
     <title>Acadmin - Home</title>
+    <link rel="stylesheet" href="/styles/home.css">
 {% endblock %}
 
 
@@ -56,7 +57,21 @@
 {%endblock%}
 
 {%block content%}
-        <h1>Bem vindo ao Acadmin</h1>
+        <h1 class="first-msg">Bem vindo <span>{{user.nome}}</span>, Você esta no Dashboard do Atendente.</h1>
+
+
+            <main>
+                <nav class="rapid-menu">
+                    <ul>
+                        <li><a href="/acadmin/cadastro" class="rapid-card">Cadastro</a></li>
+                        <li><a href="/acadmin/agendamento" class="rapid-card">Agendamento</a></li>
+                        <li><a href="/acadmin/agendamento/criar/search/cliente" class="rapid-card">Novo Agendamento</a></li>
+                        <li><a href="/acadmin/gerenciamento" class="rapid-card">Gerenciamento</a></li>
+                        <li><a href="/acadmin/financeiro/pagamentos" class="rapid-card">Financeiro</a></li>
+                        <li><a href="/acadmin/financeiro/criar/search" class="rapid-card">Novo Pagamento</a></li>
+                    </ul>
+                </nav>
+            </main>
 {%endblock%}
 
 

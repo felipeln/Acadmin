@@ -154,8 +154,8 @@ nav#left-menu ul li.active a::after{
 
 /* content container */
 .container{
-    margin-left: 300px;
-    margin-right: 40px;
+    margin-left: clamp(300px, 350px, 10%);
+    margin-right: clamp(20px, 350px, 2%);
 
     padding-top: 5px;
 
@@ -183,4 +183,53 @@ nav#left-menu ul li.active a::after{
 #logout{
     display: none;
     overflow: hidden;
+}
+
+/* Mobile Devices (Portrait): */
+
+@media screen and (max-width: 480px) {
+    .container{
+        max-width: 400px;
+    }
+}
+
+/* Mobile Devices (Landscape) and Small Tablets: */
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    .container{
+        max-width: 700px;
+    }
+}
+
+  
+
+/* Tablets and Small Desktops: */
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+    .container{
+        max-width: 900px;
+    }
+}
+
+/* Desktops and Laptops: */
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .container{
+        max-width: 1000px;
+    }
+}
+
+/* Large Desktops and High-Resolution Displays: */
+
+@media screen and (min-width: 1600px) {
+    .container{
+        max-width: 1400px;
+
+    }
+}
+@media screen and (min-width: 1800px) {
+    .container{
+        max-width: calc(80%);
+
+    }
 }

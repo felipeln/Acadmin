@@ -41,6 +41,7 @@ app.use(express.urlencoded({extended: false })) // accept other things and not o
 app.set('view engine', 'njk');
 // setup css file
 app.use(express.static(__dirname + '/public'));
+// app.use(express.static(__dirname + '/views'));
 
  nunjucks.configure(['./views', './views/', './views/template'] ,{
     autoescape: true,

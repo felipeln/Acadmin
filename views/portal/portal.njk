@@ -3,6 +3,7 @@
 
 {% block head %}
         <title>Portal - Acadmin </title>
+        <link rel="stylesheet" href="/styles/home.css">
 {% endblock %}
 
 
@@ -46,6 +47,17 @@
 
 
 {%block content%}
-        <h1>Bem vindo ao acadmin, Você esta no Portal do Cliente.</h1>
+       <h1 class="first-msg">Bem vindo <span>{{user.nome}}</span>, Você esta no Portal do Cliente.</h1>
+
+            <main>
+                <nav class="rapid-menu">
+                    <ul>
+                        <li><a href="/portal/agendamento" class="rapid-card">Agendamento</a></li>
+                        <li><a href="/portal/agendamento/criar/novo/" class="rapid-card">Novo Agendamento</a></li>
+                        <li><a href="/portal/financeiro" class="rapid-card">Financeiro</a></li>
+                    </ul>
+                    
+                </nav>
+            </main>
         
 {%endblock%}

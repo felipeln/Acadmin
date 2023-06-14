@@ -2,6 +2,7 @@
 
         {% block head %}
             <title>Acadmin - Dashboard</title>
+            <link rel="stylesheet" href="/styles/home.css">
         {% endblock %}
 
 
@@ -61,12 +62,27 @@
         {%endblock%}
 
         {%block content%}
-            <h1>Bem vindo a o Dashboard de Administrador do Acadmin</h1>
+            <h1 class="first-msg">Bem vindo <span>{{user.nome}}</span>, Você esta no Dashboard de Administrador do Acadmin. </h1>
 
+
+            <main>
+                <nav class="rapid-menu">
+                    <ul>
+                        <li><a href="/dashboard/cadastro" class="rapid-card">Cadastro</a></li>
+                        <li><a href="/dashboard/agendamento" class="rapid-card">Agendamento</a></li>
+                        <li><a href="/dashboard/agendamento/criar/search" class="rapid-card">Novo Agendamento</a></li>
+                        <li><a href="/dashboard/gerenciamento" class="rapid-card">Gerenciamento</a></li>
+                        <li><a href="/dashboard/financeiro" class="rapid-card">Financeiro</a></li>
+                        <li><a href="/dashboard/financeiro/criar/search" class="rapid-card">Novo Pagamento</a></li>
+                        <li><a href="/dashboard/relatorios" class="rapid-card">Relatorios</a></li>
+                    </ul>
+                    
+                </nav>
+            </main>
              
         {%endblock%}
 
 {% block scripts %}
-<script src="/scripts/flashmsg.js"></script>
+    <script src="/scripts/flashmsg.js"></script>
 {% endblock scripts %}
    
