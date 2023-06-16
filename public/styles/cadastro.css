@@ -131,3 +131,42 @@ input, select{
     color: #dc3545;
 }
 
+/* Mobile Devices (Portrait): */
+
+@media screen and (max-width: 480px) {
+    form {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(150px, 1fr));
+        gap: 15px 30px;
+    }
+}
+
+/* Mobile Devices (Landscape) and Small Tablets: */
+
+@media screen and (min-width: 481px) and (max-width: 767px) {
+    form {
+        display: grid;
+        grid-template-columns: repeat(auto-fill,minmax(250px, 1fr));
+        gap: 15px 30px;
+    }
+}
+
+  
+
+/* Tablets and Small Desktops: */
+
+@media screen and (min-width: 768px) and (max-width: 991px) {
+
+}
+
+/* Desktops and Laptops: */
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+
+}
+
+/* Large Desktops and High-Resolution Displays: */
+
+@media screen and (min-width: 1200px) {
+
+}
