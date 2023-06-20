@@ -9,7 +9,7 @@ main{
 .rapid-menu ul{
     display: grid;
     grid-template-columns: repeat(auto-fill,minmax(450px, 1fr));
-    gap: 15px 30px;
+    gap: 20px 30px;
 }
 .rapid-menu ul li{
     list-style: none;

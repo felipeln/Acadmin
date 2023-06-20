@@ -2,7 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const moment = require('moment'); 
 
-
 const agendamentoSchema = new Schema({
   clienteId: {type: Schema.Types.ObjectId, ref: 'Cliente'},
   clienteNome: {type: Schema.Types.String, ref: 'Cliente'},

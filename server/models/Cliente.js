@@ -63,7 +63,6 @@ const ClienteSchema = new Schema({
 })
 
 // salvar senha encryptada
-
 ClienteSchema.pre('save', async function(next){
     if(!this.isModified('senha')){
         next()

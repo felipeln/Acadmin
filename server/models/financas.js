@@ -12,5 +12,4 @@ const financasSchema = new mongoose.Schema({
   tipo: String
 });
 
-
 module.exports = mongoose.model('financas', financasSchema)

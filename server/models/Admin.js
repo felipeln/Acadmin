@@ -39,7 +39,7 @@ const AdminSchema = new Schema({
 })
 
 
-// encryypting password before saving
+// encrypting password before saving
 AdminSchema.pre('save', async function(next){
     if(!this.isModified('senha')){
         next()

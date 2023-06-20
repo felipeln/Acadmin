@@ -40,7 +40,4 @@ const boletoSchema = new Schema({
     }
 })
 
-
-
-
 module.exports = mongoose.model('Boleto', boletoSchema)

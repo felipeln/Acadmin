@@ -65,7 +65,6 @@ const FuncionarioSchema = new Schema({
 
 })
 
-
 FuncionarioSchema.pre('save', async function(next){
     if(!this.isModified('senha')){
         next()
@@ -76,6 +75,5 @@ FuncionarioSchema.pre('save', async function(next){
 FuncionarioSchema.methods.comparePassword = async function(yourPassword){
     return await bcrypt.compare(yourPassword, this.senha);
 }
-
 
 module.exports = mongoose.model('Funcionario', FuncionarioSchema)
