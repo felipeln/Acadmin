@@ -11,7 +11,6 @@ router.post('/login',  loginController.loginPost)
 router.post('/logout', loginController.logOut)
 // esqueci a senha
 router.get('/esqueci_a_senha',loginController.esqueceuSenha)
-router.post('/esqueci_a_senha',loginController.esqueceuSenhaPost)
 // rota para onde vai o email para resetar a senha
 router.get('/reset_senha', loginController.resetSenha)
 

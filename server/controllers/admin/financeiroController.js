@@ -9,15 +9,9 @@ const cron = require('node-cron');
 const Agendamento = require('../../models/Agendamento');
 moment.locale('pt-br');
 
-// mudar status para atrasado
-// a cada segundo * * * * * *
-//  a cada 5 segundos */5 * * * * *
+// Busca todos os boletos pendentes no banco de dados e de acordo com a dataVencimento muda status para atrasado
 cron.schedule('* * * * * *', async () => {
-    // console.log('Verificando boletos pendentes...');
-  
-    // Busca todos os boletos pendentes no banco de dados
     const boletos = await Boleto.find({ status: 'Pendente' });
-
 
     boletos.forEach(async (boleto) => {
         const data1 = moment().format('DD/MM/YYYY')
@@ -27,7 +21,6 @@ cron.schedule('* * * * * *', async () => {
 
 
         if (vencimento.isBefore(hoje)) {
-          // console.log(`Boleto ${boleto._id} está atrasado`);
           await Boleto.findByIdAndUpdate(boleto._id, { $set: { status: 'Atrasado' } });
 
             
@@ -38,7 +31,7 @@ cron.schedule('* * * * * *', async () => {
 
 
 
-// se o cliente estiver com alguem boleto com o status atrasado a mais de 7 dias, desative os futuros agendamentos dele.
+// se o cliente estiver com alguem boleto com o status atrasado a mais de 7 dias,exclua os futuros agendamentos dele.
 cron.schedule('*/5 * * * * *', async () =>{
 
     const boletos = await Boleto.find({ status: 'Atrasado' });
@@ -61,8 +54,6 @@ cron.schedule('*/5 * * * * *', async () =>{
             const diaConsulta = moment(dataHora, 'DD/MM/YYYY HH:mm')
             clienteAgendamentos.forEach(async (agendamento) => {
     
-                  // agendamento.status = 'Inativo'
-                  // await agendamento.save() 
                   const data = moment(agendamento.dia, 'DD/MM/YYYY')
                   .set('hour', moment(agendamento.horarioComeca, 'HH:mm').get('hour'))
                   .set('minute', moment(agendamento.horarioComeca, 'HH:mm').get('minute'))
@@ -71,13 +62,10 @@ cron.schedule('*/5 * * * * *', async () =>{
 
                   if(dataAgendado.isAfter(diaConsulta)){
 
-
                     agendamento.deleteOne({_id: agendamento.id})
 
                   }
 
-
-                //   console.log(`os agendamentos do ${cliente.nome} ${cliente.sobrenome}, estao sendo desativados por atraso no pagamento da mensalidade`);
             });
           }
     })
@@ -214,14 +202,10 @@ exports.pagamentos = async (req,res) => {
         
           return dataA.diff(dataB);
         });
-        // let count = await Boleto.count()
-        
 
         res.render('admin/financeiro/pagamentos', {
             boletos,
-            // current: page,
-            // number, 
-            // pages: Math.ceil(count / perpage),
+
         })
     } catch (error) {
         console.log(error);
@@ -343,7 +327,6 @@ exports.searchCliente = async (req,res) =>{
     const clientesAcademia = await Cliente.aggregate([
         { $sort: { nome: 1 } }
         ]).exec();
-        // console.log(clientesAcademia);
 
     res.render('admin/financeiro/search-cliente', {clientesAcademia})
    } catch (error) {
@@ -354,7 +337,6 @@ exports.searchCliente = async (req,res) =>{
 exports.searchClientePost = async (req,res) =>{
     try {
         
-
       const searchWithSpace = req.body.searchTerm
       const searchTerm = req.body.searchTerm.trim();
       const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
@@ -427,23 +409,14 @@ exports.searchClientePost = async (req,res) =>{
         console.log(error);
       }
       
-      
-
-      
-
-    
 }
 
 
 
 exports.historicoPagamentos = async (req,res) =>{
-    // const cliente = await Cliente.findOne({ _id: req.params.id })
     const Id = req.params.id
 
-
     const boletos = await Boleto.find({clienteId: Id})
-    // console.log(boletos);
-    
     
     res.render('admin/financeiro/historico', {boletos} )
 }
@@ -469,7 +442,6 @@ exports.boletoPago = async (req,res) =>{
         cliente.status = 'Ativo'
         await cliente.save()
 
-        // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
         res.redirect(`/dashboard/financeiro/pagamentos`)
     } catch (error) {
         console.log(error);
@@ -487,10 +459,6 @@ exports.boletoPagoPessoal = async (req,res) =>{
             status: 'Pago',
             transactionHash: bcrypt.hashSync(id, 10),
             dataPagamento: dataPagamentoFormatada
-            // dataPagamento: '09/01/2023'
-            // dataPagamento: '12/02/2023'
-            // dataPagamento: '11/03/2023'
-            // dataPagamento: '14/04/2023'
         })
 
        const cliente = await Cliente.findById(boleto.clienteId)
@@ -512,18 +480,11 @@ exports.boletoPagoPessoal = async (req,res) =>{
 
 exports.excluirBoleto =  async (req,res) =>{
 
-
     try {
         const boleto = await Boleto.findByIdAndRemove(req.params.id)
 
-        // console.log(boleto);
-        let url
-
         const previousUrl = req.get('referer') 
 
-
-
-        // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
         res.redirect('/dashboard/financeiro/pagamentos')
     } catch (error) {
         console.log(error);
@@ -532,12 +493,8 @@ exports.excluirBoleto =  async (req,res) =>{
 }
 
 exports.excluirBoletoPessoal =  async (req,res) =>{
-
-
     try {
         const boleto = await Boleto.findByIdAndRemove(req.params.id)
-
-        // console.log(boleto);
 
         const previousUrl = req.get('referer') 
 

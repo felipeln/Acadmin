@@ -11,7 +11,6 @@ const { agendamento, agendamentoVer ,agendamentoCriar, agendamentoClienteSearch,
 
 //! dashboard admin
 
-// router.get('/dashboard',  dashboardController.homepage)
 router.get('/dashboard/',  dashboardController.homepage)
 router.post('/dashboard/cadastro/admin/', dashboardController.admin)
 
@@ -39,7 +38,6 @@ router.get('/dashboard/agendamento/edit/:id', agendamentoEdit)
 router.put('/dashboard/agendamento/edit/:id', agendamentoEditPut)
 router.delete('/dashboard/agendamento/edit/:id', agendamentoDelete)
 
-// router.get('/dashboard/agendamento/criar', agendamentoCriar)
 router.get('/dashboard/agendamento/criar/search', agendamentoClienteSearchView)
 router.get('/dashboard/agendamento/historico/:id', agendamentoClienteHistorico)
 router.post('/dashboard/agendamento/criar/search', agendamentoClienteSearch)
@@ -51,17 +49,7 @@ router.get('/dashboard/info/:instrutor/horarios/:dia', instrutoresHorarios)
 router.post('/dashboard/criar/novo-agendamento', novoAgendamento)
 
 
-// router.get('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
-// router.post('/dashboard/agendamento/criar/modalidade', agendamentoCriarPost)
-// router.post('/dashboard/agendamento/criar/modalidade/agendado', agendamentoCriarAgendamento)
-
 router.post('/dashboard/agendamento/search',  agendamentoSearch)
-
-
-
-// * turmas
-// * horarios
-// * agendamento
 
 
 // ! dashboard admin  **gerenciamento**
@@ -131,9 +119,6 @@ router.delete('/dashboard/financeiro/excluir/boleto/:id', excluirBoleto)
 
 router.put('/dashboard/financeiro/historico/boleto/pagar/:id', boletoPagoPessoal)
 router.delete('/dashboard/financeiro/historico/boleto/excluir/:id', excluirBoletoPessoal)
-// router.get('/dashboard/financeiro/criar-novo/pagamento/:id', criarPagamento)
-// router.get('/dashboard/financeiro/criar-novo/pagamento/:id', novoPagamento)
-
 
 
 //! dashboard admin relatorios

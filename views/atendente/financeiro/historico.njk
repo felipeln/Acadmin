@@ -124,8 +124,6 @@
                     </div>
                 </div>
 
-
-   
    {% block boletoModal %}
     
         {% for boleto in boletos %}
@@ -160,9 +158,6 @@
 
 
                                 </div>
-                                {# <div class="boleto__details">
-                                    <div class="boleto__details__item">transação: {{boleto.transactionHash}}</div>
-                                </div> #}
                             {% endif %}
 
                             <div class="boleto__instructions">
@@ -175,9 +170,6 @@
                             
                             
                             <div class="modal-buttons">
-                                {# <form action="/financeiro/historico/boleto/excluir/{{boleto._id}}?_method=DELETE" method="POST">
-                                        <button type="submit" class="btn excluir">Excluir Cobrança</button>
-                                </form> #}
                                 {% if boleto.status == 'Pendente' or boleto.status == 'Atrasado' %}
                                     <form action="/acadmin/financeiro/historico/boleto/pagar/{{boleto._id}}?_method=PUT" method="POST">
                                         <button type="submit" class="btn">Pagar</button>

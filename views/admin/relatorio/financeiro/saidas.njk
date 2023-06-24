@@ -5,8 +5,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Relatorio Financeiro</title>
-    {# <link rel="stylesheet" href="/styles/relatorioModel.css"> #}
-    {# <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> #}
    <style>
 
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
@@ -70,10 +68,6 @@
   #root, #__next {
     isolation: isolate;
   }
-
-
-
-
 
         .title{
             text-align: center;
@@ -183,9 +177,6 @@
    </style>
 </head>
 <body>
-    
-    
-
         {# ! TABELA #}
 
         {% if estilo == 'tabela' %}
@@ -220,7 +211,6 @@
                                     <div class="row">
                                         <ul>
                                             <li>{{boleto.mes}}</li>
-                                            {# <li>{{boleto.tipo}}</li> #}
                                             <li>{{boleto.quantidade}}</li>
                                             <li>R$ {{boleto.valor}}</li>
                                             <li>R$ {{boleto.valorTotal}}</li>
@@ -274,25 +264,20 @@
 
 
                         <div class="grafico-primeiro">
-
                             <h3>Grafico por quantidade</h3>
                             <div>
                                 <canvas id="graficoQuantidade"></canvas>
-                                
                             </div>
                         </div>
                         
                         
                         <div class="grafico-segundo">
-
                                 <h3>Grafico por Valor R$</h3>
                                 <div>
                                     <canvas id="graficoValor"></canvas>
                                 </div>
                         </div>
                 </div>
-                    
-
             </div>
         {% endif %}
 
@@ -317,7 +302,6 @@
                                 <div class="finance-head">
                                         <ul>
                                             <li>Mês <div class="filter-desc"></div></li>
-                                            {# <li>Tipo<div class="filter-valor"></div></li> #}
                                             <li>Quantidade <div class="filter-data"></div></li>
                                             <li>Valor Medio <div class="filter-tipo"></div></li>
                                             <li>Total</li>
@@ -356,7 +340,6 @@
                         </div>
                             
                             <div class="grafico-primeiro">
-                                
                                     {% if boletoMeses.length > 1 %}
                                         <h2>Grafico de Saidas Entre o mês de {{boletoMeses[0].mes}} e     {{boletoMeses[ultimoMes].mes}} </h2>
                                         {%else%}
@@ -365,7 +348,6 @@
                                     <h3>Grafico por quantidade</h3>
                                     <div>
                                         <canvas id="graficoQuantidade"></canvas>
-                                        
                                     </div>
                             </div>
                     </div>
@@ -557,8 +539,6 @@ https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
         }
       }
     });
-
-
 
 </script>
 </body>

@@ -108,11 +108,9 @@
 
         <div class="table-head">
             <ul>
-                {# <li>id <div class="filter-id"></div></li> #}
                 <li>Nome <div class="filter nome"></div></li>
                 <li>Email <div class="filter email"></div></li>
                 <li>Telefone <div class="filter telefone"></div></li>
-                {# <li>Cpf <div class="filter-cpf"></div></li> #}
                 <li>Status <div class="filter status"></div></li>
                 <li>Acões</li>
             </ul>
@@ -124,11 +122,9 @@
     
                 <div class="row" data-status="{{funcionario.status}}">
                 <ul>
-                    {# <li>{{funcionario._id}}</li> #}
                     <li>{{funcionario.nome}} {{funcionario.sobrenome}}</li>
                     <li>{{funcionario.email}}</li>
                     <li>{{funcionario.telefone}}</li>
-                    {# <li>{{funcionario.cpf}}</li> #}
                     <li>{{funcionario.status}}</li>
 
                     <li class="actions">
@@ -160,50 +156,6 @@
             
         </div>
 
-
-        
-
-        {# {% if funcionariosAcademia.length > 0 %}
-
-            <nav class="pagination-nav">
-                <ul class="pagination-ul">
-
-                    {% if current == 1 %}
-                        <li class="page-item disabled"><a href="#" class="page-link">Primeira</a></li>
-                        {% else %}
-                        <li class="page-item"><a href="/dashboard/gerenciamento/funcionarios/?page=1" class="page-link">Primeira</a></li>
-                    {% endif %}
-
-
-                    {% set i = 0 %}
-
-                    {% if number > 5 %}
-                        {% set i = number - 4 %}
-                        {% else %}
-                        {% set i = 1 %}
-                    {% endif %}
-
-
-                    {% for i in range(1 , pages + 1) %}
-                        {% if i == current %}
-                            <li class="page-item disabled"><a href="" class="page-link">{{i}}</a></li>
-                            {%else%}
-                            <li class="page-item"><a href="/dashboard/gerenciamento/funcionarios/?page={{i}}" class="page-link">{{i}}</a></li>
-                        {% endif %}
-
-                    {% endfor %}
-
-
-                    {% if current == pages %}
-                        <li class="page-item disabled"><a href="" class="page-link">Ultima</a></li>
-                        {%else%}
-                        <li class="page-item"><a href="/dashboard/gerenciamento/funcionarios/?page={{pages}}" class="page-link">Ultima</a></li>
-                    {% endif %}
-
-                </ul>
-            </nav>
-
-        {% endif %} #}
 
     {% endblock %}
 

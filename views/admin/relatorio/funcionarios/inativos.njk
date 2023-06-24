@@ -4,13 +4,10 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    {# <link rel="stylesheet" href="/styles/relatorioModel.css"> #}
     <title>Relatorio Financeiro</title>
    <style>
 
                 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700;800;900&display=swap');
-
-
         /*
         1. Use a more-intuitive box-sizing model.
         */
@@ -431,23 +428,9 @@ https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js" integrity="sha512-JPcRR8yFa8mmCsfrw4TNte1ZvF1e3+1SdGMslZvmrzDYxS69J7J49vkFL8u6u8PlPJK+H3voElBtUCzaXj+6ig==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 <script>
     const graficoQuantidade = document.getElementById('graficoQuantidade');
-    {# const graficoValor = document.getElementById('graficoValor'); #}
-    {# let meses = document.querySelectorAll('.mes') #}
     let quantidade = document.querySelectorAll('.quantidade')
     let valor = document.querySelectorAll('.valorTotal')
     
-    {# let mesesArray = []
-    for(let i of meses){
-       mesesArray.push(i.textContent) 
-    } #}
-    {# let quantidadeArray = []
-     for(let i of quantidade){
-       quantidadeArray.push(Number(i.textContent)) 
-    }
-    let valorArray = []
-    for(let i of valor){
-       valorArray.push(Number(i.textContent)) 
-    } #}
     let funcionariosInativos = [Number(document.querySelector('.nFuncionariosInativos').textContent)]
     let funcionarios = [Number(document.querySelector('.nFuncionarios').textContent)]
 
@@ -462,11 +445,7 @@ https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
                     label: 'Numero de Funcionarios Inativos',
                     data: funcionariosInativos,
                     backgroundColor: [
-                    // 'rgba(255, 0, 0, 0.8)',
                         'rgba(0, 141, 255, 0.8)',
-                    // 'rgba(205, 255, 0, 0.8)',
-                    // 'rgba(0, 255, 40, 0.8)',
-                    // 'rgba(120, 0, 255, 0.8)'
                     ],
                     borderWidth: 5,
                     },
@@ -474,10 +453,6 @@ https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
                     label: 'Numero Total de Funcionarios ',
                     data: funcionarios,
                     backgroundColor: [
-                    // 'rgba(255, 0, 0, 0.8)',
-                    //    'rgba(0, 141, 255, 0.8)',
-                    // 'rgba(205, 255, 0, 0.8)',
-                    // 'rgba(0, 255, 40, 0.8)',
                      'rgba(120, 0, 255, 0.8)'
                     ],
                     borderWidth: 5,
@@ -544,85 +519,6 @@ https://cdn.jsdelivr.net/npm/chart.js@4.3.0/dist/chart.umd.min.js
             }
       }
     });
-
-   
-    {# new Chart(graficoValor, {
-      type: 'bar',
-      data: {
-        labels: mesesArray,
-        datasets: [{
-          label: 'Entradas por Valor R$',
-          data: valorArray,
-          backgroundColor: [
-            'rgba(255, 0, 0, 0.8)',
-            'rgba(0, 141, 255, 0.8)',
-            'rgba(205, 255, 0, 0.8)',
-            'rgba(0, 255, 40, 0.8)',
-            'rgba(120, 0, 255, 0.8)'
-          ],
-          borderWidth: 3
-        }]
-      },
-      plugins: [ChartDataLabels],
-        options: {
-            plugins: {
-                datalabels: {
-                    color: 'black',
-                    anchor: 'end',
-                    align: 'end',
-                    font: {
-                        size: 18,
-                        weight: 'bold'
-                    },
-                },
-            legend: {
-                display: false // Desabilita a exibição da legenda
-            },
-            title: {
-                display: true,
-                padding: {
-                        bottom: 40 // Espaçamento inferior do título
-                    },
-                text: 'Entradas Mensais por valor R$',
-                color: 'black', // Define a cor do título como azul
-                font: {
-                    size: 20
-                }
-            }
-            },
-      
-        //indexAxis: 'y', // Definindo o eixo x como o eixo horizontal
-        scales: {
-          x: {
-            beginAtZero: true,
-            ticks: {
-                    font: {
-                        family: 'Arial',
-                        size: 18,
-                    }
-                }
-          },
-          y: {
-            beginAtZero: true,
-            ticks: {
-                    font: {
-                        family: 'Arial',
-                        size: 20,
-                        weight: 'bold'
-                    }
-                }
-          }
-        },
-        responsive: true,
-           datasets: {
-            bar: {
-                barThickness: 50 // Ajuste o valor para alterar a largura das barras
-            }
-        }
-      }
-    }); #}
-
-
 
 </script>
 </body>

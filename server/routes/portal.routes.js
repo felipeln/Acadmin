@@ -20,10 +20,8 @@ router.put('/portal/agendamento/edit/salvar/:id', agendamentoEditPut)
 // * agendamento Delete
 router.delete('/portal/agendamento/edit/:id', agendamentoDelete)
 // ? get pagina HISTORICO
-//! router.get('/portal/agendamento/historico/:id', agendamentoHistorico)
 router.get('/portal/agendamento/historico/', agendamentoHistorico)
 // ? get pagina CRIAR NOVO AGENDAMENTO
-//! router.get('/portal/agendamento/criar/novo/:id', agendamentoCriar)
 router.get('/portal/agendamento/criar/novo/', agendamentoCriar)
 // * post Novo agendamento
 router.post('/portal/agendamento/criando/novo', agendamentoCriarPost)

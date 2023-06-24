@@ -20,10 +20,6 @@ const {
  } = require('../controllers/atendente/financeiroController')
 
 
-
-
-
-
 //  ! Home
 
     router.get('/acadmin',home)

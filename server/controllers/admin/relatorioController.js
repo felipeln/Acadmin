@@ -6,8 +6,6 @@ const Cliente = require('../../models/Cliente')
 const Financa = require('../../models/financas')
 const moment = require('moment')
 
-// model
-
 
 function valorTotal(mes){
   const total = mes.reduce((total, boleto) =>{
@@ -29,7 +27,6 @@ function quantidade(mes){
 exports.relatorio = async (req,res) => {
  
     res.render('admin/relatorio/relatorios')
-
 }
 
     exports.relatorioFinanceiro = async (req,res) => {
@@ -52,8 +49,6 @@ exports.relatorio = async (req,res) => {
       for (let i = parseInt(mesInicio); i <= parseInt(mesFim); i++) {
       meses.push(i.toString().padStart(2, "0"));
       }
-
-      
      
 
     if(tipo == 'entradas'){
@@ -85,9 +80,8 @@ exports.relatorio = async (req,res) => {
                         break;
                     // Adicione mais casos para os outros meses, se necessário
                     }
-
             }
-        })
+          })
     // pegando boletos pagos
       boletosPagos.forEach(boleto => {
         const dataPagamento = moment(boleto.dataPagamento, 'DD/MM/YYYY');
@@ -533,16 +527,12 @@ exports.relatorio = async (req,res) => {
 
 
           
-        //   const renderedHtml = nunjucks.render('admin/relatorio/financeiro/completo.njk', context);
         //!
         // Crie uma instância do navegador e crie uma nova página
           const browser = await puppeteer.launch();
           const page = await browser.newPage();
          
           // Defina o conteúdo da página como a saída do template Nunjucks renderizado
-          
-          
-
 
           await page.setContent(renderedHtml);
 
@@ -570,9 +560,6 @@ exports.relatorio = async (req,res) => {
           //  res.send(renderedHtml);
          
     }
-
-    
-
 
     exports.relatorioFuncionario = async (req,res) => {
 
@@ -656,8 +643,6 @@ exports.relatorio = async (req,res) => {
           res.send(pdf);
         // !
           //  res.send(renderedHtml);
-      
-
 
     }
 
@@ -739,7 +724,7 @@ exports.relatorio = async (req,res) => {
           // Feche o navegador
           await browser.close();
 
-        //  // Envie o PDF como resposta ao cliente
+         // Envie o PDF como resposta ao cliente
            res.contentType('application/pdf');
           res.send(pdf);
         // !

@@ -32,8 +32,6 @@ exports.financeiroPagamentos = async (req,res) =>{
 
     try {
         // ! id do usuario logado
-        // ? usuario teste
-        // let clienteTeste = await Cliente.findOne({cpf: '256.369.343-74'})
         let id = req.session.userId
         const boletos = await Boleto.find({clienteId: id}).sort({status: -1})
 
@@ -54,7 +52,6 @@ exports.financeiroPagamentos = async (req,res) =>{
 }
 
 exports.boletoPago = async (req,res) =>{
-
     try {
 
         let id = req.params.id
@@ -66,12 +63,9 @@ exports.boletoPago = async (req,res) =>{
         })
 
        const cliente = await Cliente.findById(boleto.clienteId)
-
-
         
         cliente.status = 'Ativo'
         await cliente.save()
-        // ! id do usuario logado
         res.redirect(`/portal/financeiro/`)
     } catch (error) {
         console.log(error);

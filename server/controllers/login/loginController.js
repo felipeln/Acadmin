@@ -10,8 +10,6 @@ exports.login = async (req,res) =>{
 
 }
 
-
-
 exports.loginPost = async (req, res) => {
   try {
     
@@ -62,10 +60,6 @@ exports.loginPost = async (req, res) => {
       return res.status(400).redirect('/login');
       
     }
-    // return res.status(400).json({
-    //   success: false,
-    //   message: 'Credenciais inválidas',
-    // });
   } catch (error) {
     await req.flash('erro',`Falha ao tentar efetuar login`)
     console.log(error);
@@ -87,19 +81,8 @@ exports.logOut = async (req,res) =>{
 exports.esqueceuSenha = async (req,res) =>{
   res.render('login/esqueci_senha')
 
-
 }
-exports.esqueceuSenhaPost = async (req,res) =>{
-  res.render('login/esqueci_senha')
-
-}
-
 exports.resetSenha = async (req,res) =>{
-  res.render('login/reset_senha')
 
-
+  res.send('um email foi enviado para redefinir sua senha.')
 }
-
-
-
-// ! historico

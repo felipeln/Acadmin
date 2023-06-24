@@ -26,8 +26,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     // ? get page clientes
     exports.gerenciamentoCliente = async (req,res) =>{
 
-        // res.render('atendente/gerenciamento/clientes/clientes')
-
         let msg = await req.consumeFlash('excluido')
 
         
@@ -36,8 +34,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
         let number = Number(page)    
             try {
                 const clientesAcademia = await Cliente.aggregate([{$sort: {nome: 1} }])
-                // .skip(perpage * page - perpage)
-                // .limit(perpage)
                 .exec()
     
                 let count = await Cliente.count()
@@ -58,9 +54,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     //? VER
     exports.gerenciamentoClienteVer = async (req,res) => {
-        // res.render('atendente/gerenciamento/clientes/ver')
-
-        
         try {
             const clienteAcademia = await Cliente.findOne({ _id: req.params.id })
         
@@ -75,8 +68,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     //? EDIT
     exports.gerenciamentoClienteEdit = async (req,res) => {
-        // res.render('atendente/gerenciamento/clientes/edit')
-
         try {
             const clienteAcademia = await Cliente.findOne({ _id: req.params.id })
             let dataNascimento = interpretarData(clienteAcademia.dataNascimento, 'YYYY-MM-DD')
@@ -91,8 +82,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * Save edit
     exports.gerenciamentoClienteEditPost = async (req,res) => {
-        // res.send('ok')
-
         let dataNascimentoFormatada = interpretarData(req.body.dataNascimento)
         try {
             const clienteAcademia = await Cliente.findByIdAndUpdate(req.params.id,{
@@ -119,8 +108,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * delete
     exports.gerenciamentoClienteDelete = async (req,res) => {
-        // res.send('ok')
-
         try {
 
             let person = await Cliente.findByIdAndDelete(req.params.id)
@@ -145,9 +132,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * search
     exports.gerenciamentoClienteSearch = async (req,res) => {
-        // res.render('atendente/gerenciamento/clientes/search-agendamento')
-
-
         try {
         
             const searchWithSpace = req.body.searchTerm
@@ -222,6 +206,5 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
           } catch (error) {
             console.log(error);
           }
-    
 
     }

@@ -3,7 +3,6 @@ const Boleto = require('../../models/boleto')
 const bcrypt = require('bcryptjs')
 const moment = require('moment'); // require
 // const cron = require('node-cron');
-// const Agendamento = require('../../models/Agendamento');
 moment.locale('pt-br');
 
 
@@ -30,9 +29,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
 // ! Financeiro
     // ? get page pagamentos
     exports.financeiroPagamentos = async (req,res) =>{
-
-        // res.render('atendente/financeiro/pagamentos')
-
         try {
             const boletos = await Boleto.find().sort({status: -1})
             
@@ -43,12 +39,9 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
               return dataA.diff(dataB);
             });
 
-            // let count = await Boleto.count()
             res.render('atendente/financeiro/pagamentos', {
                 boletos,
-                // current: page,
-                // number, 
-                // pages: Math.ceil(count / perpage),
+
             })
         } catch (error) {
             console.log(error);
@@ -57,14 +50,11 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * pagamentos search
     exports.pagamentosSearch = async (req,res) =>{
-        // res.render('atendente/financeiro/search-pagamento')
-
-
         try {
 
             const searchTerm = req.body.searchTerm.trim();
-            const searcNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
-            const searchTermIsNumber = !isNaN(searcNoSpecialChar);
+            const searchNoSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+            const searchTermIsNumber = !isNaN(searchNoSpecialChar);
 
             if(searchTerm.includes('/')){
               let currentYear = moment().format('YYYY')
@@ -86,7 +76,7 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     
             }
             else if (searchTermIsNumber) {
-                const cpfWithoutSpecialChar = searcNoSpecialChar.replace(/[^\d]/g, "");
+                const cpfWithoutSpecialChar = searchNoSpecialChar.replace(/[^\d]/g, "");
                 const cpfWithSpecialCharRegex = new RegExp(cpfWithoutSpecialChar.replace(/(\d{3})(\d{3})(\d{3})(\d{2})/, "$1.$2.$3-$4"));
       
                 const boletos = await Boleto.find({
@@ -108,7 +98,7 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                 const boletos = await Boleto.find({
                     $or: [
                         {
-                            clienteNome: { $regex: new RegExp(searcNoSpecialChar, "i")}
+                            clienteNome: { $regex: new RegExp(searchNoSpecialChar, "i")}
                         },
                   ],
                 });
@@ -126,14 +116,10 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // ? get pagamentos criar search cliente
     exports.pagamentoSearchCliente = async (req,res) =>{
-        // res.render('atendente/financeiro/search-cliente')
-
         try {
             const clientesAcademia = await Cliente.aggregate([
                 { $sort: { nome: 1 } }
                 ]).exec();
-                // console.log(clientesAcademia);
-        
             res.render('atendente/financeiro/search-cliente', {clientesAcademia})
            } catch (error) {
             console.log(error);
@@ -144,8 +130,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * post search cliente
     exports.pagamentoSearchClientePost = async (req,res) =>{
-        // res.send('ok')
-
       try {
           const searchWithSpace = req.body.searchTerm
           const searchTerm = req.body.searchTerm.trim();
@@ -223,8 +207,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // ? get pagamento cria nova cobrança
     exports.pagamentoNovaCobranca = async (req,res) =>{
-        // res.render('atendente/financeiro/criar-pagamento')
-
         try {
             const cliente = await Cliente.findOne({ _id: req.params.id })
             let msgErro = await req.consumeFlash('AgendamentoMsg')
@@ -241,8 +223,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * post criar nova cobrança
     exports.pagamentoNovaCobrancaPost = async (req,res) =>{
-        // res.send('ok')
-
         try {
             const {valor, dataEmissao, dataVencimento, tipo} = req.body
             const cliente = await Cliente.findOne({ _id: req.params.id })
@@ -269,12 +249,9 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // ? get cliente historico de pagamentos
     exports.historicoPagamentos = async (req,res) =>{
-        // res.render('atendente/financeiro/historico')
-
         try {
             const Id = req.params.id
             const boletos = await Boleto.find({clienteId: Id})
-            // console.log(boletos);
             
             res.render('atendente/financeiro/historico', {boletos} )
         } catch (error) {
@@ -283,7 +260,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * pagar boleto/cobrança
     exports.boletoPago = async (req,res) =>{
-        // res.send('ok')
         try {
 
             let id = req.params.id
@@ -301,19 +277,15 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
             cliente.status = 'Ativo'
             await cliente.save()
     
-            // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
             res.redirect(`/acadmin/financeiro/pagamentos`)
         } catch (error) {
             console.log(error);
         }
 
     }
-    // * excluir boleto/cobrança
-    //  TODO exports.excluirBoleto = async (req,res) =>{}
 
     // * pagar boleto/cobrança no historico do cliente
     exports.boletoPagoPessoal = async (req,res) =>{
-        // res.send('ok')
         try {
 
             let id = req.params.id
@@ -322,10 +294,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                  status: 'Pago',
                  transactionHash: bcrypt.hashSync(id, 10),
                  dataPagamento: dataPagamentoFormatada
-                 // dataPagamento: '09/01/2023'
-                 // dataPagamento: '12/02/2023'
-                 // dataPagamento: '11/03/2023'
-                 // dataPagamento: '14/04/2023'
              })
      
             const cliente = await Cliente.findById(boleto.clienteId)
@@ -336,12 +304,9 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
              cliente.status = 'Ativo'
              await cliente.save()
      
-             // res.redirect(`/dashboard/financeiro/pagamento/historico/${boleto.clienteId}`)
              res.redirect(previousUrl)
          } catch (error) {
              console.log(error);
          }
     }
-    // * excluir boleto/cobrança no historico do cliente
-    // TODO exports.excluirBoletoPessoal = async (req,res) =>{}
 

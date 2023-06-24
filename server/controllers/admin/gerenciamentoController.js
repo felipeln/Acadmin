@@ -37,11 +37,7 @@ exports.funcionarios = async (req,res) => {
    
         try {
             const funcionariosAcademia = await Funcionario.aggregate([{$sort: {nome: 1} }])
-            // .skip(perpage * page - perpage)
-            // .limit(perpage)
             .exec()
-
-            // length
 
             let count = await Funcionario.count()
 
@@ -230,8 +226,6 @@ exports.funcionarios = async (req,res) => {
     let number = Number(page)    
         try {
             const clientesAcademia = await Cliente.aggregate([{$sort: {nome: 1} }])
-            // .skip(perpage * page - perpage)
-            // .limit(perpage)
             .exec()
 
             let count = await Cliente.count()
@@ -253,10 +247,6 @@ exports.funcionarios = async (req,res) => {
 
     //* ver
     exports.ClienteVer = async (req,res) => {
-
-     
-
-
         try {
             const clienteAcademia = await Cliente.findOne({ _id: req.params.id })
         
@@ -303,8 +293,6 @@ exports.funcionarios = async (req,res) => {
                 endereco: req.body.endereco,
                 dataModificado: moment().format('DD/MM/YYYY HH:mm:ss')
             })
-            
-            
 
             await res.redirect(`/dashboard/gerenciamento/clientes/edit/${req.params.id}`);
             console.log('redirected');
@@ -435,8 +423,6 @@ exports.funcionarios = async (req,res) => {
 
         try {
             const InstrutoresAcademia = await Instrutor.aggregate([{$sort: {nome: 1} }])
-            // .skip(perpage * page - perpage)
-            // .limit(perpage)
             .exec()
 
             let count = await Instrutor.count()
@@ -479,8 +465,6 @@ exports.funcionarios = async (req,res) => {
         try {
             const InstrutoresAcademia = await Instrutor.findOne({ _id: req.params.id })
             let dataNascimento = interpretarData(InstrutoresAcademia.dataNascimento, 'YYYY-MM-DD')
-
-
             res.render('admin/gerenciamento/instrutores/edit', {
               InstrutoresAcademia,
               dataNascimento

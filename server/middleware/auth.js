@@ -1,22 +1,3 @@
-// autenticacaoMiddleware.js
-
-// function autenticacaoMiddleware(req, res, next) {
-//   if (!req.session.cargo) {
-//     res.redirect('/login');
-//   } else {
-//     if (req.session.cargo === 'Admin') {
-//       res.redirect('/dashboard');
-//     } else if (req.session.cargo === 'funcionario') {
-//       res.redirect('/acadmin');
-//     } else if (req.session.cargo === 'Cliente') {
-//       res.redirect('/portal');
-//     } else {
-//       res.redirect('/error');
-//     }
-//   }
-// }
-
-
 
 function autenticacaoMiddleware(req, res, next) {
   if (!req.session.cargo) {

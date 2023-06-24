@@ -67,14 +67,4 @@ const InstrutorSchema = new Schema({
 
 })
 
-
 module.exports = mongoose.model('Instrutor', InstrutorSchema)
-
-
-
-// InstrutorSchema.pre('save', async function(next) {
-//     if(!this.isModified('senha')){
-//         next()
-//     }
-//     this.senha = await bcrypt.hash(this.senha, 10)
-// })

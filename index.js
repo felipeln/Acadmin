@@ -12,8 +12,6 @@ const port = 1212
 // ! autenticação
 const autenticacaoMiddleware = require('./server/middleware/auth');
 
-// const axios = require('axios')
-
 // session (cookies)
 app.use(
     session({
@@ -31,19 +29,17 @@ app.use(flash({sessionKeyName: 'flashmessage'}))
 // methodOverride
 app.use(methodOverride('_method'))
 
-// nunjucks
 
-app.use(express.json()) // accetp json as data
+app.use(express.json()) // accept json as data
 app.use(express.urlencoded({extended: false })) // accept other things and not only json
 
 
 // template engine configs
 app.set('view engine', 'njk');
-// setup css file
+// setup static files
 app.use(express.static(__dirname + '/public'));
-// app.use(express.static(__dirname + '/views'));
-
- nunjucks.configure(['./views', './views/', './views/template'] ,{
+// nunjucks
+nunjucks.configure(['./views', './views/', './views/template'] ,{
     autoescape: true,
     express: app,
     noCache: true
@@ -53,17 +49,13 @@ app.use(express.static(__dirname + '/public'));
 // db
 connectDB()
 
-// login routes
-
 app.get('/', (req,res) => {
     res.redirect('/login')
 })
 
-
 // ? login routes
 app.use(require('./server/routes/login.routes'));
 
-// TODO - Rotas protegidas que exigem autenticação e redirecionamento com base no cargo do usuário
 // ? dashboard
 app.use( autenticacaoMiddleware, require('./server/routes/dashboard.routes'));
 
@@ -79,8 +71,6 @@ app.use( autenticacaoMiddleware, require('./server/routes/acadmin.routes'));
 app.get('*', (req, res) => {
   res.status(404).render('errors/404');
 });
-
-
 
 app.listen(port, () =>{
     console.log(`server on at ${port}`);

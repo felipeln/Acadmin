@@ -389,14 +389,12 @@ exports.agendamentoCriar = async (req,res) => {
   if(cliente.status == 'Ativo'){
     let msgErro = await req.consumeFlash('AgendamentoMsg')
     let msgSucesso = await req.consumeFlash('AgendamentoMsgSucesso')
-  res.render('admin/agendamento/criar-novo',{cliente, msgErro, msgSucesso})
+    res.render('admin/agendamento/criar-novo',{cliente, msgErro, msgSucesso})
   }else{
     await req.flash('erro',`Não é possivel criar Agendamentos para usuarios Inativos`)
     const previousUrl = req.get('referer') 
     res.redirect(previousUrl)
   }
-  
-
   
 }
 
@@ -481,9 +479,6 @@ exports.instrutoresHorarios = async (req,res) =>{
       console.error(err);
     });
 
-
-
-    
 }
 
 exports.novoAgendamento = async (req,res) =>{
@@ -502,8 +497,6 @@ exports.novoAgendamento = async (req,res) =>{
 
 
   // ! Verificaçoes
-
-
   try {
       const novoAgendamento = new Agendamentos({
           clienteId: clienteId,
@@ -527,9 +520,6 @@ exports.novoAgendamento = async (req,res) =>{
           // Retorne um erro ou uma mensagem para o usuário
           await req.flash('AgendamentoMsg',`${clienteDados.nome}  já tem um agendamento nesta modalidade neste dia`)
           res.redirect(`/dashboard/agendamento/criar/novo/${clienteId}`)
-          // res.status(400).json({
-          //   message: "Este cliente já tem um agendamento nesta modalidade neste dia."
-          // });
 
         } else {
           // Verifique se o cliente já tem dois agendamentos para o dia, independentemente da modalidade
@@ -542,10 +532,8 @@ exports.novoAgendamento = async (req,res) =>{
             // Cliente já tem 2 agendamentos para o mesmo dia
             // Retorne um erro ou uma mensagem para o usuário
             await req.flash('AgendamentoMsg',`${clienteDados.nome}  já tem 2 agendamentos neste dia`)
-          res.redirect(`/dashboard/agendamento/criar/novo/${clienteId}`)
-          //   res.status(400).json({
-          //     message: "Este cliente já tem 2 agendamentos neste dia."
-          //   });
+            res.redirect(`/dashboard/agendamento/criar/novo/${clienteId}`)
+
           } else {
             // Verifique se o cliente já tem um agendamento no mesmo horário
             const agendamentoExistente = await Agendamentos.findOne({
@@ -561,9 +549,6 @@ exports.novoAgendamento = async (req,res) =>{
             if (agendamentoExistente) {
               // Cliente já tem um agendamento para o mesmo dia e horários de início e término
               // Retorne um erro ou uma mensagem para o usuário
-              // res.status(400).json({
-              //   message: "Este cliente já tem um agendamento neste dia e horário."
-              // });
               await req.flash('AgendamentoMsg',`${clienteDados.nome}  já tem um agendamento neste dia e horário.`)
               res.redirect(`/dashboard/agendamento/criar/novo/${clienteId}`)
             } else {
@@ -593,13 +578,10 @@ exports.novoAgendamento = async (req,res) =>{
           }
         }
       
-      //   await novoAgendamento.save();
-      //   await req.flash('AgendamentoMsgSucesso',`Agendamento criado com sucesso.`)
-      //   res.redirect(`/dashboard/agendamento`)
       
   } catch (error) {
       console.log(error);
-      // return res.status(400).send({ error: error.message });
+      return res.status(400).send({ error: error.message });
   }
 
 
@@ -626,7 +608,6 @@ try {
     dia,
     msgErro,
     msgSucesso
-    // , instrutores, horarios, dia, msgErro,msgSucesso
   })
 
 } catch (error) {
@@ -734,3 +715,6 @@ exports.agendamentoDelete = async (req,res) => {
 
 }
 
+
+
+// TODO: Remover todos os "previousUrl", pois extensoes que mascaram o referer url quebram o sistema.

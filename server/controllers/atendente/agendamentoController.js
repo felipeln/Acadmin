@@ -70,10 +70,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
     // * post search Agendamento
     exports.agendamentoSearch = async (req,res) =>{
-
-
-      //  res.render('atendente/agendamento/search-agendamento')
-
         try {
             let searchTerm = req.body.searchTerm.trim()
             const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "")
@@ -112,9 +108,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                 return horarioComecaA.isBefore(horarioComecaB) ? -1 : 1;
             }
             });
-        
-        
-        
             res.render('atendente/agendamento/search-agendamento', {
             agendamentos,
         })
@@ -144,7 +137,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     }
      // ? agendamento edit page
     exports.agendamentoEdit = async (req,res) =>{
-       // res.render('atendente/agendamento/edit')
        let msgErro = await req.consumeFlash('editMsg')
        let msgSucesso = await req.consumeFlash('editMsgSucesso')
      
@@ -273,13 +265,11 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
 
     // ? get agendamento search cliente para novo agendamento
     exports.agendamentoSearchCliente= async (req,res) =>{
-        // res.render('atendente/agendamento/search-cliente')
 
         try {
             let msgErro = await req.consumeFlash('erro')
     
             const clientesAcademia = await Cliente.aggregate([
-            // { $match: { status: 'Ativo' } },
             { $sort: { nome: 1 } }
             ]).exec();
             res.render('atendente/agendamento/search-cliente',{clientesAcademia, msgErro} )
@@ -293,10 +283,10 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
     exports.agendamentoSearchClientePost = async (req,res) =>{
 
         try {
-            const searchWithSpace = req.body.searchTerm
-      const searchTerm = req.body.searchTerm.trim();
-      const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
-      const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
+        const searchWithSpace = req.body.searchTerm
+        const searchTerm = req.body.searchTerm.trim();
+        const searchTermWithoutSpecialChar = searchTerm.replace(/[^a-zA-Z0-9 ]/g, "");
+        const searchTermIsNumber = !isNaN(searchTermWithoutSpecialChar);
 
         let msgErro = await req.consumeFlash('erro')
         if(searchTerm.includes('@') || searchTerm.includes('.com')){
@@ -412,8 +402,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
 
     // ? get page criar novo agendamento
     exports.agendamentoCriar = async (req,res) =>{
-        // res.render('atendente/agendamento/criar-novo')
-
         try {
             
             const cliente = await Cliente.findOne({ _id: req.params.id })
@@ -431,7 +419,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
         } catch (error) {
             console.log(error);
         }
-
 
     }
     // * post para criar novo agendamento
@@ -453,8 +440,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
 
 
         // ! Verificaçoes
-
-
         try {
                 const novoAgendamento = new Agendamentos({
                     clienteId: clienteId,
@@ -478,9 +463,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                     // Retorne um erro ou uma mensagem para o usuário
                         await req.flash('AgendamentoMsg',`${clienteDados.nome}  já tem um agendamento nesta modalidade neste dia`)
                         res.redirect(`/acadmin/agendamento/criar/novo/${clienteId}`)
-                    // res.status(400).json({
-                    //   message: "Este cliente já tem um agendamento nesta modalidade neste dia."
-                    // });
 
                     } 
                     else {
@@ -495,9 +477,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                             // Retorne um erro ou uma mensagem para o usuário
                             await req.flash('AgendamentoMsg',`${clienteDados.nome}  já tem 2 agendamentos neste dia`)
                         res.redirect(`/acadmin/agendamento/criar/novo/${clienteId}`)
-                        //   res.status(400).json({
-                        //     message: "Este cliente já tem 2 agendamentos neste dia."
-                        //   });
                         } 
                         else {
                             // Verifique se o cliente já tem um agendamento no mesmo horário
@@ -514,9 +493,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                             if (agendamentoExistente) {
                             // Cliente já tem um agendamento para o mesmo dia e horários de início e término
                             // Retorne um erro ou uma mensagem para o usuário
-                            // res.status(400).json({
-                            //   message: "Este cliente já tem um agendamento neste dia e horário."
-                            // });
                                 await req.flash('AgendamentoMsg',`${clienteDados.nome}  já tem um agendamento neste dia e horário.`)
                                 res.redirect(`/acadmin/agendamento/criar/novo/${clienteId}`)
                             } 
@@ -547,10 +523,6 @@ function interpretarData(dataString, formatoRetorno = 'DD/MM/YYYY') {
                             }
                         }
                     }
-            
-            //   await novoAgendamento.save();
-            //   await req.flash('AgendamentoMsgSucesso',`Agendamento criado com sucesso.`)
-            //   res.redirect(`/dashboard/agendamento`)
             
             } catch (error) {
                 console.log(error);
