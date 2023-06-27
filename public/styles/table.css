@@ -80,3 +80,21 @@ hr{
     align-items: center;
     font-size: 1.125em;
 }
+
+.ver-menu .clientes-btns{
+    display: flex;
+    gap: 10px;
+}
+
+.ver-menu .clientes-btns a {
+    letter-spacing: 1.1px;
+}
+.clientes-btns .agenda a{
+    background-color: #0d6efd;
+    color: white;
+}
+
+.clientes-btns .payment a{
+    background-color: teal;
+    color: #fff;
+}

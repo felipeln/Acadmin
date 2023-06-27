@@ -70,9 +70,17 @@
                 <li> / {{clienteAcademia.nome}} {{clienteAcademia.sobrenome}} </li>
             </ul>
 
-             <span>
-                <a class="editar" href="/dashboard/gerenciamento/clientes/edit/{{clienteAcademia._id}}">Editar</a>
-            </span>
+            <div class="clientes-btns">
+                <span class="agenda">
+                    <a class="editar" href="/dashboard/agendamento/historico/{{clienteAcademia._id}}">Agendamentos</a>
+                </span>
+                <span class="payment">
+                    <a class="editar" href="/dashboard/financeiro/pagamento/historico/{{clienteAcademia._id}}">Pagamentos</a>
+                </span>
+                <span>
+                    <a class="editar" href="/dashboard/gerenciamento/clientes/edit/{{clienteAcademia._id}}">Editar</a>
+                </span>
+            </div>
         </div>
 
      
