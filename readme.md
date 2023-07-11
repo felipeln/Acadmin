@@ -1,6 +1,6 @@
 # Project
 
-Acadmin is a gym management system that was developed by me as Conclusion Project of Bachelor's degree in Information Systems.
+Acadmin is a gym management system that was developed by me as  my Conclusion Project for my Bachelor's degree in Information Systems.
 
 # Screens
 ## Login.  
