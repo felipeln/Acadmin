@@ -45,3 +45,47 @@ Acadmin is a gym management system that was developed by me as  my Conclusion Pr
   - Financial Report
   - Customers Report
   - Employee Report:
+
+
+## If you wanna run this project, follow this instructions:
+
+  1. Clone this repository
+   ```
+    git clone  https://github.com/felipeln/Acadmin
+
+    cd Acadmin
+   ```
+
+  2. Setup Environment variable
+     1. Create an `.env` file
+
+
+     2. Inside the `.env` create the `MONGODB_URI` variable and set the credentials to the database.
+
+
+     3. I recommend use **Atlas mongoDb database** that is online and provides an easy way to have an database for free.
+
+  3. Install Project dependencies
+  ```
+  npm install
+  ```
+  
+  1. Run `npm start` to run the project.
+   
+  2. When you run the project an default user will be created, with this credentials:
+     1. Email = `admin`
+     2. Senha = `admin`
+
+
+  6. Use the credentials above to login into the system.
+   
+  7. If you face any error when try to generate an `Relatorio`, follow the instructions bellow:
+
+
+     1. if you are trying to run on wsl or Linux, checkout this article [link](https://pptr.dev/troubleshooting#running-puppeteer-on-wsl-windows-subsystem-for-linux)
+
+
+     2. if you are not using Linux or WSL, make sure you have google-chrome installed
+
+
+     3. If you had to install google-chrome, use this command `npm install puppeteer` and run the project again with `npm start`

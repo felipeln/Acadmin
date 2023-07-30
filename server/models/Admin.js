@@ -19,7 +19,7 @@ const AdminSchema = new Schema({
     },
     senha: {
         type: String,
-        default: null
+        required: true
     },
     cargo: {
         type: String,
