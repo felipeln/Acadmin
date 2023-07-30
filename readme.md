@@ -70,9 +70,9 @@ Acadmin is a gym management system that was developed by me as  my Conclusion Pr
   npm install
   ```
   
-  1. Run `npm start` to run the project.
+  4. Run `npm start` to run the project, the project will run at `localhost:1212`
    
-  2. When you run the project an default user will be created, with this credentials:
+  5. When you run the project an default user will be created, with this credentials:
      1. Email = `admin`
      2. Senha = `admin`
 
