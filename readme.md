@@ -89,3 +89,7 @@ Acadmin is a gym management system that was developed by me as  my Conclusion Pr
 
 
      3. If you had to install google-chrome, use this command `npm install puppeteer` and run the project again with `npm start`
+
+## Autor
+| [<img src="https://avatars.githubusercontent.com/u/76855578?v=4" width="150"><br><sub>@felipeln</sub>](https://github.com/felipeln) |
+| :---: |
